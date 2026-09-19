@@ -20,6 +20,8 @@ public class MessageManager {
     private FileConfiguration messagesConfig;
     private File messagesFile;
     private YamlConfiguration defaultJarConfig;
+    private YamlConfiguration fallbackJarConfig;
+    private String currentLanguage = "EN";
 
     public MessageManager(PinataPartyLite plugin) {
         this.plugin = plugin;
@@ -27,23 +29,44 @@ public class MessageManager {
     }
 
     public void loadMessages() {
+        this.currentLanguage = plugin.getConfig().getString("settings.language", "EN").trim().toUpperCase();
+        String fileName = currentLanguage.equals("ES") ? "messages_es.yml" : "messages.yml";
+
         if (plugin.getConfigUpdaterEngine() != null) {
-            plugin.getConfigUpdaterEngine().updateFile("messages.yml");
+            plugin.getConfigUpdaterEngine().updateFile(fileName);
         }
 
-        this.messagesFile = new File(plugin.getDataFolder(), "messages.yml");
+        this.messagesFile = new File(plugin.getDataFolder(), fileName);
         if (!messagesFile.exists()) {
-            plugin.saveResource("messages.yml", false);
+            plugin.saveResource(fileName, false);
         }
 
         this.messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
 
-        InputStream defStream = plugin.getResource("messages.yml");
+        InputStream defStream = plugin.getResource(fileName);
         if (defStream != null) {
             defaultJarConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defStream, StandardCharsets.UTF_8));
             messagesConfig.setDefaults(defaultJarConfig);
             messagesConfig.options().copyDefaults(true);
         }
+
+        InputStream enStream = plugin.getResource("messages.yml");
+        if (enStream != null) {
+            fallbackJarConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(enStream, StandardCharsets.UTF_8));
+        }
+    }
+
+    public void setLanguage(String lang) {
+        if (lang == null) lang = "EN";
+        String normalized = lang.trim().equalsIgnoreCase("ES") ? "ES" : "EN";
+        this.currentLanguage = normalized;
+        plugin.getConfig().set("settings.language", normalized);
+        plugin.saveConfig();
+        loadMessages();
+    }
+
+    public String getLanguage() {
+        return currentLanguage;
     }
 
     public String getRaw(String path) {
@@ -56,6 +79,9 @@ public class MessageManager {
         }
         if (defaultJarConfig != null && defaultJarConfig.contains(path)) {
             return defaultJarConfig.getString(path, def);
+        }
+        if (fallbackJarConfig != null && fallbackJarConfig.contains(path)) {
+            return fallbackJarConfig.getString(path, def);
         }
         return def;
     }

@@ -221,6 +221,23 @@ public class PinataLiteCommand implements CommandExecutor, TabCompleter {
                     plugin.getMessageManager().send(sender, "bat.given", "player", target.getName());
                 }
             }
+            case "lang", "language", "idioma" -> {
+                if (!sender.hasPermission("pinataspectra.admin")) {
+                    plugin.getMessageManager().send(sender, "general.no-permission");
+                    return true;
+                }
+                if (args.length < 2) {
+                    plugin.getMessageManager().send(sender, "general.language-current", "lang", plugin.getMessageManager().getLanguage());
+                    return true;
+                }
+                String targetLang = args[1].toUpperCase();
+                if (!targetLang.equals("EN") && !targetLang.equals("ES")) {
+                    plugin.getMessageManager().send(sender, "general.language-invalid");
+                    return true;
+                }
+                plugin.getMessageManager().setLanguage(targetLang);
+                plugin.getMessageManager().send(sender, "general.language-changed", "lang", targetLang);
+            }
             case "reload" -> {
                 if (!sender.hasPermission("pinataspectra.admin")) {
                     plugin.getMessageManager().send(sender, "general.no-permission");
@@ -264,6 +281,7 @@ public class PinataLiteCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata setspawn <name> &7- Set fixed Piñata spawn point"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata pool [amount] &7- View or fund community pool"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata vote &7- Check community vote goal progress"));
+        sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata lang <EN|ES> &7- Switch active language (EN/ES)"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata editor &7- Open in-game visual editor GUI"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata kill &7- Remove active Piñata immediately"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata reload &7- Reload configurations and messages"));
@@ -294,13 +312,15 @@ public class PinataLiteCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> list = new ArrayList<>();
         if (args.length == 1) {
-            list.addAll(List.of("spawn", "bat", "clean", "setspawn", "pool", "kill", "editor", "vote", "pro", "comparison", "reload", "help"));
+            list.addAll(List.of("spawn", "bat", "clean", "setspawn", "pool", "kill", "editor", "vote", "lang", "language", "pro", "comparison", "reload", "help"));
         } else if (args.length == 2 && args[0].equalsIgnoreCase("spawn")) {
             for (PinataProfile p : plugin.getRegistry().getAllProfiles()) {
                 list.add(p.getId());
             }
         } else if (args.length == 3 && args[0].equalsIgnoreCase("spawn")) {
             list.addAll(plugin.getSavedLocationNames());
+        } else if (args.length == 2 && (args[0].equalsIgnoreCase("lang") || args[0].equalsIgnoreCase("language") || args[0].equalsIgnoreCase("idioma"))) {
+            list.addAll(List.of("EN", "ES"));
         } else if (args.length == 2 && args[0].equalsIgnoreCase("bat")) {
             list.add("give");
             for (Player p : Bukkit.getOnlinePlayers()) list.add(p.getName());
