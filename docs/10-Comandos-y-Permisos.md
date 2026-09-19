@@ -1,26 +1,37 @@
-# 🕹️ 10. Comandos & Permisos
+# 🎮 10. Comandos, Permisos & Bate Festivo
 
-## 💻 Tabla de Comandos
-
-| Comando | Permiso Requerido | Descripción |
-| :--- | :--- | :--- |
-| `/pinata spawn [perfil]` | `pinataspectra.admin` | Invoca una piñata en la ubicación actual o punto guardado. |
-| `/pinata kill` | `pinataspectra.admin` | Elimina la piñata activa inmediatamente sin entregar drops. |
-| `/pinata setspawn <nombre>` | `pinataspectra.admin` | Guarda un punto de aparición con el nombre indicado. |
-| `/pinata reload` | `pinataspectra.admin` | Recarga todas las configuraciones YAML, perfiles y mensajes. |
-| `/pinata studio [perfil]` | `pinataspectra.admin` | Abre el menú GUI interactivo para editar parámetros de la piñata. |
-| `/pinata bat give <jugador>` | `pinataspectra.admin` | Entrega un Bate Festivo con daño aumentado. |
-| `/pinata pool [cantidad]` | `pinataspectra.use` | Consulta o aporta dinero al fondo comunitario de fiesta. |
-| `/pinata pro` | *Ninguno* | Muestra la comparativa interactiva con la edición Sovereign PRO. |
-| `/vote` | `pinataspectra.use` | Muestra el estado de la meta de votos y enlaces para votar. |
-| `/clean` | `pinataspectra.admin` | Purga entidades o displays huérfanos del mundo. |
+PinataSpectra Lite incluye una suite completa de comandos administrativos e interactivos con soporte completo de autocompletado en Tab.
 
 ---
 
-## 🔐 Nodos de Permiso
+## 🕹️ Lista de Comandos
 
-- `pinataspectra.admin`: Concede acceso total a todos los comandos administrativos y de configuración.
-- `pinataspectra.use`: Permite ver la información de `/vote` y donar con `/pinata pool`.
-- `pinataspectra.hit.2`: Multiplicador VIP que cuenta cada impacto como **2 golpes**.
-- `pinataspectra.hit.3`: Multiplicador VIP que cuenta cada impacto como **3 golpes**.
-- `pinataspectra.hit.5`: Multiplicador VIP que cuenta cada impacto como **5 golpes**.
+| Comando | Permiso | Descripción |
+|---|---|---|
+| `/pinata help` | *Ninguno* | Muestra el menú de ayuda visual con todos los comandos. |
+| `/pinata spawn [perfil] [spawn]` | `pinataspectra.admin` | Invoca una piñata en tu posición o en un spawn guardado. |
+| `/pinata kill` | `pinataspectra.admin` | Elimina la piñata activa de inmediato. |
+| `/pinata bat [give <jugador>]` | `pinataspectra.admin` | Entrega el Bate Festivo con partículas y sonido personalizado. |
+| `/pinata clean` | `pinataspectra.admin` | Purga entidades residuales o colgadas en todos los mundos. |
+| `/pinata setspawn <nombre>` | `pinataspectra.admin` | Guarda tu ubicación actual como un punto de spawn fijo. |
+| `/pinata lang <EN\|ES>` | `pinataspectra.admin` | Cambia el idioma activo del servidor (Español / Inglés). |
+| `/pinata editor` (o `/pinata studio`) | `pinataspectra.admin` | Abre la GUI del editor visual dentro del juego. |
+| `/pinata reload` | `pinataspectra.admin` | Recarga las configuraciones, perfiles y mensajes. |
+| `/pinata pool [cantidad]` | *Ninguno* | Consulta el pozo comunitario o dona dinero de Vault. |
+| `/pinata vote` (o `/vote`) | *Ninguno* | Consulta el progreso de votos hacia la siguiente fiesta. |
+| `/pinata comparison` (o `/pinatapro`)| *Ninguno* | Muestra la tabla comparativa con la edición Sovereign PRO. |
+
+---
+
+## 🔑 Nodos de Permisos
+
+* **`pinataspectra.admin`**: Otorga acceso a todos los comandos administrativos (`spawn`, `kill`, `clean`, `bat`, `setspawn`, `lang`, `reload`, `editor`). Por defecto asignado a operadores (`op`).
+* **`pinataspectra.user`**: Permiso base para jugadores comunes (`pool`, `vote`, `help`).
+
+---
+
+<div align="center">
+
+[**← 09. Configuración YAML**](09-Configuracion-YAML-Maestra.md) | [**11. Placeholders & Hooks →**](11-Placeholders-y-Hooks.md)
+
+</div>

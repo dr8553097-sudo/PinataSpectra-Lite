@@ -1,23 +1,56 @@
-# 🗳️ 07. Metas de Votos & Pool Vault
+# 💰 07. Metas Comunitarias: NuVotifier & Pozo Vault
 
-PinataSpectra-Lite incluye dos sistemas de invocación comunitaria automática diseñados para dinamizar y retener a los jugadores en el servidor.
-
----
-
-## 🗳️ 1. Meta de Votos Comunitaria (Vote Goal)
-
-Al integrar **NuVotifier** o **Votifier**:
-- Cada voto de un jugador en listas de servidores incrementa el contador global de votos del servidor.
-- Cada X votos (`vote-goal.broadcast-interval`), se anuncia el progreso actual a todo el servidor.
-- Al alcanzar la meta fijada (`vote-goal.target-votes: 25`), se activa automáticamente la piñata comunitaria en el punto de spawn configurado.
-- Los jugadores pueden consultar el estado de la meta y los enlaces con el comando `/vote`.
+Una de las características más potentes de **PinataSpectra Lite** es su capacidad para unir a la comunidad de tu servidor hacia un objetivo colectivo mediante dos sistemas:
 
 ---
 
-## 🏦 2. Fondo Comunitario de Dinero (`/pinata pool`)
+## 🗳️ 1. Sistema de Meta de Votos (`vote-goal`)
 
-Permite a los jugadores donar dinero de su saldo de Vault a una bolsa comunitaria:
-- **Consulta de Progreso:** Al ejecutar `/pinata pool`, se muestra un mensaje interactivo con el monto actual recaudado, la meta requerida y la barra de progreso porcentual.
-- **Aportar Dinero:** Los jugadores pueden donar fondos ejecutando `/pinata pool <cantidad>`.
-- Al completarse la meta fijada (`pinata-pool.target-money: 5000.0`), el sistema anuncia la victoria y libera inmediatamente la piñata de fiesta.
-- Los fondos donados se guardan y persisten de forma segura entre reinicios del servidor.
+Si tu servidor utiliza **NuVotifier** o **Votifier**, PinataSpectra Lite intercepta automáticamente los votos entrantes y alimenta una barra de progreso comunitaria.
+
+```yaml
+# En config.yml:
+vote-goal:
+  enabled: true
+  # Votos requeridos para invocar automáticamente la piñata
+  target-votes: 25
+  # Perfil de piñata a invocar al completar la meta
+  reward-profile: "FESTIVE_LLAMA"
+  # Reiniciar el contador de votos a 0 tras la fiesta
+  reset-on-trigger: true
+  # Anunciar en el chat cada X votos conseguidos
+  broadcast-interval: 5
+```
+
+### Comandos de Usuario:
+* **`/vote`** o **`/pinata vote`**: Muestra el progreso actual de votos (`18 / 25 [72%]`) y los enlaces de votación del servidor.
+
+---
+
+## 🪙 2. Pozo de Donaciones Comunitario (`pinata-pool`)
+
+Permite a los jugadores donar dinero de su economía de **Vault** hacia un pozo colectivo. Cuando se recauda el monto objetivo, la Gran Piñata se invoca de inmediato en el spawn predeterminado.
+
+```yaml
+# En config.yml:
+pinata-pool:
+  enabled: true
+  # Monto total de dinero de Vault requerido
+  target-money: 5000.0
+  # Dinero acumulado actualmente (se guarda entre reinicios)
+  current-money: 0.0
+  # Perfil a invocar al llegar a la meta
+  reward-profile: "FESTIVE_LLAMA"
+```
+
+### Comandos de Usuario:
+* **`/pinata pool`**: Muestra la recaudación actual, el porcentaje completado y la meta.
+* **`/pinata pool <cantidad>`** (o `/pinata donate <cantidad>`): Contribuye dinero de la cuenta del jugador al pozo comunitario.
+
+---
+
+<div align="center">
+
+[**← 06. Loot & Recompensas**](06-Loot-Drops-y-Recompensas.md) | [**08. Auto-Scheduler →**](08-Scheduler-y-Eventos-Automaticos.md)
+
+</div>

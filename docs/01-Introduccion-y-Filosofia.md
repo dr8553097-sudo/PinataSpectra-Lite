@@ -1,33 +1,73 @@
-# 🏛️ 01. Introducción & Filosofía
+# 🍃 01. Introducción & Filosofía de PinataSpectra Lite
 
-**PinataSpectra-Lite** es el estándar de nueva generación para eventos de piñatas en servidores de Minecraft. Construido completamente sobre la API moderna de **Display Entities (BlockDisplay / Interaction / TextDisplay)**, elimina la necesidad de paquetes de texturas externos (Resource Packs) o mods en el cliente.
+**PinataSpectra Lite** es la edición comunitaria y de código abierto del motor de piñatas 3D procedimentales y eventos festivos para servidores **Minecraft (Paper, Purpur y Spigot 1.20 - 1.26+)**.
 
----
-
-## 🌟 Características Principales
-
-- **🧊 Renderizado 3D Voxel Nativo:** Diseñado mediante geometrías tridimensionales de bloques en miniatura que oscilan y reaccionan físicamente a cada golpe.
-- **⚡ Físicas Cinéticas Reales:** Péndulo oscilatorio con balanceo sinusoidal continuo y micro-rebotes dinámicos al recibir impactos.
-- **🎶 Motor de Música Dinámica Procedimental:** 3 pistas musicales completas compuestas con NoteBlocks que cambian de ritmo y melodía en tiempo real según la fase de la piñata.
-- **🌌 Paisaje Sonoro Atmosférico:** Integración de sonidos avanzados de Minecraft moderno (Resonancia de Amatista, Balizas celestiales, Anclas de Respawn, Latidos de Warden y Catalizadores Sculk).
-- **⚔️ Combate por Fases de Boss:**
-  - **Fase 1 (100% - 66% HP):** Ritmo festivo tradicional.
-  - **Fase 2 (66% - 33% HP):** Micro-Evasión (se encoge al 65% y duplica su velocidad).
-  - **Fase 3 (33% - 0% HP):** Chaotic Shifter (teletransporte acrobático evasivo y ondas expansivas).
-- **⛰️ Fijación Inteligente de Terreno:** Algoritmo que calcula la altura sólida del suelo (+2.35 bloques) para que nunca se entierre en montañas, colinas o desniveles.
-- **🎁 Sistema de Loot Dual:** Entrega directa al inventario con protección de suelo si está lleno + lluvia de premios en el clímax final.
-- **🗳️ Metas Comunitarias:** Soporte para NuVotifier (Meta de Votos) y Fondo de Aportes Vault (`/pinata pool`).
+Fue concebido para democratizar los eventos de alta gama en Minecraft, permitiendo a cualquier comunidad (desde pequeños servidores survival entre amigos hasta modalidades en crecimiento) disfrutar de jefes festivos con físicas fluidas, música por fases y cero lag.
 
 ---
 
-## ⚖️ Comparativa: Lite vs Sovereign PRO
+## 🎯 ¿Por qué existe PinataSpectra Lite?
 
-| Característica | 🍃 PinataSpectra-Lite | 👑 Sovereign PRO |
-| :--- | :---: | :---: |
-| **Modelos 3D Voxel** | Estrella & Llama Clásica | 8 Formas (Mecha, Dragón, Totem, etc.) |
-| **Animaciones de Muerte** | Cascada Fuente Clásica | 7 Cinemáticas Cósmicas Supernova |
-| **Motor de Música de Fases** | ✅ Sí (3 Pistas) | ✅ Sí (8 Pistas Orquestadas) |
-| **Leaderboards & Top Hits** | SQLite Local | SQLite + Multi-Server MySQL Sync |
-| **Ruleta de la Fortuna 3D** | ❌ No | ✅ Sí (Jackpot Wheel) |
-| **Mjolnir Lightning Bats** | Bate Festivo Estándar | Bate Mjolnir con Rayos & Habilidades |
-| **Precio** | **100% Gratuito & Open Source** | **Premium Sovereign** |
+Los plugins de piñatas tradicionales de la última década arrastran problemas estructurales que dañan la experiencia de los jugadores:
+
+1. **Saturación por ArmorStands invisibles:**
+   * Los plugins antiguos agrupaban entre 15 y 30 `ArmorStands` invisibles por piñata para sostener cabezas o bloques.
+   * Esto generaba un diluvio de paquetes de sincronización hacia los clientes, provocando caídas drásticas de FPS en computadoras de gama media/baja.
+2. **Hitboxes rotas o imprecisas:**
+   * Al golpear armaduras invisibles, los golpes fallaban o no se registraban si el jugador miraba un ángulo no colisionable.
+3. **Mecánicas monótonas:**
+   * La mayoría de plugins se limitaban a una entidad estática flotando que soltaba ítems al recibir X clics.
+
+---
+
+## ⚡ Los 4 Pilares de la Arquitectura Lite
+
+```
+ ┌──────────────────────────────────────────────────────────────┐
+ │                  🍃 PINATASPECTRA LITE CORE                  │
+ ├──────────────────────────────┬───────────────────────────────┤
+ │ 🧊 GPU Native Display        │ 🎶 3-Phase Dynamic Audio      │
+ │  • ItemDisplay nativo 1.20+  │  • 3 melodías NoteBlock       │
+ │  • Interaction Hitbox exacta │  • Resonancias & SFX avanzados│
+ ├──────────────────────────────┼───────────────────────────────┤
+ │ ⛰️ Smart Terrain Clamping    │ 🌐 Live Multi-Language Engine │
+ │  • findSafeGroundY (+2.35m)  │  • /pinata lang [EN|ES]       │
+ │  • Balanceo armónico sin/cos │  • Sincronizador sin pérdidas │
+ └──────────────────────────────┴───────────────────────────────┘
+```
+
+1. **Display Entities Nativas (1.20+):**
+   * Toda la piñata se construye mediante un único `ItemDisplay` maestro acoplado a una entidad `Interaction` de precisión milimétrica.
+   * Renderizado directo en GPU por el cliente de Minecraft: **reducción del 85% en uso de CPU y ancho de banda**.
+
+2. **Soundscape Dinámico por Fases:**
+   * En lugar de simples clics genéricos, la piñata ejecuta una banda sonora completa en NoteBlocks que cambia de ritmo e instrumentos al avanzar las fases de combate.
+
+3. **Fijación de Altura Inteligente:**
+   * Algoritmo de trazado de rayos que calcula el suelo real y mantiene la piñata flotando a una altura óptima (+2.35 bloques), evitando que quede enterrada en cerros o colinas tras teletransportarse.
+
+4. **100% Abierto, Transparente & Seguro (GPLv3):**
+   * Sin código ofuscado, sin librerías invasivas y con sincronización inteligente de archivos mediante `ConfigUpdaterEngine`.
+
+---
+
+## 👑 Comparativa con la Edición Sovereign PRO
+
+| Característica | 🍃 PinataSpectra Lite | 🪅 PinataSpectra Sovereign PRO |
+|---|:---:|:---:|
+| **Código & Licencia** | GPLv3 (Open Source) | Comercial Propietaria |
+| **Modelos 3D Voxel** | 1 Forma Base (Festive Llama) | **8 Formas** (Mecha, Dragón, Corona, etc.) |
+| **Fases de Combate** | **3 Fases** (Evasión & Caos) | **4 Fases** (Escudos orbitales & Esbirros) |
+| **Efectos de Muerte** | Explosión Festiva Clásica | **7 Supernovas Cósmicas (Black Hole)** |
+| **Bates Míticos** | 1 Bate Festivo con MiniMessage | **7 Bates Míticos** (Mjolnir con Rayos) |
+| **Seguridad de Loot** | Dropeo directo + Piso | **Anti-Steal Vault** (Protección anti-robo) |
+| **Bases de Datos** | SQLite Local | **MySQL + MariaDB + Redis** |
+| **Jackpots** | Ninguno | **Ruletas 3D en el suelo en tiempo real** |
+
+---
+
+<div align="center">
+
+[**02. Instalación & Requisitos →**](02-Instalacion-y-Requisitos.md)
+
+</div>

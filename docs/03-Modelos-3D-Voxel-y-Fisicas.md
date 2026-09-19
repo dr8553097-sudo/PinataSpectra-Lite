@@ -1,31 +1,55 @@
-# 🦄 03. Modelos 3D Voxel & Físicas
+# 🧊 03. Modelos 3D Voxel & Físicas de Balanceo
 
-## 🧊 Geometría Voxel Dinámica
-
-PinataSpectra-Lite renderiza sus piñatas utilizando **Block Displays** nativos de Minecraft combinados con una entidad de hitbox `Interaction`.
-
-- **Cuerpo Central:** Voxel Core de 3x3x3 cubos de colores vibrantes configurables (`primary-block` y `secondary-block`).
-- **Puntas Cónicas & Listones:** 6 extensiones cardinales (`+X`, `-X`, `+Y`, `-Y`, `+Z`, `-Z`) con bloques de lana decorativa (`ribbon-blocks`).
-- **Cuerda Colgante:** Micro-partículas que unen la piñata al ancla superior virtual, simulando suspensión por cuerda.
+PinataSpectra Lite introduce un sistema de renderizado y simulación cinemática procedural que hace que golpear una piñata se sienta reactivo, dinámico y festivo.
 
 ---
 
-## ⚡ Péndulo Armónico & Balanceo
+## 🦄 Renderizado 3D Mediante Display Entities
 
-El movimiento no es estático ni repetitivo:
-- **Ecuaciones de Trayectoria Sinusoidal:**
-  ```
-  X = sin(t) * SwayFactor
-  Z = cos(t * 0.7) * (SwayFactor * 0.6)
-  Y = |sin(t * 2)| * 0.38
-  ```
-- **Reacción Física a Impactos (Hit Wobble):** Cuando un jugador golpea la piñata, el modelo calcula el vector de dirección del impacto y aplica un momento de inercia y torsión angular que decae suavemente (`wobbleDecay = 0.88`).
+A diferencia de los modelos basados en resource packs externos que requieren descargas forzadas a los clientes, PinataSpectra Lite utiliza **`ItemDisplay` de Minecraft nativo**:
+
+* **Cabezas Custom en Base64:** Soporta cualquier textura de skin de cabeza de Minecraft (`head-texture`).
+* **Interpolación Fluida de Transformaciones:** Las rotaciones, escalas y desplazamientos se transmiten con `Transformation` e interpolación de ticks (`setInterpolationDuration`), lo que produce movimientos a **60+ FPS sin tirones**.
+* **Interacción Precisa:** La hitbox `Interaction` se sincroniza exactamente en el centro geométrico de la piñata, asegurando que cada espadazo o golpe con el bate cuente.
 
 ---
 
-## ⛰️ Fijación Inteligente del Terreno (Smart Ground Clamping)
+## ⚡ Simulación de Físicas & Balanceo Armónico
 
-Para evitar que la piñata quede atrapada dentro del suelo o flote a alturas inalcanzables cuando se teletransporta en colinas o montañas:
-1. El algoritmo `findSafeGroundY` escanea verticalmente el terreno hacia abajo hasta hallar el primer bloque sólido no traspasable.
-2. Fija automáticamente la base de oscilación a **+2.35 bloques sobre el suelo**.
-3. Realiza un recalibramiento continuo cada 2 segundos para adaptarse si el terreno sufre modificaciones.
+El motor matemático calcula tres fuerzas simultáneas durante el ciclo de vida del evento:
+
+1. **Oscilación Flotante Suave (Péndulo Armónico):**
+   * Mientras nadie la golpea, la piñata flota en un patrón senoidal suave:
+     $$\Delta Y = A \cdot \sin(\omega t)$$
+   * Esto simula la suspensión elástica de una cuerda festiva.
+
+2. **Rebote Reactivo al Impacto (Recoil Vector):**
+   * Cuando un jugador golpea la piñata con un bate o espada, el motor calcula un vector opuesto a la mirada del atacante:
+     $$\vec{v}_{\text{recoil}} = \text{normalize}(\vec{P}_{\text{piñata}} - \vec{P}_{\text{jugador}}) \cdot K_{\text{fuerza}}$$
+   * La piñata se inclina y se balancea en el aire absorbiendo la inercia del golpe.
+
+---
+
+## ⛰️ Fijación Inteligente del Terreno (`findSafeGroundY`)
+
+Uno de los problemas más comunes en eventos con teletransporte es que la entidad se entierre bajo tierra o flote a 20 bloques en el cielo al moverse a una montaña.
+
+```
+       [Piñata Suspendida]
+                │
+                │  ← Altura Base Fija (+2.35 bloques)
+                ▼
+  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ (Terreno Real / Montaña / Escalera)
+```
+
+* El algoritmo realiza un trazado vertical hacia abajo desde la posición objetivo.
+* Encuentra el primer bloque sólido (`isSolid()`), ignorando pasto alto, flores y agua.
+* Asigna la altura exacta sumando un margen de seguridad de **+2.35 bloques**, garantizando que los jugadores siempre puedan alcanzarla a pie sin importar la topografía del terreno.
+
+---
+
+<div align="center">
+
+[**← 02. Instalación**](02-Instalacion-y-Requisitos.md) | [**04. Máquina de Fases & Combate →**](04-Maquina-de-Fases-Combate.md)
+
+</div>
