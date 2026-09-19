@@ -5,11 +5,17 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.List;
 
+/**
+ * Intelligent Automatic Config & Profile Synchronizer.
+ * Ensures all existing and newly created configuration files on disk
+ * receive newly introduced keys, default values, and headers from the JAR
+ * without overwriting or resetting any user-customized settings.
+ */
 public class ConfigUpdaterEngine {
 
     private final PinataPartyLite plugin;
@@ -19,10 +25,17 @@ public class ConfigUpdaterEngine {
     }
 
     public void updateAllConfigs() {
+        // 1. Sync standard root configs
         updateFile("config.yml");
         updateFile("messages.yml");
+        updateFile("messages_es.yml");
+
+        // 2. Sync and deploy all default and custom pinatas in pinatas/ folder
         updateFile("pinatas/festive_llama.yml");
         updateFile("pinatas/custom_party.yml");
+
+        // 3. Scan and synchronize any custom pinatas created by admins in /pinatas/
+        syncAllCustomPinataProfiles();
     }
 
     public void updateFile(String resourcePath) {
@@ -32,16 +45,19 @@ public class ConfigUpdaterEngine {
                 if (diskFile.getParentFile() != null && !diskFile.getParentFile().exists()) {
                     diskFile.getParentFile().mkdirs();
                 }
-                plugin.saveResource(resourcePath, false);
-            } catch (Exception ignored) {}
+                InputStream jarIn = plugin.getResource(resourcePath);
+                if (jarIn != null) {
+                    plugin.saveResource(resourcePath, false);
+                    plugin.getLogger().info("[ConfigUpdater] Desplegado nuevo archivo por defecto: " + resourcePath);
+                }
+            } catch (Exception e) {
+                plugin.getLogger().warning("[ConfigUpdater] No se pudo desplegar " + resourcePath + ": " + e.getMessage());
+            }
             return;
         }
 
         try {
-            FileConfiguration diskConfig;
-            try (InputStream in = new java.io.FileInputStream(diskFile)) {
-                diskConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(in, StandardCharsets.UTF_8));
-            }
+            FileConfiguration diskConfig = YamlConfiguration.loadConfiguration(diskFile);
 
             InputStream jarStream = plugin.getResource(resourcePath);
             if (jarStream == null) return;
@@ -50,11 +66,54 @@ public class ConfigUpdaterEngine {
 
             int addedKeys = mergeSections(jarConfig, diskConfig);
             if (addedKeys > 0) {
+                // Ensure header is copied
+                if (jarConfig.options().header() != null && (diskConfig.options().header() == null || diskConfig.options().header().isEmpty())) {
+                    diskConfig.options().header(jarConfig.options().header());
+                }
+                diskConfig.options().copyHeader(true);
                 diskConfig.save(diskFile);
-                plugin.getLogger().info("[ConfigUpdater] Sincronizadas " + addedKeys + " nuevas opciones en " + resourcePath + " sin alterar tus configuraciones.");
+                plugin.getLogger().info("[ConfigUpdater] ✔ Sincronizadas " + addedKeys + " nuevas opciones en " + resourcePath + " sin alterar tus configuraciones existentes.");
             }
         } catch (Exception e) {
-            plugin.getLogger().warning("[ConfigUpdater] Error al actualizar " + resourcePath + ": " + e.getMessage());
+            plugin.getLogger().warning("[ConfigUpdater] Error al sincronizar " + resourcePath + ": " + e.getMessage());
+        }
+    }
+
+    private void syncAllCustomPinataProfiles() {
+        File pinatasDir = new File(plugin.getDataFolder(), "pinatas");
+        if (!pinatasDir.exists() || !pinatasDir.isDirectory()) return;
+
+        File[] files = pinatasDir.listFiles((dir, name) -> name.endsWith(".yml"));
+        if (files == null || files.length == 0) return;
+
+        InputStream sampleStream = plugin.getResource("pinatas/festive_llama.yml");
+        if (sampleStream == null) return;
+
+        FileConfiguration templateConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(sampleStream, StandardCharsets.UTF_8));
+
+        for (File file : files) {
+            try {
+                FileConfiguration profileConfig = YamlConfiguration.loadConfiguration(file);
+                int added = 0;
+
+                // Essential Profile Keys to guarantee
+                for (String key : templateConfig.getKeys(false)) {
+                    if (key.equalsIgnoreCase("drops") || key.equalsIgnoreCase("display-name") || key.equalsIgnoreCase("id")) {
+                        continue; // Keep profile custom identity and custom loot
+                    }
+                    if (!profileConfig.isSet(key)) {
+                        profileConfig.set(key, templateConfig.get(key));
+                        added++;
+                    }
+                }
+
+                if (added > 0) {
+                    profileConfig.save(file);
+                    plugin.getLogger().info("[ConfigUpdater] ✔ Perfil 'pinatas/" + file.getName() + "' actualizado con " + added + " nuevos parámetros por defecto.");
+                }
+            } catch (Exception e) {
+                plugin.getLogger().warning("[ConfigUpdater] Error al comprobar perfil " + file.getName() + ": " + e.getMessage());
+            }
         }
     }
 
@@ -70,7 +129,7 @@ public class ConfigUpdaterEngine {
                 }
                 added += mergeSections(subSource, subTarget);
             } else {
-                if (!target.contains(key, true)) {
+                if (!target.isSet(key)) {
                     target.set(key, source.get(key));
                     added++;
                 }

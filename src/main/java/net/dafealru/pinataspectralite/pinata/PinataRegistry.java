@@ -95,7 +95,7 @@ public class PinataRegistry {
         Particle hit = matchParticle(config.getString("hit-particle"), Particle.FIREWORK);
         Particle trail = matchParticle(config.getString("trail-particle"), Particle.CHERRY_LEAVES);
 
-        Sound ambient = matchSound(config.getString("ambient-sound", config.getString("ambient_sound")), Sound.ENTITY_LLAMA_AMBIENT);
+        Sound ambient = matchSound(config.getString("ambient-sound", config.getString("ambient_sound")), Sound.BLOCK_AMETHYST_BLOCK_CHIME);
         Sound hitSound = matchSound(config.getString("hit-sound", config.getString("hit_sound")), Sound.BLOCK_WOOD_HIT);
         Sound deathSound = matchSound(config.getString("death-sound", config.getString("death_sound")), Sound.UI_TOAST_CHALLENGE_COMPLETE);
 
