@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "💬 Official Discord Support"
+    url: "https://discord.gg/yourdiscord"
+    about: "Get instant community support, configuration help, and discuss server setups with developers."
+  - name: "👑 Sovereign PRO Edition"
+    url: "https://builtbybit.com/pinataspectra"
+    about: "Explore Sovereign PRO for 8 3D Shapes, 7 Supernovas, Mjolnir Bats, 3D Wheels & MySQL."

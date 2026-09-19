@@ -1,0 +1,150 @@
+# ==============================================================================
+#   ____  _             _          ____                  _             
+#  |  _ \(_)_ __   __ _| |_ __ _  / ___| _ __   ___  ___| |_ _ __ __ _ 
+#  | |_) | | '_ \ / _` | __/ _` | \___ \| '_ \ / _ \/ __| __| '__/ _` |
+#  |  __/| | | | | (_| | || (_| |  ___) | |_) |  __/ (__| |_| | | (_| |
+#  |_|   |_|_| |_|\__,_|\__\__,_| |____/| .__/ \___|\___|\__|_|  \__,_|
+#                                       |_|   🍃 L I T E   E D I T I O N
+#
+#  🪅 PINATASPECTRA LITE — THE STANDARD 3D PIÑATA ENGINE
+#  👑 Creator & Author: Dafealru | Native Java 21 & Paper/Purpur 1.20 - 1.26
+#  🌟 Sovereign PRO Edition: https://builtbybit.com/pinataspectra
+# ==============================================================================
+
+settings:
+  # Language: EN (English) or ES (Spanish)
+  language: "EN"
+  # Default Piñata Profile to spawn when running /pinata spawn without args
+  default-profile: "FESTIVE_LLAMA"
+  # Automatically check for updates on startup
+  check-for-updates: true
+  # Show promotional tip in console on startup
+  show-pro-banner: true
+
+# Community Vote Goal System (NuVotifier / Votifier Hook)
+vote-goal:
+  enabled: true
+  # Votes required to automatically trigger the community Piñata party
+  target-votes: 25
+  # Profile to spawn upon reaching the goal
+  reward-profile: "FESTIVE_LLAMA"
+  # Reset vote counter after spawn
+  reset-on-trigger: true
+  # Broadcast progress every X votes
+  broadcast-interval: 5
+  # Vote links shown when typing /vote
+  vote-links:
+    - "§e1. §fhttps://minecraftservers.org/vote/YOURSERVER"
+    - "§e2. §fhttps://topg.org/minecraft-servers/vote/YOURSERVER"
+
+# Community Vault Money Pool System (/pinata pool)
+pinata-pool:
+  enabled: true
+  # Total Vault currency required to automatically trigger the Piñata party
+  target-money: 5000.0
+  # Current funded money (persisted across restarts)
+  current-money: 0.0
+  # Profile to spawn upon reaching the monetary goal
+  reward-profile: "FESTIVE_LLAMA"
+
+# Dynamic Health Scaling (Scales Piñata hits according to online players)
+health-scaling:
+  enabled: true
+  # Additional hits added to base profile health per online player
+  bonus-per-player: 15
+
+# Saved Spawn Locations (/pinata setspawn <name>)
+spawns: {}
+
+# Bossfight Dynamic Phases, Combat Attacks & Evasion Mechanics
+mechanics:
+  phases:
+    # Enable dynamic phase transitions (Micro-speed & Evasive Blink)
+    enabled: true
+    # Miniature scale in Phase 2 (66% - 33% HP)
+    phase2-scale: 0.65
+    # Hits required to trigger an evasive acrobatic teleport in Phase 3 (33% - 0% HP)
+    phase3-blink-hits: 3
+
+  teleport:
+    # Distance range for evasive blinks
+    min-distance: 12.0
+    max-distance: 22.0
+    # Minimum cooldown between blinks (seconds)
+    cooldown-seconds: 2.0
+
+  boss-attacks:
+    ground-slam:
+      # Ground shockwave attack knocking back nearby players in frenzy phase
+      enabled: true
+      hit-interval: 15
+      radius: 6.0
+      knockback-force: 1.1
+
+# Smart Loot Delivery Mode
+loot:
+  # Mode: INVENTORY_FIRST (Direct to player inventory with full-bag drop protection) or FLOOR_DROPS
+  delivery-mode: "INVENTORY_FIRST"
+
+# Festive Piñata Bat Configuration (/pinata bat give <player>)
+pinata-bat:
+  material: "STICK"
+  display-name: "<gradient:#EC4899:#FCD34D><bold>🪅 FESTIVE PIÑATA BAT</bold></gradient>"
+  # Extra hit damage against piñata when striking with the bat
+  bonus-damage: 1
+
+# Automatic Timed Scheduler (Daily fixed event triggers)
+schedule:
+  enabled: false
+  # Times in 24h server format (HH:mm)
+  times:
+    - "14:00"
+    - "20:00"
+  announce-minutes-before: 5
+  profile: "FESTIVE_LLAMA"
+
+# Physics and Movement
+physics:
+  # Swing pendulum speed multiplier
+  pendulum-speed: 1.15
+  # Despawn if the Piñata is not destroyed within X seconds (0 = disabled)
+  despawn-timeout-seconds: 240
+  # Anti-stuck teleport failsafe (seconds)
+  stuck-timeout-seconds: 300
+
+# Sound Effects & Vibrations
+audio:
+  volume: 1.0
+  pitch-variation: true
+  ambient-loop:
+    enabled: true
+
+# Continuous Dynamic Fiesta Music Engine (Noteblock / Bells / Chimes Orchestra)
+music:
+  enabled: true
+  volume: 1.2
+  radius: 45.0
+
+# Economy rewards for Top Strikers and Community Participants (Vault Hook)
+rewards:
+  mvp-1st-money: 1000.0
+  mvp-2nd-money: 500.0
+  mvp-3rd-money: 250.0
+  # Community Participation Threshold (Reward players with minimum hits)
+  participation-enabled: true
+  participation-min-hits: 10
+  participation-money: 150.0
+
+# Discord Webhook Notification System
+discord:
+  enabled: false
+  webhook-url: ""
+  username: "PinataSpectra Lite"
+  avatar-url: "https://i.imgur.com/8QzXkQp.png"
+
+# ══════════════════════════════════════════════════════════════════════════════
+# 👑 PINATASPECTRA SOVEREIGN PRO EDITION
+# Need 8 3D Shapes (Mecha, Dragon, Crown, Totem), 7 Cosmic Supernova Death
+# Cinemáticas, Mjolnir Lightning Bats, 3D Jackpot Wheels & Multi-server MySQL?
+# 🔗 Unlock Sovereign PRO: https://builtbybit.com/pinataspectra
+# ══════════════════════════════════════════════════════════════════════════════

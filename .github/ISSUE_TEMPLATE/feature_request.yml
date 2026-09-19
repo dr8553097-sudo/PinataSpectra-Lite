@@ -1,0 +1,49 @@
+name: "💡 Feature Request & Improvement"
+description: "Suggest a new feature, mechanic, audio effect, or improvement for PinataSpectra-Lite"
+title: "[FEATURE] <short summary>"
+labels: ["enhancement", "proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a great idea to make PinataSpectra-Lite even more spectacular? Let us know below!
+  - type: textarea
+    id: problem_statement
+    attributes:
+      label: "Problem or Opportunity"
+      description: "Is your feature request related to a problem or limitation? Explain clearly."
+      placeholder: "I'm always frustrated when..."
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: "Proposed Solution / Mechanics"
+      description: "Describe how you envision this feature working in-game."
+      placeholder: "Add a mechanic where..."
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives_considered
+    attributes:
+      label: "Alternatives Considered"
+      description: "Any alternative solutions or workarounds you've thought of?"
+      placeholder: "I considered using..."
+    validations:
+      required: false
+  - type: dropdown
+    id: target_area
+    attributes:
+      label: "Target Subsystem"
+      description: "Which area of PinataSpectra-Lite does this relate to?"
+      options:
+        - "3D Voxel Models & Animation"
+        - "Boss Mechanics & Phase Combat"
+        - "Audio Engine & Soundscape"
+        - "Economy, Vault & Loot Delivery"
+        - "Vote Goal & Community Systems"
+        - "GUI & Visual Polish"
+        - "API & Developer Events"
+        - "Other"
+    validations:
+      required: true

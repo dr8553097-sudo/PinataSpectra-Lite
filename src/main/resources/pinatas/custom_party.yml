@@ -1,0 +1,91 @@
+# ==============================================================================
+#   ____  _             _          ____                  _             
+#  |  _ \(_)_ __   __ _| |_ __ _  / ___| _ __   ___  ___| |_ _ __ __ _ 
+#  | |_) | | '_ \ / _` | __/ _` | \___ \| '_ \ / _ \/ __| __| '__/ _` |
+#  |  __/| | | | | (_| | || (_| |  ___) | |_) |  __/ (__| |_| | | (_| |
+#  |_|   |_|_| |_|\__,_|\__\__,_| |____/| .__/ \___|\___|\__|_|  \__,_|
+#                                       |_|   🍃 L I T E   E D I T I O N
+#
+#  🪅 PINATASPECTRA LITE — CELESTIAL PARTY PROFILE
+# ==============================================================================
+id: "CUSTOM_PARTY"
+display-name: "<gradient:#8B5CF6:#38BDF8><bold>✦ Celestial Piñata Party ✦</bold></gradient>"
+health: 450
+primary-block: "PURPLE_CONCRETE"
+secondary-block: "LIGHT_BLUE_CONCRETE"
+ribbon-blocks:
+  - "PURPLE_WOOL"
+  - "LIGHT_BLUE_WOOL"
+  - "WHITE_WOOL"
+glow-color: "#8B5CF6"
+aura-particle: "PORTAL"
+hit-particle: "ELECTRIC_SPARK"
+trail-particle: "END_ROD"
+ambient-sound: "BLOCK_AMETHYST_BLOCK_CHIME"
+hit-sound: "BLOCK_WOOD_HIT"
+death-sound: "UI_TOAST_CHALLENGE_COMPLETE"
+death-animation: "FOUNTAIN_CASCADE"
+teleport-chance: 0.45
+teleport-interval-seconds: 4
+movement-speed: 1.25
+
+drops:
+  hit-drops:
+    candy_common:
+      material: "COOKIE"
+      amount: 1
+      chance: 20.0
+      name: "<#FCD34D>★ Cosmic Party Cookie ★"
+      lore:
+        - "<#71717A>Sweet festive candy from above!"
+    astral_gold_nugget:
+      material: "GOLD_NUGGET"
+      amount: 2
+      chance: 15.0
+      name: "<#FFD700>★ Star Gold Nugget ★"
+    astral_exp_drop:
+      material: "EXPERIENCE_BOTTLE"
+      amount: 1
+      chance: 15.0
+      name: "<#8B5CF6>★ Stellar Sparkle ★"
+  finale-drops:
+    astral_totem:
+      material: "TOTEM_OF_UNDYING"
+      amount: 4
+      chance: 95.0
+      name: "<#F59E0B>★ Celestial Totem of Luck ★"
+    astral_diamond:
+      material: "DIAMOND_BLOCK"
+      amount: 8
+      chance: 100.0
+      name: "<#38BDF8>★ Astral Diamond Core Block ★"
+    astral_gold:
+      material: "GOLD_BLOCK"
+      amount: 12
+      chance: 100.0
+      name: "<#FCD34D>★ Cosmic Gold Vault Block ★"
+    astral_emerald:
+      material: "EMERALD_BLOCK"
+      amount: 10
+      chance: 100.0
+      name: "<#22C55E>★ Celestial Emerald Block ★"
+    astral_netherite:
+      material: "NETHERITE_INGOT"
+      amount: 3
+      chance: 85.0
+      name: "<#71717A>★ Galactic Netherite Ingot ★"
+    astral_god_apple:
+      material: "ENCHANTED_GOLDEN_APPLE"
+      amount: 3
+      chance: 90.0
+      name: "<#FCD34D>★ Cosmic Supernova Apple ★"
+    astral_exp:
+      material: "EXPERIENCE_BOTTLE"
+      amount: 64
+      chance: 100.0
+      name: "<#22C55E>★ Cosmic Wisdom Fount ★"
+    astral_cake:
+      material: "CAKE"
+      amount: 3
+      chance: 100.0
+      name: "<#EC4899>★ Astral Party Galaxy Cake ★"

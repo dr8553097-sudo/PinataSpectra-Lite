@@ -1,0 +1,60 @@
+# ==============================================================================
+#             🪅 PINATASPECTRA LITE — CONFIGURACIÓN DE MENSAJES (ES)
+# ==============================================================================
+
+prefix: "<#8B5CF6>[<gradient:#EC4899:#FCD34D><bold>PinataSpectra</bold></gradient><#8B5CF6>] "
+
+general:
+  no-permission: "<#EF4444>No tienes permisos para ejecutar este comando."
+  only-players: "<#EF4444>Este comando solo puede ser ejecutado por jugadores dentro del juego."
+  player-not-found: "<#EF4444>El jugador especificado no fue encontrado o está desconectado."
+  reload-success: "<#22C55E>✔ <gradient:#22C55E:#38BDF8><bold>PinataSpectra Lite</bold></gradient> <#22C55E>se ha recargado exitosamente."
+  already-active: "<#EF4444>¡Ya hay una Piñata activa en el servidor! Usa <#FCD34D>/pinata kill <#EF4444>primero."
+  no-active: "<#F59E0B>No hay ninguna Piñata activa en este momento."
+  profile-not-found: "<#EF4444>El perfil de piñata '<#FCD34D>%profile%<#EF4444>' no existe."
+  spawn-success: "<#22C55E>✔ ¡Piñata <gradient:#EC4899:#FCD34D><bold>%profile%</bold></gradient> <#22C55E>invocada exitosamente!"
+  kill-success: "<#22C55E>✔ La Piñata activa ha sido eliminada con éxito."
+  setspawn-success: "<#22C55E>✔ Ubicación de spawn '<#FCD34D>%name%<#22C55E>' guardada correctamente."
+  timeout-despawn: "<#EF4444>⌛ <gradient:#EC4899:#FCD34D><bold>¡TIEMPO AGOTADO!</bold></gradient> <gray>›</gray> <#EF4444>¡La Piñata no fue derrotada a tiempo y escapó al cosmos!"
+
+clean:
+  success: "<#22C55E>✔ <gradient:#22C55E:#38BDF8><bold>Limpieza completada:</bold></gradient> <#22C55E>Se purgaron <#FCD34D>%count% <#22C55E>entidades residuales del servidor."
+  none-found: "<#22C55E>✔ El servidor está completamente limpio. No se encontraron entidades residuales."
+
+bat:
+  received: "<#22C55E>✔ ¡Has recibido el <gradient:#EC4899:#FCD34D><bold>Bate Festivo de Piñata</bold></gradient><#22C55E>!"
+  given: "<#22C55E>✔ Bate Festivo entregado a <#FCD34D>%player%<#22C55E>."
+
+phases:
+  phase2-broadcast: "<#EC4899>⚡ <gradient:#EC4899:#FCD34D><bold>¡FASE 2: MICRO-EVASIÓN ACTIVADA!</bold></gradient> <gray>›</gray> <white>¡La Piñata se encogió a tamaño miniatura y se mueve al doble de velocidad!</white>"
+  phase3-broadcast: "<#A855F7>🌀 <gradient:#A855F7:#EC4899><bold>¡FASE 3: CAOS TELEPORT SHIFTER!</bold></gradient> <gray>›</gray> <white>¡La Piñata emite ondas sónicas y saltos dimensionales continuos!</white>"
+  blink-chat: "<#A855F7>🌀 <gradient:#EC4899:#FCD34D><bold>¡SALTO DIMENSIONAL!</bold></gradient> <gray>›</gray> <#EC4899>La Piñata saltó a <#FCD34D>X: %x%, Y: %y%, Z: %z%<#EC4899>! <white>¡Persíguela!</white>"
+  blink-actionbar: "<#A855F7>🌀 <gradient:#EC4899:#FCD34D><bold>¡Teletransporte a X: %x%, Y: %y%, Z: %z%!</bold></gradient> <#FCD34D>¡Persíguela!"
+
+rewards:
+  inventory-full: "<#F59E0B>⚠ <white>¡Tu inventario está lleno! El dulce de piñata cayó a tus pies.</white>"
+  participation-reward: "<#22C55E>🎁 <gradient:#FCD34D:#22C55E><bold>¡RECOMPENSA DE PARTICIPACIÓN!</bold></gradient> <gray>›</gray> <white>Conectaste <#FCD34D>%hits% golpes <white>y ganaste <#22C55E>+$%money% <white>de consolación.</white>"
+  victory-title: "<gradient:#EC4899:#FCD34D><bold>🪅 ¡PIÑATA DERROTADA! 🪅</bold></gradient>"
+  victory-subtitle: "<#FCD34D>👑 Gran MVP: <gradient:#F59E0B:#EC4899><bold>%mvp%</bold></gradient>"
+  victory-broadcast-header: "\n<gradient:#EC4899:#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>\n                  <gradient:#FCD34D:#F59E0B><bold>🪅 ¡LA GRAN PIÑATA HA SIDO DESTRUIDA! 🪅</bold></gradient>\n"
+  victory-mvp-highlight: "  <#FCD34D>👑 <gradient:#FCD34D:#F59E0B><bold>TOP MVP DE LA FIESTA</bold></gradient> <gray>›</gray> <white><bold>%mvp%</bold></white> <gray>(</gray><#FCD34D>%hits% golpes<gray>)</gray>\n"
+  victory-podium-1st: "  <#FCD34D>🥇 <bold>1º Lugar:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% golpes <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-podium-2nd: "  <#E2E8F0>🥈 <bold>2º Lugar:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% golpes <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-podium-3rd: "  <#F59E0B>🥉 <bold>3º Lugar:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% golpes <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-broadcast-footer: "\n<gradient:#EC4899:#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"
+  pro-promo-hint: "<#8B5CF6>⭐ <gray>¿Disfrutas PinataSpectra Lite? Usa <#FCD34D>/pinata pro <gray>para desbloquear animaciones cósmicas de Supernova!"
+
+pool:
+  info-header: "<#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  info-title: " <gradient:#FCD34D:#F59E0B><bold>💰 POZO COMUNITARIO DE PIÑATA</bold></gradient>"
+  info-progress: " <gray>Recaudado:</gray> <#22C55E>$%current% <dark_gray>/</dark_gray> <#FCD34D>$%target% <#8B5CF6>(%percent%%)"
+  info-command: " <gray>Contribuye usando:</gray> <#FCD34D>/pinata pool <cantidad>"
+  info-footer: "<#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  donate-broadcast: "<#FCD34D>💰 <white>%player% <gray>donó <#22C55E>+$%amount% <gray>al Pozo de Piñata! <#8B5CF6>(Progreso: <#22C55E>$%current% <dark_gray>/</dark_gray> <#FCD34D>$%target% <dark_gray>-</dark_gray> <#EC4899>%percent%%<#8B5CF6>)"
+  goal-reached: "<#FCD34D>★══════════════════════════════════════════════════★\n<#22C55E><bold>🎉 ¡META DEL POZO COMUNITARIO ALCANZADA! 🎉</bold>\n<#FCD34D>¡Se recaudaron <#22C55E>$%target%<#FCD34D>! ¡Invocando a la Gran Piñata!\n<#FCD34D>★══════════════════════════════════════════════════★"
+  disabled: "<#EF4444>El pozo comunitario de Piñata está actualmente desactivado."
+  invalid-amount: "<#EF4444>Por favor ingresa una cantidad de dinero positiva."
+  no-funds: "<#EF4444>¡No tienes fondos suficientes! Requerido: <#FCD34D>$%amount%"
+
+vote:
+  progress: "<#FCD34D>🗳 <gray>Progreso de votos comunitarios:</gray> <#22C55E>%current% <dark_gray>/</dark_gray> <#FCD34D>%target% <#8B5CF6>(%percent%%)"

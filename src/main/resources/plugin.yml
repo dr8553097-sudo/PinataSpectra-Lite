@@ -1,0 +1,46 @@
+name: PinataSpectra-Lite
+version: '1.0.0'
+main: net.dafealru.pinataspectralite.PinataPartyLite
+api-version: '1.20'
+author: Dafealru
+description: The Ultimate 3D Kinetic Piñata Community Vote Engine (Free Edition)
+website: https://builtbybit.com/pinataspectra
+
+softdepend:
+  - Vault
+  - PlaceholderAPI
+  - Votifier
+  - NuVotifier
+
+commands:
+  pinata:
+    description: Master PinataSpectra Lite command.
+    aliases: [pinatalite, pparty, pinataparty]
+    permission: pinataspectra.use
+    usage: /pinata help
+  pinatapro:
+    description: Learn about PinataSpectra Sovereign PRO Edition.
+    aliases: [pro, upgrade, comparison, pinatacomparison]
+    permission: pinataspectra.use
+    usage: /pinatapro
+  vote:
+    description: Check the community vote goal and vote links.
+    aliases: [pinatavote, votes]
+    permission: pinataspectra.vote
+    usage: /vote
+  clean:
+    description: Purge any orphan piñata entities from the world.
+    aliases: [pinataclean]
+    permission: pinataspectra.admin
+    usage: /clean
+
+permissions:
+  pinataspectra.use:
+    description: Allows using basic player commands.
+    default: true
+  pinataspectra.vote:
+    description: Allows viewing the community vote goal.
+    default: true
+  pinataspectra.admin:
+    description: Full administrative control over PinataSpectra Lite.
+    default: op

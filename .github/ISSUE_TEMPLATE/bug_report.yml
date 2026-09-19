@@ -1,0 +1,69 @@
+name: "🐛 Bug Report"
+description: "Report an issue, error, or unexpected behavior in PinataSpectra-Lite"
+title: "[BUG] <concise summary>"
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue! Please provide as much detailed information as possible so we can diagnose and resolve it swiftly.
+  - type: input
+    id: server_software
+    attributes:
+      label: "Server Platform & Version"
+      description: "Example: Paper 1.21.4-build 123, Purpur 1.20.6, Folia, Spigot"
+      placeholder: "e.g., Paper 1.21.4 (build 123)"
+    validations:
+      required: true
+  - type: input
+    id: java_version
+    attributes:
+      label: "Java Version"
+      description: "Example: OpenJDK 21, Eclipse Temurin 25"
+      placeholder: "e.g., Java 21.0.2"
+    validations:
+      required: true
+  - type: input
+    id: plugin_version
+    attributes:
+      label: "PinataSpectra-Lite Version"
+      description: "Run /pinata version or check console startup"
+      placeholder: "e.g., 1.0.0"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: "Detailed Bug Description"
+      description: "What happened? What did you expect to happen instead?"
+      placeholder: "Explain clearly what occurred..."
+    validations:
+      required: true
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: "Steps to Reproduce"
+      description: "Exact step-by-step instructions to reproduce the issue"
+      placeholder: |
+        1. Run command '/pinata spawn'
+        2. Hit the piñata until phase 2
+        3. Observe...
+    validations:
+      required: true
+  - type: textarea
+    id: logs_stacktrace
+    attributes:
+      label: "Console Logs & Stacktrace"
+      description: "Paste the full error log from console (use mcpaste / pastebin / markdown code blocks)"
+      placeholder: "Paste console logs / stacktraces here..."
+      render: shell
+    validations:
+      required: false
+  - type: textarea
+    id: configs
+    attributes:
+      label: "Relevant Configuration Files"
+      description: "Paste your config.yml or custom pinata profile if modified"
+      render: yaml
+    validations:
+      required: false
