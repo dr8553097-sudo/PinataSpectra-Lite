@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>PinataSpectra Lite — Documentación Oficial & Web Portal</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="El motor estándar de piñatas 3D procedimentales y eventos festivos para servidores Minecraft Paper/Purpur 1.20 - 1.26+. Documentación Interactiva Oficial.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/dr8553097-sudo/PinataSpectra-Lite/main/assets/banner.png">
+
+  <!-- Google Fonts: Space Grotesk, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Base Theme Stylesheet -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
+  
+  <!-- KaTeX for Math Equations -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"/>
+
+  <style>
+    :root {
+      --bg-canvas: #090d16;
+      --bg-surface: #0f172a;
+      --bg-card: rgba(15, 23, 42, 0.85);
+      --bg-card-hover: rgba(30, 41, 59, 0.95);
+      --border-color: rgba(34, 197, 94, 0.25);
+      --border-glow: rgba(252, 211, 77, 0.4);
+      --primary: #22c55e;
+      --primary-bright: #4ade80;
+      --primary-glow: rgba(34, 197, 94, 0.35);
+      --secondary: #f59e0b;
+      --secondary-bright: #fcd34d;
+      --secondary-glow: rgba(245, 158, 11, 0.3);
+      --carnival-pink: #ec4899;
+      --carnival-pink-glow: rgba(236, 72, 153, 0.3);
+      --carnival-purple: #8b5cf6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --code-bg: #070b14;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Space Grotesk', var(--font-sans);
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      /* docsify-tabs vars */
+      --docsifytabs-border-color: var(--border-color);
+      --docsifytabs-tab-background: rgba(15, 23, 42, 0.7);
+      --docsifytabs-tab-background--active: rgba(34, 197, 94, 0.15);
+      --docsifytabs-tab-color: var(--text-muted);
+      --docsifytabs-tab-color--active: var(--primary-bright);
+      --docsifytabs-tab-highlight-color: var(--primary);
+      --docsifytabs-tab-padding: 8px 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      color-scheme: dark;
+    }
+
+    body {
+      background-color: var(--bg-canvas) !important;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 15.5px;
+      line-height: 1.75;
+      background-image: 
+        radial-gradient(circle at 10% 10%, rgba(34, 197, 94, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 50% 90%, rgba(245, 158, 11, 0.08) 0%, transparent 35%);
+      background-attachment: fixed;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #060911;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(34, 197, 94, 0.35);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    /* Scroll Progress Bar */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #22c55e, #fcd34d, #ec4899);
+      z-index: 99999;
+      transition: width 0.1s ease;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+    }
+
+    /* Top Floating Navigation Header */
+    #top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 54px;
+      background: rgba(9, 13, 22, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-brand .brand-badge {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #ffffff;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .nav-btn-pro {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(245, 158, 11, 0.2));
+      border-color: rgba(236, 72, 153, 0.4);
+      color: #fcd34d;
+    }
+
+    .nav-btn-pro:hover {
+      background: linear-gradient(135deg, #ec4899, #f59e0b);
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .nav-btn-github {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+    }
+
+    .nav-btn-github:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Sidebar Customization */
+    .sidebar {
+      background: rgba(11, 16, 28, 0.94) !important;
+      border-right: 1px solid var(--border-color) !important;
+      padding-top: 65px !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .sidebar > h1 {
+      margin: 0.8rem 0 1.2rem;
+      text-align: center;
+    }
+
+    .sidebar > h1 a {
+      font-family: var(--font-heading) !important;
+      font-weight: 800 !important;
+      font-size: 1.2rem !important;
+      background: linear-gradient(135deg, #22c55e, #fcd34d, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .sidebar-nav ul {
+      padding-left: 0 !important;
+    }
+
+    .sidebar-nav li {
+      margin: 4px 0 !important;
+    }
+
+    .sidebar-nav a {
+      color: var(--text-muted) !important;
+      font-size: 0.9rem !important;
+      font-weight: 500 !important;
+      padding: 7px 16px !important;
+      border-radius: 8px !important;
+      margin: 2px 10px !important;
+      display: block !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      border: 1px solid transparent;
+      text-decoration: none !important;
+    }
+
+    .sidebar-nav a:hover {
+      color: #ffffff !important;
+      background: rgba(34, 197, 94, 0.12) !important;
+      border-color: rgba(34, 197, 94, 0.25) !important;
+      transform: translateX(3px);
+    }
+
+    .sidebar-nav li.active > a {
+      color: #ffffff !important;
+      background: linear-gradient(90deg, rgba(34, 197, 94, 0.25), rgba(245, 158, 11, 0.15)) !important;
+      border-color: rgba(34, 197, 94, 0.5) !important;
+      font-weight: 700 !important;
+      box-shadow: 0 0 14px rgba(34, 197, 94, 0.25);
+    }
+
+    /* Content Area */
+    .content {
+      padding-top: 65px !important;
+      max-width: 960px;
+    }
+
+    .markdown-section {
+      max-width: 920px !important;
+      padding: 30px 40px 80px !important;
+    }
+
+    /* Headings */
+    .markdown-section h1 {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.03em;
+      margin: 2rem 0 1.2rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .markdown-section h2 {
+      font-family: var(--font-heading);
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: -0.02em;
+      margin: 2.2rem 0 1rem;
+      position: relative;
+    }
+
+    .markdown-section h2::before {
+      content: '';
+      position: absolute;
+      left: -16px;
+      top: 6px;
+      bottom: 6px;
+      width: 4px;
+      background: linear-gradient(180deg, #22c55e, #fcd34d);
+      border-radius: 2px;
+    }
+
+    .markdown-section h3 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--secondary-bright);
+      margin: 1.6rem 0 0.8rem;
+    }
+
+    /* Code Blocks */
+    .markdown-section pre {
+      background-color: var(--code-bg) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 10px !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      padding: 1.2rem 1.4rem !important;
+      margin: 1.4rem 0 !important;
+    }
+
+    .markdown-section code {
+      font-family: var(--font-mono) !important;
+      font-size: 0.88em !important;
+      background-color: rgba(34, 197, 94, 0.12) !important;
+      color: #86efac !important;
+      padding: 2px 6px !important;
+      border-radius: 4px !important;
+      border: 1px solid rgba(34, 197, 94, 0.25) !important;
+    }
+
+    .markdown-section pre code {
+      background-color: transparent !important;
+      color: #e2e8f0 !important;
+      padding: 0 !important;
+      border: none !important;
+    }
+
+    /* Tables */
+    .markdown-section table {
+      width: 100% !important;
+      border-collapse: separate !important;
+      border-spacing: 0 !important;
+      margin: 1.5rem 0 !important;
+      border-radius: 10px !important;
+      overflow: hidden !important;
+      border: 1px solid var(--border-color) !important;
+      background: var(--bg-card) !important;
+    }
+
+    .markdown-section th {
+      background: rgba(34, 197, 94, 0.15) !important;
+      color: #ffffff !important;
+      font-family: var(--font-heading) !important;
+      font-weight: 700 !important;
+      padding: 12px 16px !important;
+      border-bottom: 1px solid var(--border-color) !important;
+      border-top: none !important;
+    }
+
+    .markdown-section td {
+      padding: 11px 16px !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+      color: var(--text-muted) !important;
+      border-top: none !important;
+    }
+
+    .markdown-section tr:last-child td {
+      border-bottom: none !important;
+    }
+
+    .markdown-section tr:hover td {
+      background: rgba(255, 255, 255, 0.03) !important;
+      color: var(--text-main) !important;
+    }
+
+    /* Blockquotes / Alerts */
+    .markdown-section blockquote {
+      background: rgba(15, 23, 42, 0.75) !important;
+      border-left: 4px solid var(--primary) !important;
+      border-radius: 0 10px 10px 0 !important;
+      padding: 14px 20px !important;
+      margin: 1.4rem 0 !important;
+      color: var(--text-main) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Links */
+    .markdown-section a {
+      color: var(--primary-bright) !important;
+      text-decoration: none !important;
+      font-weight: 600 !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .markdown-section a:hover {
+      color: #fcd34d !important;
+      text-decoration: underline !important;
+    }
+
+    /* Search Box */
+    .search {
+      border-bottom: 1px solid var(--border-color) !important;
+      padding: 12px 14px !important;
+    }
+
+    .search input {
+      background: rgba(15, 23, 42, 0.8) !important;
+      border: 1px solid rgba(34, 197, 94, 0.3) !important;
+      border-radius: 8px !important;
+      color: var(--text-main) !important;
+      font-family: var(--font-sans) !important;
+      padding: 8px 12px !important;
+      font-size: 0.88rem !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .search input:focus {
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.35) !important;
+    }
+
+    @media screen and (max-width: 768px) {
+      #top-nav {
+        padding: 0 12px;
+      }
+      .nav-brand span {
+        display: none;
+      }
+      .markdown-section {
+        padding: 20px 18px 60px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div id="progress-bar"></div>
+
+  <!-- Top Floating Navigation -->
+  <header id="top-nav">
+    <a href="#/" class="nav-brand">
+      <span style="font-size: 1.3rem;">🪅</span>
+      <span>PinataSpectra</span>
+      <span class="brand-badge">🍃 Lite Edition</span>
+    </a>
+    <div class="nav-links">
+      <a href="https://builtbybit.com/pinataspectra" target="_blank" class="nav-btn nav-btn-pro">
+        <span>⭐ Desbloquear Sovereign PRO</span>
+      </a>
+      <a href="https://github.com/dr8553097-sudo/PinataSpectra-Lite" target="_blank" class="nav-btn nav-btn-github">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+  </header>
+
+  <div id="app">Cargando documentación de PinataSpectra Lite...</div>
+
+  <script>
+    window.$docsify = {
+      name: '🪅 PinataSpectra Lite',
+      repo: 'https://github.com/dr8553097-sudo/PinataSpectra-Lite',
+      homepage: 'README.md',
+      loadSidebar: true,
+      subMaxLevel: 3,
+      auto2top: true,
+      search: {
+        maxAge: 86400000,
+        paths: 'auto',
+        placeholder: '🔍 Buscar en la wiki...',
+        noData: 'No se encontraron resultados',
+        depth: 4
+      },
+      copyCode: {
+        buttonText: '📋 Copiar',
+        errorText: 'Error',
+        successText: '✔ ¡Copiado!'
+      },
+      pagination: {
+        previousText: '← Anterior',
+        nextText: 'Siguiente →',
+        crossChapter: true,
+        crossChapterText: true
+      },
+      tabs: {
+        persist: true,
+        sync: true,
+        theme: 'classic',
+        tabComments: true,
+        tabHeadings: true
+      }
+    };
+
+    // Scroll progress tracker
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const progressBar = document.getElementById('progress-bar');
+      if (progressBar) {
+        progressBar.style.width = scrolled + '%';
+      }
+    });
+  </script>
+
+  <!-- Docsify Core & Plugins -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-tabs@1/dist/docsify-tabs.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  
+  <!-- Prism Syntax Highlighting -->
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-java.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  
+  <!-- KaTeX for Math Equations -->
+  <script src="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/marked@4"></script>
+</body>
+</html>
