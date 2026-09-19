@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="docs/README.md"><img src="https://img.shields.io/badge/📚_Official_Wiki-12_Chapter_Docs-00f0ff.svg?style=for-the-badge" alt="Wiki"></a>
+  <a href="https://dr8553097-sudo.github.io/PinataSpectra-Lite/"><img src="https://img.shields.io/badge/📚_Official_Wiki-Interactive_Docs-00f0ff.svg?style=for-the-badge" alt="Wiki"></a>
   <a href="https://github.com/dr8553097-sudo/PinataSpectra-Lite"><img src="https://img.shields.io/badge/Edition-COMMUNITY_LITE-22c55e.svg?style=for-the-badge" alt="Edition"></a>
   <a href="https://papermc.io"><img src="https://img.shields.io/badge/Paper%20%2F%20Purpur-1.20%20--%201.26+-00D26A.svg?style=for-the-badge" alt="Platform"></a>
   <a href="https://www.java.com"><img src="https://img.shields.io/badge/Java-21%20%2F%2025-ED8B00.svg?style=for-the-badge" alt="Java"></a>
