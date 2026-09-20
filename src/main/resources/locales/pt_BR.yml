@@ -1,0 +1,84 @@
+# ==============================================================================
+#  🪅 PINATASPECTRA LITE — ARQUIVO DE IDIOMA (pt_BR)
+#  👑 Idioma: Português (Brasil)
+#  ✨ Autor: Dafealru | Suporte MiniMessage + HEX
+# ==============================================================================
+
+meta:
+  language-name: "Português"
+  language-region: "BR"
+  flag-symbol: "🇧🇷"
+
+prefix: "<#8B5CF6>[<gradient:#EC4899:#FCD34D><bold>PinataSpectra</bold></gradient><#8B5CF6>] "
+
+general:
+  no-permission: "<#EF4444>Você não tem permissão para executar este comando."
+  only-players: "<#EF4444>Este comando só pode ser executado por jogadores dentro do jogo."
+  player-not-found: "<#EF4444>O jogador especificado não foi encontrado ou está offline."
+  reload-success: "<#22C55E>✔ <gradient:#22C55E:#38BDF8><bold>PinataSpectra Lite</bold></gradient> <#22C55E>recarregado com sucesso em <#FCD34D>%time%ms<#22C55E>."
+  language-changed: "<#22C55E>✔ Idioma alterado com sucesso para <gradient:#EC4899:#FCD34D><bold>%lang%</bold></gradient><#22C55E>!"
+  language-invalid: "<#EF4444>Idioma inválido! Disponíveis: <#FCD34D>%languages%"
+  language-current: "<#8B5CF6>Idioma atual: <gradient:#EC4899:#FCD34D><bold>%lang%</bold></gradient><#8B5CF6>. Mude com <#FCD34D>/pinata lang"
+  language-list: "<#8B5CF6>Idiomas disponíveis: <#FCD34D>%languages%"
+  language-reloaded: "<#22C55E>✔ Carregados <#FCD34D>%count%<#22C55E> pacotes de idiomas em <#FCD34D>%time%ms<#22C55E>."
+  already-active: "<#EF4444>Um evento de Piñata já está ativo! Use <#FCD34D>/pinata kill <#EF4444>primeiro."
+  no-active: "<#F59E0B>Não há nenhuma Piñata ativa no momento."
+  profile-not-found: "<#EF4444>O perfil de piñata '<#FCD34D>%profile%<#EF4444>' não existe."
+  spawn-success: "<#22C55E>✔ Piñata <gradient:#EC4899:#FCD34D><bold>%profile%</bold></gradient> <#22C55E>gerada com sucesso!"
+  kill-success: "<#22C55E>✔ Piñata ativa removida com sucesso."
+  setspawn-success: "<#22C55E>✔ Ponto de spawn '<#FCD34D>%name%<#22C55E>' salvo com sucesso."
+  timeout-despawn: "<#EF4444>⌛ <gradient:#EC4899:#FCD34D><bold>TEMPO ESGOTADO!</bold></gradient> <gray>›</gray> <#EF4444>A Piñata não foi destruída a tempo e fugiu!"
+
+clean:
+  success: "<#22C55E>✔ <gradient:#22C55E:#38BDF8><bold>Limpeza Concluída:</bold></gradient> <#22C55E>Removidas <#FCD34D>%count% <#22C55E>entidades residuais."
+  none-found: "<#22C55E>✔ O servidor está limpo. Nenhuma entidade residual encontrada."
+
+bat:
+  received: "<#22C55E>✔ Você recebeu o <gradient:#EC4899:#FCD34D><bold>Taco Festivo de Piñata</bold></gradient><#22C55E>!"
+  given: "<#22C55E>✔ Taco Festivo entregue a <#FCD34D>%player%<#22C55E>."
+  given-all: "<#22C55E>✔ Tacos Festivos distribuídos para todos os <#FCD34D>%count% <#22C55E>jogadores online!"
+  name: "<gradient:#EC4899:#FCD34D><bold>🪅 TACO FESTIVO DE PIÑATA</bold></gradient>"
+  lore-1: "&7Um taco festivo criado para"
+  lore-2: "&7destruir piñatas em alta velocidade!"
+  lore-bonus: " &#22C55E✔ &fDano extra contra Piñata: &#FCD34D+%bonus% HP"
+  lore-effect: " &#60A5FA✔ &fEfeito de impacto: &#EC4899Confete & Faíscas"
+  lore-footer: "&d✦ Edição de Evento PinataSpectra ✦"
+
+phases:
+  phase2-broadcast: "<#EC4899>⚡ <gradient:#EC4899:#FCD34D><bold>FASE 2: MICRO-ESQUIVA ATIVADA!</bold></gradient> <gray>›</gray> <white>A Piñata encolheu e se move com o dobro de velocidade!</white>"
+  phase3-broadcast: "<#A855F7>🌀 <gradient:#A855F7:#EC4899><bold>FASE 3: SALTO DIMENSIONAL CAÓTICO!</bold></gradient> <gray>›</gray> <white>A Piñata dispara pulsos sônicos e saltos no espaço!</white>"
+  blink-chat: "<#A855F7>🌀 <gradient:#EC4899:#FCD34D><bold>SALTO DIMENSIONAL!</bold></gradient> <gray>›</gray> <#EC4899>A Piñata teleportou para <#FCD34D>X: %x%, Y: %y%, Z: %z%<#EC4899>! <white>Persiga-a!</white>"
+  blink-actionbar: "<#A855F7>🌀 <gradient:#EC4899:#FCD34D><bold>Teleportada para X: %x%, Y: %y%, Z: %z%!</bold></gradient> <#FCD34D>Pegue-a!"
+
+rewards:
+  inventory-full: "<#F59E0B>⚠ <white>Inventário cheio! Seus doces caíram no chão.</white>"
+  participation-reward: "<#22C55E>🎁 <gradient:#FCD34D:#22C55E><bold>RECOMPENSA DE PARTICIPAÇÃO!</bold></gradient> <gray>›</gray> <white>Você deu <#FCD34D>%hits% golpes <white>e ganhou <#22C55E>+$%money%<white>.</white>"
+  victory-title: "<gradient:#EC4899:#FCD34D><bold>🪅 PIÑATA DESTRUÍDA! 🪅</bold></gradient>"
+  victory-subtitle: "<#FCD34D>👑 Melhor Jogador: <gradient:#F59E0B:#EC4899><bold>%mvp%</bold></gradient>"
+  victory-broadcast-header: "\n<gradient:#EC4899:#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>\n                  <gradient:#FCD34D:#F59E0B><bold>🪅 A PIÑATA FOI DESTRUÍDA! 🪅</bold></gradient>\n"
+  victory-mvp-highlight: "  <#FCD34D>👑 <gradient:#FCD34D:#F59E0B><bold>MVP DA FESTA</bold></gradient> <gray>›</gray> <white><bold>%mvp%</bold></white> <gray>(</gray><#FCD34D>%hits% golpes<gray>)</gray>\n"
+  victory-podium-1st: "  <#FCD34D>🥇 <bold>1º Lugar:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% golpes <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-podium-2nd: "  <#E2E8F0>🥈 <bold>2º Lugar:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% golpes <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-podium-3rd: "  <#F59E0B>🥉 <bold>3º Lugar:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% golpes <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-broadcast-footer: "\n<gradient:#EC4899:#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"
+  pro-promo-hint: "<#8B5CF6>⭐ <gray>Gostando do PinataSpectra Lite? Digite <#FCD34D>/pinata pro <gray>para liberar a versão PRO!"
+
+pool:
+  info-header: "<#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  info-title: " <gradient:#FCD34D:#F59E0B><bold>💰 FUNDO COMUNITÁRIO DE PIÑATA</bold></gradient>"
+  info-progress: " <gray>Arrecadado:</gray> <#22C55E>$%current% <dark_gray>/</dark_gray> <#FCD34D>$%target% <#8B5CF6>(%percent%%)"
+  info-command: " <gray>Contribua usando:</gray> <#FCD34D>/pinata pool <quantia>"
+  info-footer: "<#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  donate-broadcast: "<#FCD34D>💰 <white>%player% <gray>contribuiu com <#22C55E>+$%amount% <gray>para o Fundo! <#8B5CF6>(Progresso: <#22C55E>$%current% <dark_gray>/</dark_gray> <#FCD34D>$%target% <dark_gray>-</dark_gray> <#EC4899>%percent%%<#8B5CF6>)"
+  goal-reached: "<#FCD34D>★══════════════════════════════════════════════════★\n<#22C55E><bold>🎉 META DO FUNDO ALCANÇADA! 🎉</bold>\n<#FCD34D>Arrecadados <#22C55E>$%target%<#FCD34D>! Invocando a Grande Piñata!\n<#FCD34D>★══════════════════════════════════════════════════★"
+  disabled: "<#EF4444>O Fundo Comunitário de Piñata está desativado no momento."
+  invalid-amount: "<#EF4444>Por favor, insira um valor numérico positivo."
+  no-funds: "<#EF4444>Fundos insuficientes! Necessário: <#FCD34D>$%amount%"
+
+vote:
+  progress: "<#FCD34D>🗳 <gray>Progresso de votos da comunidade:</gray> <#22C55E>%current% <dark_gray>/</dark_gray> <#FCD34D>%target% <#8B5CF6>(%percent%%)"
+
+gui:
+  language-title: "<gradient:#8B5CF6:#EC4899><bold>SELECIONE SEU IDIOMA</bold></gradient>"
+  language-selected: "<#22C55E>✔ Selecionado atualmente"
+  language-click-to-select: "<#FCD34D>Clique para selecionar este idioma!"

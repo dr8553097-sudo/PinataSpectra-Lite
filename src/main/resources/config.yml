@@ -6,16 +6,20 @@
 #  |_|   |_|_| |_|\__,_|\__\__,_| |____/| .__/ \___|\___|\__|_|  \__,_|
 #                                       |_|   🍃 L I T E   E D I T I O N
 #
-#  🪅 PINATASPECTRA LITE — THE STANDARD 3D PIÑATA ENGINE
+#  🪅 PINATASPECTRA LITE — MASTER CONFIGURATION
 #  👑 Creator & Author: Dafealru | Native Java 21 & Paper/Purpur 1.20 - 1.26
 #  🌟 Sovereign PRO Edition: https://builtbybit.com/pinataspectra
 # ==============================================================================
 
 settings:
   # Internal configuration version for automatic updates (Do not edit)
-  config-version: 1
-  # Language: EN (English) or ES (Spanish)
-  language: "EN"
+  config-version: 2
+  # Server default language: en_US, es_ES, fr_FR, de_DE, pt_BR, ru_RU, zh_CN, it_IT, ja_JP
+  language: "en_US"
+  # Auto-detect player's client language and display messages in their native language
+  auto-detect-client-locale: true
+  # Allow players to manually select their preferred language with /pinata lang
+  per-player-locale: true
   # Default Piñata Profile to spawn when running /pinata spawn without args
   default-profile: "FESTIVE_LLAMA"
   # Automatically check for updates on startup
@@ -88,12 +92,20 @@ loot:
   # Mode: INVENTORY_FIRST (Direct to player inventory with full-bag drop protection) or FLOOR_DROPS
   delivery-mode: "INVENTORY_FIRST"
 
-# Festive Piñata Bat Configuration (/pinata bat give <player>)
+# Festive Piñata Bat Configuration (/pinata bat give <player> or /pinata bat all)
 pinata-bat:
   material: "STICK"
   display-name: "<gradient:#EC4899:#FCD34D><bold>🪅 FESTIVE PIÑATA BAT</bold></gradient>"
   # Extra hit damage against piñata when striking with the bat
   bonus-damage: 1
+  lore:
+    - "&7A festive club designed to"
+    - "&7shatter piñatas with maximum speed!"
+    - ""
+    - " &#22C55E✔ &fBonus Damage vs Piñata: &#FCD34D+%bonus% HP"
+    - " &#60A5FA✔ &fImpact Effect: &#EC4899Confetti & Sparks"
+    - ""
+    - "&d✦ PinataSpectra Event Edition ✦"
 
 # Automatic Timed Scheduler (Daily fixed event triggers)
 schedule:

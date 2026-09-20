@@ -45,11 +45,11 @@ public class PinataPartyLite extends JavaPlugin {
         this.configUpdaterEngine.updateAllConfigs();
 
         // 2. Initialize Subsystems
-        this.messageManager = new net.dafealru.pinataspectralite.messages.MessageManager(this);
-        this.cleanEngine = new net.dafealru.pinataspectralite.clean.PinataCleanEngine(this);
-
         this.databaseManager = new DatabaseManager(this);
         this.databaseManager.initialize();
+
+        this.messageManager = new net.dafealru.pinataspectralite.messages.MessageManager(this);
+        this.cleanEngine = new net.dafealru.pinataspectralite.clean.PinataCleanEngine(this);
 
         this.vaultHook = new VaultHook(this);
         this.lootManager = new LootManager(this);

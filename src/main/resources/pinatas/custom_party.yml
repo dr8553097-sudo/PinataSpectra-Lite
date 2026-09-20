@@ -6,86 +6,116 @@
 #  |_|   |_|_| |_|\__,_|\__\__,_| |____/| .__/ \___|\___|\__|_|  \__,_|
 #                                       |_|   🍃 L I T E   E D I T I O N
 #
-#  🪅 PINATASPECTRA LITE — CELESTIAL PARTY PROFILE
+#  🪅 PINATASPECTRA LITE — CUSTOM PARTY PROFILE
+#  👑 Creator & Author: Dafealru | Standard 3D Voxel Engine
 # ==============================================================================
-id: "CUSTOM_PARTY"
-display-name: "<gradient:#8B5CF6:#38BDF8><bold>✦ Celestial Piñata Party ✦</bold></gradient>"
-health: 450
-primary-block: "PURPLE_CONCRETE"
-secondary-block: "LIGHT_BLUE_CONCRETE"
-ribbon-blocks:
-  - "PURPLE_WOOL"
-  - "LIGHT_BLUE_WOOL"
-  - "WHITE_WOOL"
-glow-color: "#8B5CF6"
-aura-particle: "PORTAL"
-hit-particle: "ELECTRIC_SPARK"
-trail-particle: "END_ROD"
-ambient-sound: "BLOCK_AMETHYST_BLOCK_CHIME"
-hit-sound: "BLOCK_WOOD_HIT"
-death-sound: "UI_TOAST_CHALLENGE_COMPLETE"
-death-animation: "FOUNTAIN_CASCADE"
-teleport-chance: 0.45
-teleport-interval-seconds: 4
-movement-speed: 1.25
 
+# Unique identifier for this Piñata profile (must be uppercase)
+id: "CUSTOM_PARTY"
+
+# Visual name displayed on floating nametags and BossBars (MiniMessage + HEX supported)
+display-name: "<gradient:#38BDF8:#818CF8:#C084FC><bold>✦ Neon Cyber Piñata ✦</bold></gradient>"
+
+# Base health (total hits required to shatter the Piñata)
+health: 200
+
+# ------------------------------------------------------------------------------
+# 3D VOXEL BLOCKS & APPEARANCE
+# ------------------------------------------------------------------------------
+primary-block: "LIGHT_BLUE_CONCRETE"
+secondary-block: "PURPLE_CONCRETE"
+
+ribbon-blocks:
+  - "CYAN_WOOL"
+  - "PURPLE_WOOL"
+  - "BLUE_WOOL"
+
+glow-color: "#38BDF8"
+voxel-scale: 0.36
+deformation-intensity: 1.0
+
+# ------------------------------------------------------------------------------
+# PARTICLE SYSTEM CONFIGURATION & AVAILABLE PARTICLES
+# ------------------------------------------------------------------------------
+# Available particles in Minecraft / Paper:
+#   FIREWORK, TOTEM_OF_UNDYING, FLAME, SOUL_FIRE_FLAME, ENCHANTED_HIT, CRIT,
+#   HEART, NOTE, PORTAL, DRAGON_BREATH, ELECTRIC_SPARK, WAX_ON, WAX_OFF, GLOW,
+#   CHERRY_LEAVES, SNOWFLAKE, CLOUD, CAMPFIRE_COSY_SMOKE, SONIC_BOOM,
+#   TRIAL_SPAWNER_DETECTION, GUST_EMITTER_LARGE, DUST, ITEM, BLOCK
+# ------------------------------------------------------------------------------
+
+aura-particle: "ELECTRIC_SPARK"
+aura-particle-count: 2
+aura-particle-speed: 0.0
+
+hit-particle: "PORTAL"
+hit-particle-count: 20
+hit-particle-speed: 0.1
+
+break-particle: "SOUL_FIRE_FLAME"
+break-particle-count: 15
+break-particle-speed: 0.15
+
+trail-particle: "GLOW"
+trail-particle-count: 2
+trail-particle-speed: 0.02
+
+# ------------------------------------------------------------------------------
+# AUDIO SOUNDSCAPE & SOUND EFFECTS
+# ------------------------------------------------------------------------------
+ambient-sound: "BLOCK_RESPAWN_ANCHOR_AMBIENT"
+ambient-sound-volume: 1.0
+ambient-sound-pitch: 1.0
+
+hit-sound: "BLOCK_AMETHYST_CLUSTER_HIT"
+hit-sound-volume: 1.8
+hit-sound-pitch: 1.2
+
+break-sound: "BLOCK_DECORATED_POT_SHATTER"
+break-sound-volume: 1.8
+break-sound-pitch: 1.2
+
+death-sound: "UI_TOAST_CHALLENGE_COMPLETE"
+death-sound-volume: 1.5
+death-sound-pitch: 1.0
+
+# ------------------------------------------------------------------------------
+# KINETICS & BOSS MECHANICS
+# ------------------------------------------------------------------------------
+teleport-chance: 0.25
+teleport-interval-seconds: 6
+movement-speed: 1.0
+death-animation: "FOUNTAIN_CASCADE"
+
+# ------------------------------------------------------------------------------
+# LOOT & REWARD TABLES
+# ------------------------------------------------------------------------------
 drops:
   hit-drops:
-    candy_common:
-      material: "COOKIE"
-      amount: 1
-      chance: 20.0
-      name: "<#FCD34D>★ Cosmic Party Cookie ★"
-      lore:
-        - "<#71717A>Sweet festive candy from above!"
-    astral_gold_nugget:
-      material: "GOLD_NUGGET"
+    candy_glow:
+      material: "GLOWSTONE_DUST"
       amount: 2
-      chance: 15.0
-      name: "<#FFD700>★ Star Gold Nugget ★"
-    astral_exp_drop:
-      material: "EXPERIENCE_BOTTLE"
+      chance: 25.0
+      name: "<#38BDF8>★ Cyber Glow Dust ★"
+    candy_diamond:
+      material: "DIAMOND"
       amount: 1
-      chance: 15.0
-      name: "<#8B5CF6>★ Stellar Sparkle ★"
+      chance: 10.0
+      name: "<#38BDF8>★ Neon Diamond Shard ★"
+
   finale-drops:
-    astral_totem:
-      material: "TOTEM_OF_UNDYING"
-      amount: 4
-      chance: 95.0
-      name: "<#F59E0B>★ Celestial Totem of Luck ★"
-    astral_diamond:
+    grand_diamond_block:
       material: "DIAMOND_BLOCK"
-      amount: 8
+      amount: 4
       chance: 100.0
-      name: "<#38BDF8>★ Astral Diamond Core Block ★"
-    astral_gold:
-      material: "GOLD_BLOCK"
-      amount: 12
-      chance: 100.0
-      name: "<#FCD34D>★ Cosmic Gold Vault Block ★"
-    astral_emerald:
+      name: "<#38BDF8>★ Cyber Diamond Matrix ★"
+    grand_emerald_block:
       material: "EMERALD_BLOCK"
-      amount: 10
+      amount: 4
       chance: 100.0
-      name: "<#22C55E>★ Celestial Emerald Block ★"
-    astral_netherite:
-      material: "NETHERITE_INGOT"
-      amount: 3
-      chance: 85.0
-      name: "<#71717A>★ Galactic Netherite Ingot ★"
-    astral_god_apple:
-      material: "ENCHANTED_GOLDEN_APPLE"
-      amount: 3
-      chance: 90.0
-      name: "<#FCD34D>★ Cosmic Supernova Apple ★"
-    astral_exp:
+      name: "<#22C55E>★ Overcharged Emerald Core ★"
+    grand_exp:
       material: "EXPERIENCE_BOTTLE"
-      amount: 64
+      amount: 32
       chance: 100.0
-      name: "<#22C55E>★ Cosmic Wisdom Fount ★"
-    astral_cake:
-      material: "CAKE"
-      amount: 3
-      chance: 100.0
-      name: "<#EC4899>★ Astral Party Galaxy Cake ★"
+      name: "<#38BDF8>★ Cybernetic XP Surge ★"

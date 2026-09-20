@@ -6,30 +6,117 @@
 #  |_|   |_|_| |_|\__,_|\__\__,_| |____/| .__/ \___|\___|\__|_|  \__,_|
 #                                       |_|   🍃 L I T E   E D I T I O N
 #
-#  🪅 PINATASPECTRA LITE — FESTIVE CARNIVAL PROFILE
+#  🪅 PINATASPECTRA LITE — FESTIVE LLAMA PROFILE
+#  👑 Creator & Author: Dafealru | Standard 3D Voxel Engine
 # ==============================================================================
+
+# Unique identifier for this Piñata profile (must be uppercase)
 id: "FESTIVE_LLAMA"
+
+# Visual name displayed on floating nametags and BossBars (MiniMessage + HEX supported)
 display-name: "<gradient:#EC4899:#F43F5E:#FCD34D><bold>✦ Festive Carnival Piñata ✦</bold></gradient>"
+
+# Base health (total hits required to shatter the Piñata)
 health: 350
+
+# ------------------------------------------------------------------------------
+# 3D VOXEL BLOCKS & APPEARANCE
+# ------------------------------------------------------------------------------
+# Primary material used for the main outer body voxels
 primary-block: "MAGENTA_CONCRETE"
+
+# Secondary material used for the inner core voxel
 secondary-block: "CYAN_CONCRETE"
+
+# Ribbons / Star tip point materials (cyclically mapped to the 6 star points)
 ribbon-blocks:
   - "PINK_WOOL"
   - "CYAN_WOOL"
   - "YELLOW_WOOL"
+
+# Glowing aura outline color (HEX format)
 glow-color: "#EC4899"
+
+# 3D Voxel cube spacing scale (default: 0.36)
+voxel-scale: 0.36
+
+# Physical deformation & angular cardboard warping multiplier (default: 1.0)
+deformation-intensity: 1.0
+
+# ------------------------------------------------------------------------------
+# PARTICLE SYSTEM CONFIGURATION & AVAILABLE PARTICLES
+# ------------------------------------------------------------------------------
+# Available particles in Minecraft / Paper:
+#   FIREWORK, TOTEM_OF_UNDYING, FLAME, SOUL_FIRE_FLAME, ENCHANTED_HIT, CRIT,
+#   HEART, NOTE, PORTAL, DRAGON_BREATH, ELECTRIC_SPARK, WAX_ON, WAX_OFF, GLOW,
+#   CHERRY_LEAVES, SNOWFLAKE, CLOUD, CAMPFIRE_COSY_SMOKE, SONIC_BOOM,
+#   TRIAL_SPAWNER_DETECTION, GUST_EMITTER_LARGE, DUST, ITEM, BLOCK
+# ------------------------------------------------------------------------------
+
+# Double-helix halo swirling particle
 aura-particle: "WAX_OFF"
+aura-particle-count: 2
+aura-particle-speed: 0.0
+
+# Particle burst spawned when the Piñata receives a hit
 hit-particle: "FIREWORK"
+hit-particle-count: 20
+hit-particle-speed: 0.1
+
+# Particle debris spawned when voxels fracture and fall off
+break-particle: "CRIT"
+break-particle-count: 15
+break-particle-speed: 0.15
+
+# Trail particle emitted under the swinging pendulum
 trail-particle: "CHERRY_LEAVES"
+trail-particle-count: 2
+trail-particle-speed: 0.02
+
+# ------------------------------------------------------------------------------
+# AUDIO SOUNDSCAPE & SOUND EFFECTS
+# ------------------------------------------------------------------------------
+# Ambient harmonic chime sound played while swinging
 ambient-sound: "BLOCK_AMETHYST_BLOCK_CHIME"
+ambient-sound-volume: 1.0
+ambient-sound-pitch: 1.0
+
+# Impact sound played when a player hits the Piñata
 hit-sound: "BLOCK_WOOD_HIT"
+hit-sound-volume: 1.8
+hit-sound-pitch: 1.1
+
+# Fracture sound played when a voxel breaks and opens a cavity
+break-sound: "BLOCK_WOOD_BREAK"
+break-sound-volume: 1.8
+break-sound-pitch: 1.2
+
+# Victory sound played upon total destruction
 death-sound: "UI_TOAST_CHALLENGE_COMPLETE"
-death-animation: "FOUNTAIN_CASCADE"
+death-sound-volume: 1.5
+death-sound-pitch: 1.0
+
+# ------------------------------------------------------------------------------
+# KINETICS & BOSS MECHANICS
+# ------------------------------------------------------------------------------
+# Teleport evasion chance in frantic phase (0.0 to 1.0)
 teleport-chance: 0.40
+
+# Minimum seconds between acrobatic blinks
 teleport-interval-seconds: 4
+
+# Movement & pendulum oscillation speed multiplier
 movement-speed: 1.15
 
+# Free Edition Death Animation: FOUNTAIN_CASCADE
+# (Upgrade to Sovereign PRO for 7 Cosmic Supernova Animations: https://builtbybit.com/pinataspectra)
+death-animation: "FOUNTAIN_CASCADE"
+
+# ------------------------------------------------------------------------------
+# LOOT & REWARD TABLES
+# ------------------------------------------------------------------------------
 drops:
+  # Drops rolled on every hit landed by players
   hit-drops:
     candy_common:
       material: "COOKIE"
@@ -48,6 +135,8 @@ drops:
       amount: 1
       chance: 15.0
       name: "<#22C55E>★ Magic Fiesta Spark ★"
+
+  # Grand Finale drops erupted when the Piñata is conquered
   finale-drops:
     grand_totem:
       material: "TOTEM_OF_UNDYING"

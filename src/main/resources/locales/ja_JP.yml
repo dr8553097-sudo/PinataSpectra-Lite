@@ -1,0 +1,84 @@
+# ==============================================================================
+#  🪅 PINATASPECTRA LITE — 言語ファイル (ja_JP)
+#  👑 言語: 日本語 (日本)
+#  ✨ 作成者: Dafealru | MiniMessage + HEX グラデーション対応
+# ==============================================================================
+
+meta:
+  language-name: "日本語"
+  language-region: "JP"
+  flag-symbol: "🇯🇵"
+
+prefix: "<#8B5CF6>[<gradient:#EC4899:#FCD34D><bold>PinataSpectra</bold></gradient><#8B5CF6>] "
+
+general:
+  no-permission: "<#EF4444>このコマンドを実行する権限がありません。"
+  only-players: "<#EF4444>このコマンドはゲーム内のプレイヤーのみが実行できます。"
+  player-not-found: "<#EF4444>指定されたプレイヤーが見つからないか、オフラインです。"
+  reload-success: "<#22C55E>✔ <gradient:#22C55E:#38BDF8><bold>PinataSpectra Lite</bold></gradient> <#22C55E>のリロードが完了しました (<#FCD34D>%time%ms<#22C55E>)。"
+  language-changed: "<#22C55E>✔ 言語を <gradient:#EC4899:#FCD34D><bold>%lang%</bold></gradient> <#22C55E>に設定しました！"
+  language-invalid: "<#EF4444>無効な言語です！利用可能: <#FCD34D>%languages%"
+  language-current: "<#8B5CF6>現在の言語: <gradient:#EC4899:#FCD34D><bold>%lang%</bold></gradient><#8B5CF6>。変更: <#FCD34D>/pinata lang"
+  language-list: "<#8B5CF6>利用可能な言語一覧: <#FCD34D>%languages%"
+  language-reloaded: "<#22C55E>✔ <#FCD34D>%count%<#22C55E> 個の言語パックを読み込みました (<#FCD34D>%time%ms<#22C55E>)。"
+  already-active: "<#EF4444>ピニャータイベントは既に進行中です！先に <#FCD34D>/pinata kill <#EF4444>を実行してください。"
+  no-active: "<#F59E0B>現在アクティブなピニャータはありません。"
+  profile-not-found: "<#EF4444>ピニャータ設定 '<#FCD34D>%profile%<#EF4444>' は存在しません。"
+  spawn-success: "<#22C55E>✔ ピニャータ <gradient:#EC4899:#FCD34D><bold>%profile%</bold></gradient> <#22C55E>をスポーンさせました！"
+  kill-success: "<#22C55E>✔ アクティブなピニャータを削除しました。"
+  setspawn-success: "<#22C55E>✔ スポーン地点 '<#FCD34D>%name%<#22C55E>' を保存しました。"
+  timeout-despawn: "<#EF4444>⌛ <gradient:#EC4899:#FCD34D><bold>時間切れ！</bold></gradient> <gray>›</gray> <#EF4444>時間内に討伐されなかったため、ピニャータは逃走しました！"
+
+clean:
+  success: "<#22C55E>✔ <gradient:#22C55E:#38BDF8><bold>クリーンアップ完了:</bold></gradient> <#22C55E>サーバーから <#FCD34D>%count% <#22C55E>個の残留エンティティを消去しました。"
+  none-found: "<#22C55E>✔ サーバーは完全に清潔です。残留エンティティはありません。"
+
+bat:
+  received: "<#22C55E>✔ <gradient:#EC4899:#FCD34D><bold>お祭りピニャータバット</bold></gradient> <#22C55E>を受け取りました！"
+  given: "<#22C55E>✔ <#FCD34D>%player% <#22C55E>にお祭りバットを付与しました。"
+  given-all: "<#22C55E>✔ オンラインのプレイヤー全員 (<#FCD34D>%count%<#22C55E>名) にお祭りバットを配布しました！"
+  name: "<gradient:#EC4899:#FCD34D><bold>🪅 お祭りピニャータバット</bold></gradient>"
+  lore-1: "&7お祭りのために作られた特製バット"
+  lore-2: "&7超高速でピニャータを叩き割る！"
+  lore-bonus: " &#22C55E✔ &fピニャータへの追加ダメージ: &#FCD34D+%bonus% HP"
+  lore-effect: " &#60A5FA✔ &fヒット効果: &#EC4899紙吹雪とスパーク"
+  lore-footer: "&d✦ PinataSpectra イベントエディション ✦"
+
+phases:
+  phase2-broadcast: "<#EC4899>⚡ <gradient:#EC4899:#FCD34D><bold>第2フェーズ: マイクロ回避モード発動！</bold></gradient> <gray>›</gray> <white>ピニャータが縮小し、2倍の速度で移動します！</white>"
+  phase3-broadcast: "<#A855F7>🌀 <gradient:#A855F7:#EC4899><bold>第3フェーズ: カオスワープシフト！</bold></gradient> <gray>›</gray> <white>ピニャータがソニックパルスを放ち、連続テレポートします！</white>"
+  blink-chat: "<#A855F7>🌀 <gradient:#EC4899:#FCD34D><bold>空間跳躍！</bold></gradient> <gray>›</gray> <#EC4899>ピニャータが <#FCD34D>X: %x%, Y: %y%, Z: %z% <#EC4899>にワープしました！ <white>追いかけろ！</white>"
+  blink-actionbar: "<#A855F7>🌀 <gradient:#EC4899:#FCD34D><bold>X: %x%, Y: %y%, Z: %z% にテレポート！</bold></gradient> <#FCD34D>追跡せよ！"
+
+rewards:
+  inventory-full: "<#F59E0B>⚠ <white>インベントリがいっぱいです！ドロップ品が足元に落ちました。</white>"
+  participation-reward: "<#22C55E>🎁 <gradient:#FCD34D:#22C55E><bold>参加賞！</bold></gradient> <gray>›</gray> <#FCD34D>%hits% 回ヒット <white>させ、<#22C55E>+$%money% <white>を獲得しました。</white>"
+  victory-title: "<gradient:#EC4899:#FCD34D><bold>🪅 ピニャータ討伐完了！ 🪅</bold></gradient>"
+  victory-subtitle: "<#FCD34D>👑 最優秀 MVP: <gradient:#F59E0B:#EC4899><bold>%mvp%</bold></gradient>"
+  victory-broadcast-header: "\n<gradient:#EC4899:#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>\n                  <gradient:#FCD34D:#F59E0B><bold>🪅 ピニャータが完全に破壊されました！ 🪅</bold></gradient>\n"
+  victory-mvp-highlight: "  <#FCD34D>👑 <gradient:#FCD34D:#F59E0B><bold>イベント最優秀 MVP</bold></gradient> <gray>›</gray> <white><bold>%mvp%</bold></white> <gray>(</gray><#FCD34D>%hits% ヒット<gray>)</gray>\n"
+  victory-podium-1st: "  <#FCD34D>🥇 <bold>第 1 位:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% ヒット <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-podium-2nd: "  <#E2E8F0>🥈 <bold>第 2 位:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% ヒット <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-podium-3rd: "  <#F59E0B>🥉 <bold>第 3 位:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% ヒット <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-broadcast-footer: "\n<gradient:#EC4899:#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"
+  pro-promo-hint: "<#8B5CF6>⭐ <gray>PinataSpectra Lite をお楽しみですか？ <#FCD34D>/pinata pro <gray>でPRO版の全機能をアンロック！"
+
+pool:
+  info-header: "<#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  info-title: " <gradient:#FCD34D:#F59E0B><bold>💰 コミュニティ・ピニャータプール</bold></gradient>"
+  info-progress: " <gray>集まった金額:</gray> <#22C55E>$%current% <dark_gray>/</dark_gray> <#FCD34D>$%target% <#8B5CF6>(%percent%%)"
+  info-command: " <gray>寄付コマンド:</gray> <#FCD34D>/pinata pool <金額>"
+  info-footer: "<#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  donate-broadcast: "<#FCD34D>💰 <white>%player% <gray>がプールに <#22C55E>+$%amount% <gray>を寄付しました！ <#8B5CF6>(進捗: <#22C55E>$%current% <dark_gray>/</dark_gray> <#FCD34D>$%target% <dark_gray>-</dark_gray> <#EC4899>%percent%%<#8B5CF6>)"
+  goal-reached: "<#FCD34D>★══════════════════════════════════════════════════★\n<#22C55E><bold>🎉 プール目標達成！ 🎉</bold>\n<#FCD34D><#22C55E>$%target% <#FCD34D>が集まりました！グランド・ピニャータを召喚します！\n<#FCD34D>★══════════════════════════════════════════════════★"
+  disabled: "<#EF4444>コミュニティプールは現在無効化されています。"
+  invalid-amount: "<#EF4444>正の数値を入力してください。"
+  no-funds: "<#EF4444>所持金が不足しています！必要額: <#FCD34D>$%amount%"
+
+vote:
+  progress: "<#FCD34D>🗳 <gray>コミュニティ投票進捗:</gray> <#22C55E>%current% <dark_gray>/</dark_gray> <#FCD34D>%target% <#8B5CF6>(%percent%%)"
+
+gui:
+  language-title: "<gradient:#8B5CF6:#EC4899><bold>言語を選択してください</bold></gradient>"
+  language-selected: "<#22C55E>✔ 現在選択中"
+  language-click-to-select: "<#FCD34D>クリックしてこの言語を選択！"

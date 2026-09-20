@@ -1,8 +1,10 @@
 package net.dafealru.pinataspectralite.commands;
 
 import net.dafealru.pinataspectralite.PinataPartyLite;
+import net.dafealru.pinataspectralite.gui.LanguageSelectorGUI;
 import net.dafealru.pinataspectralite.gui.PinataStudioGUI;
 import net.dafealru.pinataspectralite.gui.PinataUpgradeGUI;
+import net.dafealru.pinataspectralite.messages.MessageManager;
 import net.dafealru.pinataspectralite.pinata.PinataProfile;
 import net.dafealru.pinataspectralite.utils.ColorUtils;
 import org.bukkit.Bukkit;
@@ -17,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PinataLiteCommand implements CommandExecutor, TabCompleter {
 
@@ -198,6 +201,28 @@ public class PinataLiteCommand implements CommandExecutor, TabCompleter {
                     plugin.getMessageManager().send(sender, "general.no-permission");
                     return true;
                 }
+
+                boolean giveToAll = false;
+                if (args.length > 1 && (args[1].equalsIgnoreCase("all") || args[1].equalsIgnoreCase("*") || args[1].equalsIgnoreCase("@a"))) {
+                    giveToAll = true;
+                } else if (args.length > 2 && args[1].equalsIgnoreCase("give") && (args[2].equalsIgnoreCase("all") || args[2].equalsIgnoreCase("*") || args[2].equalsIgnoreCase("@a"))) {
+                    giveToAll = true;
+                }
+
+                if (giveToAll) {
+                    ItemStack bat = net.dafealru.pinataspectralite.items.PinataBatItem.createBat(plugin);
+                    int count = 0;
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.getInventory().addItem(bat.clone());
+                        plugin.getMessageManager().send(p, "bat.received");
+                        p.playSound(p.getLocation(), org.bukkit.Sound.ITEM_ARMOR_EQUIP_GOLD, 1.0f, 1.2f);
+                        p.playSound(p.getLocation(), org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.8f, 1.6f);
+                        count++;
+                    }
+                    plugin.getMessageManager().send(sender, "bat.given-all", "count", String.valueOf(count));
+                    return true;
+                }
+
                 Player target = null;
                 if (args.length > 2 && args[1].equalsIgnoreCase("give")) {
                     target = Bukkit.getPlayer(args[2]);
@@ -221,41 +246,104 @@ public class PinataLiteCommand implements CommandExecutor, TabCompleter {
                     plugin.getMessageManager().send(sender, "bat.given", "player", target.getName());
                 }
             }
-            case "lang", "language", "idioma" -> {
-                if (!sender.hasPermission("pinataspectra.admin")) {
-                    plugin.getMessageManager().send(sender, "general.no-permission");
-                    return true;
-                }
-                if (args.length < 2) {
-                    plugin.getMessageManager().send(sender, "general.language-current", "lang", plugin.getMessageManager().getLanguage());
-                    return true;
-                }
-                String targetLang = args[1].toUpperCase();
-                if (!targetLang.equals("EN") && !targetLang.equals("ES")) {
-                    plugin.getMessageManager().send(sender, "general.language-invalid");
-                    return true;
-                }
-                plugin.getMessageManager().setLanguage(targetLang);
-                plugin.getMessageManager().send(sender, "general.language-changed", "lang", targetLang);
+            case "lang", "language", "idioma", "locales" -> {
+                handleLanguageCommand(sender, args);
             }
             case "reload" -> {
                 if (!sender.hasPermission("pinataspectra.admin")) {
                     plugin.getMessageManager().send(sender, "general.no-permission");
                     return true;
                 }
+                long start = System.currentTimeMillis();
                 plugin.reloadConfig();
                 if (plugin.getConfigUpdaterEngine() != null) {
                     plugin.getConfigUpdaterEngine().updateAllConfigs();
                 }
-                plugin.getMessageManager().loadMessages();
+                plugin.getMessageManager().loadAllLocales();
                 plugin.getVoteGoalManager().loadConfig();
                 plugin.getPinataPoolManager().loadConfig();
                 plugin.getRegistry().loadProfiles();
-                plugin.getMessageManager().send(sender, "general.reload-success");
+                long elapsed = System.currentTimeMillis() - start;
+                plugin.getMessageManager().send(sender, "general.reload-success", "time", String.valueOf(elapsed));
             }
             default -> sendHelp(sender);
         }
         return true;
+    }
+
+    private void handleLanguageCommand(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            if (sender instanceof Player player) {
+                LanguageSelectorGUI.open(player, plugin);
+            } else {
+                String current = plugin.getMessageManager().getServerLanguage();
+                String all = plugin.getMessageManager().getAllLocales().stream().map(MessageManager.LocaleInfo::getCode).collect(Collectors.joining(", "));
+                sender.sendMessage(ColorUtils.colorize("&d[PinataSpectra] &7Current server language: &e" + current));
+                sender.sendMessage(ColorUtils.colorize("&d[PinataSpectra] &7Available languages: &a" + all));
+                sender.sendMessage(ColorUtils.colorize("&d[PinataSpectra] &7Use: &f/pinata lang <code|reload|list>"));
+            }
+            return;
+        }
+
+        String sub = args[1].toLowerCase();
+
+        if (sub.equals("list")) {
+            String all = plugin.getMessageManager().getAllLocales().stream()
+                    .map(l -> l.getFlag() + " " + l.getName() + " (" + l.getCode() + ")")
+                    .collect(Collectors.joining("&7, &f"));
+            plugin.getMessageManager().send(sender, "general.language-list", "languages", all);
+            return;
+        }
+
+        if (sub.equals("reload")) {
+            if (!sender.hasPermission("pinataspectra.admin")) {
+                plugin.getMessageManager().send(sender, "general.no-permission");
+                return;
+            }
+            long start = System.currentTimeMillis();
+            plugin.getMessageManager().loadAllLocales();
+            long elapsed = System.currentTimeMillis() - start;
+            plugin.getMessageManager().send(sender, "general.language-reloaded",
+                    "count", String.valueOf(plugin.getMessageManager().getAllLocales().size()),
+                    "time", String.valueOf(elapsed));
+            return;
+        }
+
+        if (sub.equals("set") && args.length >= 4) {
+            if (!sender.hasPermission("pinataspectra.admin")) {
+                plugin.getMessageManager().send(sender, "general.no-permission");
+                return;
+            }
+            Player target = Bukkit.getPlayer(args[2]);
+            if (target == null) {
+                plugin.getMessageManager().send(sender, "general.player-not-found");
+                return;
+            }
+            String targetLocale = args[3];
+            if (!plugin.getMessageManager().isLocaleLoaded(targetLocale)) {
+                String available = plugin.getMessageManager().getAllLocales().stream().map(MessageManager.LocaleInfo::getCode).collect(Collectors.joining(", "));
+                plugin.getMessageManager().send(sender, "general.language-invalid", "languages", available);
+                return;
+            }
+            plugin.getMessageManager().setPlayerLanguage(target, targetLocale);
+            sender.sendMessage(ColorUtils.colorize("&a✔ Set language of player &e" + target.getName() + " &ato &b" + targetLocale));
+            return;
+        }
+
+        // Direct code switch: /pinata lang <code_or_name>
+        String targetCode = args[1];
+        if (!plugin.getMessageManager().isLocaleLoaded(targetCode)) {
+            String available = plugin.getMessageManager().getAllLocales().stream().map(MessageManager.LocaleInfo::getCode).collect(Collectors.joining(", "));
+            plugin.getMessageManager().send(sender, "general.language-invalid", "languages", available);
+            return;
+        }
+
+        if (sender instanceof Player player) {
+            plugin.getMessageManager().setPlayerLanguage(player, targetCode);
+        } else {
+            plugin.getMessageManager().setServerLanguage(targetCode);
+            sender.sendMessage(ColorUtils.colorize("&a✔ Server default language changed to &b" + targetCode));
+        }
     }
 
     private void handleClean(CommandSender sender) {
@@ -276,12 +364,12 @@ public class PinataLiteCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(ColorUtils.colorize("&#8B5CF6━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"));
         sender.sendMessage(ColorUtils.colorize(" <gradient:#EC4899:#FCD34D><bold>🪅 PINATASPECTRA LITE &8v1.0.0</bold></gradient> &7(Free Community Edition)"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata spawn [profile] [spawn] &7- Start a 3D Piñata boss event"));
-        sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata bat [give <player>] &7- Give the festive Piñata bat"));
+        sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata bat [give <player>|all] &7- Give the festive Piñata bat"));
+        sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata lang [code|list|reload] &7- Open language selector GUI / switch language"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata clean &7- Purge residual entities across all worlds"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata setspawn <name> &7- Set fixed Piñata spawn point"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata pool [amount] &7- View or fund community pool"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata vote &7- Check community vote goal progress"));
-        sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata lang <EN|ES> &7- Switch active language (EN/ES)"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata editor &7- Open in-game visual editor GUI"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata kill &7- Remove active Piñata immediately"));
         sender.sendMessage(ColorUtils.colorize(" &#FCD34D/pinata reload &7- Reload configurations and messages"));
@@ -319,12 +407,22 @@ public class PinataLiteCommand implements CommandExecutor, TabCompleter {
             }
         } else if (args.length == 3 && args[0].equalsIgnoreCase("spawn")) {
             list.addAll(plugin.getSavedLocationNames());
-        } else if (args.length == 2 && (args[0].equalsIgnoreCase("lang") || args[0].equalsIgnoreCase("language") || args[0].equalsIgnoreCase("idioma"))) {
-            list.addAll(List.of("EN", "ES"));
+        } else if (args.length == 2 && (args[0].equalsIgnoreCase("lang") || args[0].equalsIgnoreCase("language") || args[0].equalsIgnoreCase("idioma") || args[0].equalsIgnoreCase("locales"))) {
+            list.addAll(List.of("list", "reload", "set"));
+            for (MessageManager.LocaleInfo l : plugin.getMessageManager().getAllLocales()) {
+                list.add(l.getCode());
+            }
+        } else if (args.length == 3 && (args[0].equalsIgnoreCase("lang") || args[0].equalsIgnoreCase("language")) && args[1].equalsIgnoreCase("set")) {
+            for (Player p : Bukkit.getOnlinePlayers()) list.add(p.getName());
+        } else if (args.length == 4 && (args[0].equalsIgnoreCase("lang") || args[0].equalsIgnoreCase("language")) && args[1].equalsIgnoreCase("set")) {
+            for (MessageManager.LocaleInfo l : plugin.getMessageManager().getAllLocales()) {
+                list.add(l.getCode());
+            }
         } else if (args.length == 2 && args[0].equalsIgnoreCase("bat")) {
-            list.add("give");
+            list.addAll(List.of("give", "all", "*"));
             for (Player p : Bukkit.getOnlinePlayers()) list.add(p.getName());
         } else if (args.length == 3 && args[0].equalsIgnoreCase("bat") && args[1].equalsIgnoreCase("give")) {
+            list.addAll(List.of("all", "*"));
             for (Player p : Bukkit.getOnlinePlayers()) list.add(p.getName());
         } else if (args.length == 2 && args[0].equalsIgnoreCase("setspawn")) {
             list.addAll(List.of("default", "arena", "spawn", "center"));

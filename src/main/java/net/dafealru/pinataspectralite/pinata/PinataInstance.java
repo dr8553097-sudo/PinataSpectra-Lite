@@ -388,7 +388,7 @@ public class PinataInstance {
         player.playSound(player.getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR, 1.2f, 1.45f);
 
         if (profile.getHitSound() != null) {
-            player.playSound(player.getLocation(), profile.getHitSound(), 2.0f, 1.1f);
+            player.playSound(player.getLocation(), profile.getHitSound(), profile.getHitSoundVolume(), profile.getHitSoundPitch());
         }
 
         if (loc.getWorld() != null) {
@@ -397,9 +397,9 @@ public class PinataInstance {
             loc.getWorld().playSound(loc, Sound.BLOCK_WOOD_BREAK, 1.8f, crackPitch);
             loc.getWorld().playSound(loc, Sound.BLOCK_BAMBOO_WOOD_HIT, 1.6f, crackPitch + 0.2f);
             if (profile.getHitSound() != null) {
-                loc.getWorld().playSound(loc, profile.getHitSound(), 1.8f, 1.1f);
+                loc.getWorld().playSound(loc, profile.getHitSound(), profile.getHitSoundVolume(), profile.getHitSoundPitch());
             }
-            loc.getWorld().spawnParticle(profile.getHitParticle(), loc.clone().add(0, 0.8, 0), 20, 0.35, 0.35, 0.35, 0.1);
+            loc.getWorld().spawnParticle(profile.getHitParticle(), loc.clone().add(0, 0.8, 0), profile.getHitParticleCount(), 0.35, 0.35, 0.35, profile.getHitParticleSpeed());
             loc.getWorld().spawnParticle(Particle.CRIT, loc.clone().add(0, 0.8, 0), 12, 0.3, 0.3, 0.3, 0.15);
             loc.getWorld().spawnParticle(Particle.BLOCK, loc.clone().add(0, 0.6, 0), 14, 0.25, 0.25, 0.25, 0.08, profile.getPrimaryBlock().createBlockData());
         }

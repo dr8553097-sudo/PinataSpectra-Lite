@@ -39,6 +39,16 @@ public class GUIListener implements Listener {
                 player.closeInventory();
                 sendProUpsell(player);
             }
+        } else if (title.contains("SELECT YOUR LANGUAGE") || title.contains("IDIOMA") || title.contains("LANGUE") || title.contains("SPRACHE") || title.contains("言語") || title.contains("语言")) {
+            event.setCancelled(true);
+            ItemStack clicked = event.getCurrentItem();
+            if (clicked != null && clicked.hasItemMeta()) {
+                String langCode = clicked.getItemMeta().getPersistentDataContainer().get(LanguageSelectorGUI.LANG_KEY, PersistentDataType.STRING);
+                if (langCode != null) {
+                    plugin.getMessageManager().setPlayerLanguage(player, langCode);
+                    player.closeInventory();
+                }
+            }
         } else if (title.contains("PINATA STUDIO")) {
             event.setCancelled(true);
             int slot = event.getRawSlot();

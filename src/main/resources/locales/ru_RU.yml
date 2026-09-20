@@ -1,0 +1,84 @@
+# ==============================================================================
+#  🪅 PINATASPECTRA LITE — ЯЗЫКОВОЙ ФАЙЛ (ru_RU)
+#  👑 Язык: Русский (Россия)
+#  ✨ Автор: Dafealru | Поддержка MiniMessage + HEX
+# ==============================================================================
+
+meta:
+  language-name: "Русский"
+  language-region: "RU"
+  flag-symbol: "🇷🇺"
+
+prefix: "<#8B5CF6>[<gradient:#EC4899:#FCD34D><bold>PinataSpectra</bold></gradient><#8B5CF6>] "
+
+general:
+  no-permission: "<#EF4444>У вас нет прав для выполнения этой команды."
+  only-players: "<#EF4444>Эту команду могут выполнять только игроки в игре."
+  player-not-found: "<#EF4444>Указанный игрок не найден или не в сети."
+  reload-success: "<#22C55E>✔ <gradient:#22C55E:#38BDF8><bold>PinataSpectra Lite</bold></gradient> <#22C55E>успешно перезагружен за <#FCD34D>%time%мс<#22C55E>."
+  language-changed: "<#22C55E>✔ Язык успешно изменен на <gradient:#EC4899:#FCD34D><bold>%lang%</bold></gradient><#22C55E>!"
+  language-invalid: "<#EF4444>Недопустимый язык! Доступно: <#FCD34D>%languages%"
+  language-current: "<#8B5CF6>Текущий язык: <gradient:#EC4899:#FCD34D><bold>%lang%</bold></gradient><#8B5CF6>. Сменить: <#FCD34D>/pinata lang"
+  language-list: "<#8B5CF6>Доступные языки: <#FCD34D>%languages%"
+  language-reloaded: "<#22C55E>✔ Загружено <#FCD34D>%count%<#22C55E> языковых пакетов за <#FCD34D>%time%мс<#22C55E>."
+  already-active: "<#EF4444>Пиньята уже активна! Сначала используйте <#FCD34D>/pinata kill<#EF4444>."
+  no-active: "<#F59E0B>Сейчас нет активной Пиньяты."
+  profile-not-found: "<#EF4444>Профиль пиньяты '<#FCD34D>%profile%<#EF4444>' не существует."
+  spawn-success: "<#22C55E>✔ Пиньята <gradient:#EC4899:#FCD34D><bold>%profile%</bold></gradient> <#22C55E>успешно заспавнена!"
+  kill-success: "<#22C55E>✔ Активная Пиньята успешно удалена."
+  setspawn-success: "<#22C55E>✔ Точка спавна '<#FCD34D>%name%<#22C55E>' сохранена."
+  timeout-despawn: "<#EF4444>⌛ <gradient:#EC4899:#FCD34D><bold>ВРЕМЯ ИСТЕКЛО!</bold></gradient> <gray>›</gray> <#EF4444>Пиньяту не успели разбить, и она сбежала!"
+
+clean:
+  success: "<#22C55E>✔ <gradient:#22C55E:#38BDF8><bold>Очистка завершена:</bold></gradient> <#22C55E>Удалено <#FCD34D>%count% <#22C55E>остаточных сущностей."
+  none-found: "<#22C55E>✔ Сервер чист. Остаточных сущностей не обнаружено."
+
+bat:
+  received: "<#22C55E>✔ Вы получили <gradient:#EC4899:#FCD34D><bold>Праздничную Биту для Пиньяты</bold></gradient><#22C55E>!"
+  given: "<#22C55E>✔ Праздничная Бита выдана игроку <#FCD34D>%player%<#22C55E>."
+  given-all: "<#22C55E>✔ Праздничные Биты розданы всем <#FCD34D>%count% <#22C55E>игрокам онлайн!"
+  name: "<gradient:#EC4899:#FCD34D><bold>🪅 ПРАЗДНИЧНАЯ БИТА ДЛЯ ПИНЬЯТЫ</bold></gradient>"
+  lore-1: "&7Праздничная дубинка, созданная для"
+  lore-2: "&7быстрого крушения пиньят на празднике!"
+  lore-bonus: " &#22C55E✔ &fДоп. урон по Пиньяте: &#FCD34D+%bonus% HP"
+  lore-effect: " &#60A5FA✔ &fЭффект удара: &#EC4899Конфетти и искры"
+  lore-footer: "&d✦ Издание события PinataSpectra ✦"
+
+phases:
+  phase2-broadcast: "<#EC4899>⚡ <gradient:#EC4899:#FCD34D><bold>ФАЗА 2: МИКРО-УКЛОНЕНИЕ АКТИВИРОВАНО!</bold></gradient> <gray>›</gray> <white>Пиньята уменьшилась и двигается вдвое быстрее!</white>"
+  phase3-broadcast: "<#A855F7>🌀 <gradient:#A855F7:#EC4899><bold>ФАЗА 3: ХАОТИЧНЫЙ ТЕЛЕПОРТ!</bold></gradient> <gray>›</gray> <white>Пиньята испускает звуковые волны и прыгает по пространству!</white>"
+  blink-chat: "<#A855F7>🌀 <gradient:#EC4899:#FCD34D><bold>ПРОСТРАНСТВЕННЫЙ СКАЧОК!</bold></gradient> <gray>›</gray> <#EC4899>Пиньята переместилась на <#FCD34D>X: %x%, Y: %y%, Z: %z%<#EC4899>! <white>В погоню!</white>"
+  blink-actionbar: "<#A855F7>🌀 <gradient:#EC4899:#FCD34D><bold>Телепорт на X: %x%, Y: %y%, Z: %z%!</bold></gradient> <#FCD34D>Ловите её!"
+
+rewards:
+  inventory-full: "<#F59E0B>⚠ <white>Инвентарь полон! Ваши сладости упали под ноги.</white>"
+  participation-reward: "<#22C55E>🎁 <gradient:#FCD34D:#22C55E><bold>НАГРАДА ЗА УЧАСТИЕ!</bold></gradient> <gray>›</gray> <white>Вы нанесли <#FCD34D>%hits% ударов <white>и получили <#22C55E>+$%money%<white>.</white>"
+  victory-title: "<gradient:#EC4899:#FCD34D><bold>🪅 ПИНЬЯТА РАЗБИТА! 🪅</bold></gradient>"
+  victory-subtitle: "<#FCD34D>👑 Главный MVP: <gradient:#F59E0B:#EC4899><bold>%mvp%</bold></gradient>"
+  victory-broadcast-header: "\n<gradient:#EC4899:#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>\n                  <gradient:#FCD34D:#F59E0B><bold>🪅 ПИНЬЯТА БЫЛА ПОЛНОСТЬЮ РАЗРУШЕНА! 🪅</bold></gradient>\n"
+  victory-mvp-highlight: "  <#FCD34D>👑 <gradient:#FCD34D:#F59E0B><bold>ЛУЧШИЙ ИГРОК ПРАЗДНИКА</bold></gradient> <gray>›</gray> <white><bold>%mvp%</bold></white> <gray>(</gray><#FCD34D>%hits% ударов<gray>)</gray>\n"
+  victory-podium-1st: "  <#FCD34D>🥇 <bold>1-е Место:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% ударов <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-podium-2nd: "  <#E2E8F0>🥈 <bold>2-е Место:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% ударов <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-podium-3rd: "  <#F59E0B>🥉 <bold>3-е Место:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% ударов <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-broadcast-footer: "\n<gradient:#EC4899:#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"
+  pro-promo-hint: "<#8B5CF6>⭐ <gray>Нравится PinataSpectra Lite? Введите <#FCD34D>/pinata pro <gray>для доступа к PRO-функциям!"
+
+pool:
+  info-header: "<#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  info-title: " <gradient:#FCD34D:#F59E0B><bold>💰 ОБЩИЙ ФОНД ПИНЬЯТЫ</bold></gradient>"
+  info-progress: " <gray>Собрано:</gray> <#22C55E>$%current% <dark_gray>/</dark_gray> <#FCD34D>$%target% <#8B5CF6>(%percent%%)"
+  info-command: " <gray>Внести средства:</gray> <#FCD34D>/pinata pool <сумма>"
+  info-footer: "<#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  donate-broadcast: "<#FCD34D>💰 <white>%player% <gray>внес <#22C55E>+$%amount% <gray>в фонд! <#8B5CF6>(Прогресс: <#22C55E>$%current% <dark_gray>/</dark_gray> <#FCD34D>$%target% <dark_gray>-</dark_gray> <#EC4899>%percent%%<#8B5CF6>)"
+  goal-reached: "<#FCD34D>★══════════════════════════════════════════════════★\n<#22C55E><bold>🎉 ЦЕЛЬ ФОНДА ДОСТИГНУТА! 🎉</bold>\n<#FCD34D>Собрано <#22C55E>$%target%<#FCD34D>! Призыв Великой Пиньяты!\n<#FCD34D>★══════════════════════════════════════════════════★"
+  disabled: "<#EF4444>Общий фонд Пиньяты в данный момент отключен."
+  invalid-amount: "<#EF4444>Пожалуйста, укажите положительное число."
+  no-funds: "<#EF4444>Недостаточно средств! Требуется: <#FCD34D>$%amount%"
+
+vote:
+  progress: "<#FCD34D>🗳 <gray>Прогресс голосования сообщества:</gray> <#22C55E>%current% <dark_gray>/</dark_gray> <#FCD34D>%target% <#8B5CF6>(%percent%%)"
+
+gui:
+  language-title: "<gradient:#8B5CF6:#EC4899><bold>ВЫБЕРИТЕ ВАШ ЯЗЫК</bold></gradient>"
+  language-selected: "<#22C55E>✔ Текущий выбранный"
+  language-click-to-select: "<#FCD34D>Нажмите, чтобы выбрать этот язык!"

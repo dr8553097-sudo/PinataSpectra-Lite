@@ -1,0 +1,84 @@
+# ==============================================================================
+#  🪅 PINATASPECTRA LITE — 语言文件 (zh_CN)
+#  👑 语言: 简体中文 (中国)
+#  ✨ 作者: Dafealru | 支持 MiniMessage 与 HEX 渐变
+# ==============================================================================
+
+meta:
+  language-name: "简体中文"
+  language-region: "CN"
+  flag-symbol: "🇨🇳"
+
+prefix: "<#8B5CF6>[<gradient:#EC4899:#FCD34D><bold>PinataSpectra</bold></gradient><#8B5CF6>] "
+
+general:
+  no-permission: "<#EF4444>您没有权限执行此命令。"
+  only-players: "<#EF4444>此命令仅限游戏内玩家执行。"
+  player-not-found: "<#EF4444>找不到指定的玩家或玩家不在线。"
+  reload-success: "<#22C55E>✔ <gradient:#22C55E:#38BDF8><bold>PinataSpectra Lite</bold></gradient> <#22C55E>已成功重载，耗时 <#FCD34D>%time%ms<#22C55E>。"
+  language-changed: "<#22C55E>✔ 语言已成功设置为 <gradient:#EC4899:#FCD34D><bold>%lang%</bold></gradient><#22C55E>！"
+  language-invalid: "<#EF4444>无效的语言！可用语言: <#FCD34D>%languages%"
+  language-current: "<#8B5CF6>当前语言: <gradient:#EC4899:#FCD34D><bold>%lang%</bold></gradient><#8B5CF6>。切换语言: <#FCD34D>/pinata lang"
+  language-list: "<#8B5CF6>可用语言列表: <#FCD34D>%languages%"
+  language-reloaded: "<#22C55E>✔ 已加载 <#FCD34D>%count%<#22C55E> 个语言包，耗时 <#FCD34D>%time%ms<#22C55E>。"
+  already-active: "<#EF4444>当前已有正在进行的皮纳塔活动！请先使用 <#FCD34D>/pinata kill<#EF4444>。"
+  no-active: "<#F59E0B>当前没有活跃的皮纳塔。"
+  profile-not-found: "<#EF4444>皮纳塔配置 '<#FCD34D>%profile%<#EF4444>' 不存在。"
+  spawn-success: "<#22C55E>✔ 皮纳塔 <gradient:#EC4899:#FCD34D><bold>%profile%</bold></gradient> <#22C55E>生成成功！"
+  kill-success: "<#22C55E>✔ 已成功清除当前活跃的皮纳塔。"
+  setspawn-success: "<#22C55E>✔ 出生点 '<#FCD34D>%name%<#22C55E>' 保存成功。"
+  timeout-despawn: "<#EF4444>⌛ <gradient:#EC4899:#FCD34D><bold>时间耗尽！</bold></gradient> <gray>›</gray> <#EF4444>皮纳塔未在规定时间内被击破，已逃离现场！"
+
+clean:
+  success: "<#22C55E>✔ <gradient:#22C55E:#38BDF8><bold>清理完成:</bold></gradient> <#22C55E>已清除服务器中 <#FCD34D>%count% <#22C55E>个残留实体。"
+  none-found: "<#22C55E>✔ 服务器状态极佳，未发现任何残留实体。"
+
+bat:
+  received: "<#22C55E>✔ 您获得了 <gradient:#EC4899:#FCD34D><bold>节日皮纳塔球棒</bold></gradient><#22C55E>！"
+  given: "<#22C55E>✔ 节日球棒已给予 <#FCD34D>%player%<#22C55E>。"
+  given-all: "<#22C55E>✔ 已向全部 <#FCD34D>%count% <#22C55E>名在线玩家发放节日皮纳塔球棒！"
+  name: "<gradient:#EC4899:#FCD34D><bold>🪅 节日皮纳塔球棒</bold></gradient>"
+  lore-1: "&7专为狂欢节打造的强力球棒"
+  lore-2: "&7能以极高速度砸碎皮纳塔！"
+  lore-bonus: " &#22C55E✔ &f对皮纳塔额外伤害: &#FCD34D+%bonus% HP"
+  lore-effect: " &#60A5FA✔ &f打击特效: &#EC4899彩纸与金色火花"
+  lore-footer: "&d✦ PinataSpectra 活动专属 ✦"
+
+phases:
+  phase2-broadcast: "<#EC4899>⚡ <gradient:#EC4899:#FCD34D><bold>第二阶段: 微型敏捷闪避已激活！</bold></gradient> <gray>›</gray> <white>皮纳塔体型缩小且移动速度加倍！</white>"
+  phase3-broadcast: "<#A855F7>🌀 <gradient:#A855F7:#EC4899><bold>第三阶段: 混乱维度跃迁！</bold></gradient> <gray>›</gray> <white>皮纳塔释放强力声波冲击并频繁空间跳跃！</white>"
+  blink-chat: "<#A855F7>🌀 <gradient:#EC4899:#FCD34D><bold>维度跃迁！</bold></gradient> <gray>›</gray> <#EC4899>皮纳塔瞬移至 <#FCD34D>X: %x%, Y: %y%, Z: %z%<#EC4899>！ <white>快追！</white>"
+  blink-actionbar: "<#A855F7>🌀 <gradient:#EC4899:#FCD34D><bold>皮纳塔已瞬移至 X: %x%, Y: %y%, Z: %z%！</bold></gradient> <#FCD34D>快追击！"
+
+rewards:
+  inventory-full: "<#F59E0B>⚠ <white>背包已满！掉落的糖果已掉在您的脚下。</white>"
+  participation-reward: "<#22C55E>🎁 <gradient:#FCD34D:#22C55E><bold>参与奖励！</bold></gradient> <gray>›</gray> <white>您命中了 <#FCD34D>%hits% 次<white>，获得了 <#22C55E>+$%money% <white>金币奖励。</white>"
+  victory-title: "<gradient:#EC4899:#FCD34D><bold>🪅 皮纳塔已被击破！ 🪅</bold></gradient>"
+  victory-subtitle: "<#FCD34D>👑 最佳 MVP: <gradient:#F59E0B:#EC4899><bold>%mvp%</bold></gradient>"
+  victory-broadcast-header: "\n<gradient:#EC4899:#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>\n                  <gradient:#FCD34D:#F59E0B><bold>🪅 狂欢皮纳塔已被彻底征服！ 🪅</bold></gradient>\n"
+  victory-mvp-highlight: "  <#FCD34D>👑 <gradient:#FCD34D:#F59E0B><bold>派对全场最佳 MVP</bold></gradient> <gray>›</gray> <white><bold>%mvp%</bold></white> <gray>(</gray><#FCD34D>%hits% 次命中<gray>)</gray>\n"
+  victory-podium-1st: "  <#FCD34D>🥇 <bold>第 1 名:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% 次 <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-podium-2nd: "  <#E2E8F0>🥈 <bold>第 2 名:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% 次 <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-podium-3rd: "  <#F59E0B>🥉 <bold>第 3 名:</bold> <#38BDF8>%player% <gray>━</gray> <#FCD34D>%hits% 次 <dark_gray>(<#22C55E>%percent%%<dark_gray>) <dark_gray>•</dark_gray> <#22C55E>+$%money%"
+  victory-broadcast-footer: "\n<gradient:#EC4899:#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"
+  pro-promo-hint: "<#8B5CF6>⭐ <gray>喜欢 PinataSpectra Lite 吗？输入 <#FCD34D>/pinata pro <gray>解锁至尊 PRO 特效与多服同步！"
+
+pool:
+  info-header: "<#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  info-title: " <gradient:#FCD34D:#F59E0B><bold>💰 全服皮纳塔资金池</bold></gradient>"
+  info-progress: " <gray>已筹集:</gray> <#22C55E>$%current% <dark_gray>/</dark_gray> <#FCD34D>$%target% <#8B5CF6>(%percent%%)"
+  info-command: " <gray>贡献资金:</gray> <#FCD34D>/pinata pool <金额>"
+  info-footer: "<#8B5CF6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  donate-broadcast: "<#FCD34D>💰 <white>%player% <gray>向资金池捐赠了 <#22C55E>+$%amount%<gray>！ <#8B5CF6>(进度: <#22C55E>$%current% <dark_gray>/</dark_gray> <#FCD34D>$%target% <dark_gray>-</dark_gray> <#EC4899>%percent%%<#8B5CF6>)"
+  goal-reached: "<#FCD34D>★══════════════════════════════════════════════════★\n<#22C55E><bold>🎉 全服资金池目标已达成！ 🎉</bold>\n<#FCD34D>成功筹集 <#22C55E>$%target%<#FCD34D>！正在召唤超级皮纳塔！\n<#FCD34D>★══════════════════════════════════════════════════★"
+  disabled: "<#EF4444>全服资金池系统当前已禁用。"
+  invalid-amount: "<#EF4444>请输入正数金额。"
+  no-funds: "<#EF4444>余额不足！所需金额: <#FCD34D>$%amount%"
+
+vote:
+  progress: "<#FCD34D>🗳 <gray>全服投票目标进度:</gray> <#22C55E>%current% <dark_gray>/</dark_gray> <#FCD34D>%target% <#8B5CF6>(%percent%%)"
+
+gui:
+  language-title: "<gradient:#8B5CF6:#EC4899><bold>选择您的语言</bold></gradient>"
+  language-selected: "<#22C55E>✔ 当前已选中"
+  language-click-to-select: "<#FCD34D>点击选择此语言！"

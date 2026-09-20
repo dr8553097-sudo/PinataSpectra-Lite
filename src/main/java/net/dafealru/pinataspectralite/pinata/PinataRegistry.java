@@ -1,7 +1,6 @@
 package net.dafealru.pinataspectralite.pinata;
 
 import net.dafealru.pinataspectralite.PinataPartyLite;
-import net.dafealru.pinataspectralite.finale.DeathAnimationType;
 import net.dafealru.pinataspectralite.loot.LootItem;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -91,20 +90,58 @@ public class PinataRegistry {
         if (ribbons.isEmpty()) ribbons.add(Material.PINK_WOOL);
 
         Color glowColor = parseHexColor(config.getString("glow-color", "#EC4899"));
+
+        // Particles
         Particle aura = matchParticle(config.getString("aura-particle"), Particle.WAX_OFF);
+        int auraCount = config.getInt("aura-particle-count", 1);
+        double auraSpeed = config.getDouble("aura-particle-speed", 0.0);
+
         Particle hit = matchParticle(config.getString("hit-particle"), Particle.FIREWORK);
+        int hitCount = config.getInt("hit-particle-count", 20);
+        double hitSpeed = config.getDouble("hit-particle-speed", 0.1);
+
+        Particle breakPart = matchParticle(config.getString("break-particle"), Particle.CRIT);
+        int breakCount = config.getInt("break-particle-count", 15);
+        double breakSpeed = config.getDouble("break-particle-speed", 0.15);
+
         Particle trail = matchParticle(config.getString("trail-particle"), Particle.CHERRY_LEAVES);
+        int trailCount = config.getInt("trail-particle-count", 2);
+        double trailSpeed = config.getDouble("trail-particle-speed", 0.02);
 
+        // Sounds
         Sound ambient = matchSound(config.getString("ambient-sound", config.getString("ambient_sound")), Sound.BLOCK_AMETHYST_BLOCK_CHIME);
-        Sound hitSound = matchSound(config.getString("hit-sound", config.getString("hit_sound")), Sound.BLOCK_WOOD_HIT);
-        Sound deathSound = matchSound(config.getString("death-sound", config.getString("death_sound")), Sound.UI_TOAST_CHALLENGE_COMPLETE);
+        float ambientVol = (float) config.getDouble("ambient-sound-volume", 1.0);
+        float ambientPitch = (float) config.getDouble("ambient-sound-pitch", 1.0);
 
+        Sound hitSound = matchSound(config.getString("hit-sound", config.getString("hit_sound")), Sound.BLOCK_WOOD_HIT);
+        float hitVol = (float) config.getDouble("hit-sound-volume", 1.8);
+        float hitPitch = (float) config.getDouble("hit-sound-pitch", 1.1);
+
+        Sound breakSound = matchSound(config.getString("break-sound", config.getString("break_sound")), Sound.BLOCK_WOOD_BREAK);
+        float breakVol = (float) config.getDouble("break-sound-volume", 1.8);
+        float breakPitch = (float) config.getDouble("break-sound-pitch", 1.2);
+
+        Sound deathSound = matchSound(config.getString("death-sound", config.getString("death_sound")), Sound.UI_TOAST_CHALLENGE_COMPLETE);
+        float deathVol = (float) config.getDouble("death-sound-volume", 1.5);
+        float deathPitch = (float) config.getDouble("death-sound-pitch", 1.0);
+
+        // Kinetics & Mechanics
         double tpChance = config.getDouble("teleport-chance", 0.15);
         int tpInterval = config.getInt("teleport-interval-seconds", 15);
         double speed = config.getDouble("movement-speed", 1.0);
+        double deformIntensity = config.getDouble("deformation-intensity", 1.0);
+        float voxelScale = (float) config.getDouble("voxel-scale", 0.36);
 
         PinataProfile profile = new PinataProfile(id, displayName, health, primary, secondary, ribbons, glowColor,
-                aura, hit, trail, ambient, hitSound, deathSound, tpChance, tpInterval, speed);
+                aura, auraCount, auraSpeed,
+                hit, hitCount, hitSpeed,
+                breakPart, breakCount, breakSpeed,
+                trail, trailCount, trailSpeed,
+                ambient, ambientVol, ambientPitch,
+                hitSound, hitVol, hitPitch,
+                breakSound, breakVol, breakPitch,
+                deathSound, deathVol, deathPitch,
+                tpChance, tpInterval, speed, deformIntensity, voxelScale);
 
         // Drops
         profile.setCustomHitDrops(loadDropsFromSection(config.getConfigurationSection("drops.hit-drops")));

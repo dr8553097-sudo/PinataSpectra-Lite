@@ -1,6 +1,7 @@
 package net.dafealru.pinataspectralite.config;
 
 import net.dafealru.pinataspectralite.PinataPartyLite;
+import net.dafealru.pinataspectralite.messages.MessageManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -27,14 +28,17 @@ public class ConfigUpdaterEngine {
     public void updateAllConfigs() {
         // 1. Sync standard root configs
         updateFile("config.yml");
-        updateFile("messages.yml");
-        updateFile("messages_es.yml");
 
-        // 2. Sync default profiles in pinatas/
+        // 2. Sync all bundled locales
+        for (String loc : MessageManager.BUNDLED_LOCALES) {
+            updateFile("locales/" + loc + ".yml");
+        }
+
+        // 3. Sync default profiles in pinatas/
         updateFile("pinatas/festive_llama.yml");
         updateFile("pinatas/custom_party.yml");
 
-        // 3. Scan and synchronize any custom admin pinata profiles
+        // 4. Scan and synchronize any custom admin pinata profiles
         syncAllCustomPinataProfiles();
     }
 

@@ -28,19 +28,29 @@ public class PinataBatItem {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return item;
 
-        // Display Name & Lore
-        String name = plugin.getConfig().getString("pinata-bat.display-name", "<gradient:#EC4899:#FCD34D><bold>🪅 BATE FESTIVO DE PIÑATA</bold></gradient>");
+        int bonus = plugin.getConfig().getInt("pinata-bat.bonus-damage", 1);
+
+        // Display Name (English default)
+        String name = plugin.getConfig().getString("pinata-bat.display-name", "<gradient:#EC4899:#FCD34D><bold>🪅 FESTIVE PIÑATA BAT</bold></gradient>");
         meta.setDisplayName(ColorUtils.colorize(name));
 
+        List<String> configLore = plugin.getConfig().getStringList("pinata-bat.lore");
         List<String> lore = new ArrayList<>();
-        lore.add(ColorUtils.colorize("&7¡Un mazo festivo diseñado para"));
-        lore.add(ColorUtils.colorize("&7destrozar piñatas a toda velocidad!"));
-        lore.add("");
-        int bonus = plugin.getConfig().getInt("pinata-bat.bonus-damage", 1);
-        lore.add(ColorUtils.colorize(" &#22C55E✔ &fDaño extra contra Piñata: &#FCD34D+" + bonus + " HP"));
-        lore.add(ColorUtils.colorize(" &#60A5FA✔ &fEfecto de impacto: &#EC4899Confeti & Chispas"));
-        lore.add("");
-        lore.add(ColorUtils.colorize("&d✦ Edición de Evento PinataSpectra ✦"));
+
+        if (configLore != null && !configLore.isEmpty()) {
+            for (String l : configLore) {
+                lore.add(ColorUtils.colorize(l.replace("%bonus%", String.valueOf(bonus))));
+            }
+        } else {
+            // Default English Lore
+            lore.add(ColorUtils.colorize("&7A festive club designed to"));
+            lore.add(ColorUtils.colorize("&7shatter piñatas with maximum speed!"));
+            lore.add("");
+            lore.add(ColorUtils.colorize(" &#22C55E✔ &fBonus Damage vs Piñata: &#FCD34D+" + bonus + " HP"));
+            lore.add(ColorUtils.colorize(" &#60A5FA✔ &fImpact Effect: &#EC4899Confetti & Sparks"));
+            lore.add("");
+            lore.add(ColorUtils.colorize("&d✦ PinataSpectra Event Edition ✦"));
+        }
         meta.setLore(lore);
 
         // PDC Tag

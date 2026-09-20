@@ -116,8 +116,8 @@ public class PinataModel {
         Material secondary = profile.getSecondaryBlock();
         List<Material> ribbons = profile.getRibbonBlocks();
 
-        double spacing = 0.36;
-        float voxelSize = 0.36f;
+        double spacing = profile.getVoxelScale();
+        float voxelSize = profile.getVoxelScale();
 
         // Core 3x3x3 Voxels
         for (int x = -1; x <= 1; x++) {
@@ -134,8 +134,8 @@ public class PinataModel {
         }
 
         // 6 Star Points (Up, Down, North, South, East, West) — Tier 3 (Shatter first)
-        double pt = 0.72;
-        float tipSize = 0.32f;
+        double pt = spacing * 2.0;
+        float tipSize = voxelSize * 0.88f;
         spawnVoxel(new Vector(0, pt, 0), ribbons.get(0 % ribbons.size()), tipSize, 3);
         spawnVoxel(new Vector(0, -pt, 0), ribbons.get(1 % ribbons.size()), tipSize, 3);
         spawnVoxel(new Vector(pt, 0, 0), ribbons.get(2 % ribbons.size()), tipSize, 3);
@@ -210,15 +210,16 @@ public class PinataModel {
 
             // Loud Multi-Layer Cardboard/Wood Snapping Soundscape ("Chasquidos")
             float snapPitch = 1.30f + (float) (ThreadLocalRandom.current().nextDouble() * 0.40);
-            world.playSound(voxelLoc, Sound.BLOCK_WOOD_BREAK, SoundCategory.PLAYERS, 2.0f, snapPitch);
+            if (profile.getBreakSound() != null) {
+                world.playSound(voxelLoc, profile.getBreakSound(), SoundCategory.PLAYERS, profile.getBreakSoundVolume(), profile.getBreakSoundPitch() * snapPitch);
+            }
             world.playSound(voxelLoc, Sound.BLOCK_BAMBOO_WOOD_BREAK, SoundCategory.PLAYERS, 1.8f, snapPitch + 0.2f);
             world.playSound(voxelLoc, Sound.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 1.8f, 1.25f);
             world.playSound(voxelLoc, Sound.BLOCK_DECORATED_POT_SHATTER, SoundCategory.PLAYERS, 1.6f, 1.15f);
-            world.playSound(voxelLoc, Sound.BLOCK_CHAIN_BREAK, SoundCategory.PLAYERS, 1.4f, 1.50f);
 
             // Real Block Break Debris Burst
             world.spawnParticle(Particle.BLOCK, voxelLoc, 30, 0.25, 0.25, 0.25, 0.12, toShatter.material.createBlockData());
-            world.spawnParticle(Particle.CRIT, voxelLoc, 15, 0.3, 0.3, 0.3, 0.18);
+            world.spawnParticle(profile.getBreakParticle(), voxelLoc, profile.getBreakParticleCount(), 0.3, 0.3, 0.3, profile.getBreakParticleSpeed());
             world.spawnParticle(Particle.DUST, voxelLoc, 20, 0.3, 0.3, 0.3, new Particle.DustOptions(Color.fromRGB(255, 200, 50), 1.2f));
 
             // Internal Sweets & Candy Leaking from new Hole Cavity
@@ -235,21 +236,27 @@ public class PinataModel {
         }
 
         // 2. Realistic Angular Deformation & Warping on remaining intact voxels
-        float deformFactor = (float) currentDamagePct;
+        float deformFactor = (float) currentDamagePct * (float) profile.getDeformationIntensity();
         for (VoxelData v : voxelList) {
             if (v.shattered || v.display == null || !v.display.isValid()) continue;
 
-            // Give each intact voxel an outward bend / sag / tilt proportional to damage
-            v.deformYaw = (float) Math.sin(v.unscaledOffset.getX() * 5 + animTicks) * deformFactor * 0.40f;
-            v.deformPitch = (float) Math.cos(v.unscaledOffset.getY() * 5 + animTicks) * deformFactor * 0.40f;
-            v.deformRoll = (float) Math.sin(v.unscaledOffset.getZ() * 5 + animTicks) * deformFactor * 0.40f;
+            // Intense irregular tilt & angular rotation simulating crushed and ripped cardboard
+            float seed = (float) (v.unscaledOffset.getX() * 7.1 + v.unscaledOffset.getY() * 11.3 + v.unscaledOffset.getZ() * 13.7);
+            v.deformYaw = (float) Math.sin(seed + animTicks * 0.1) * deformFactor * 0.75f;
+            v.deformPitch = (float) Math.cos(seed + animTicks * 0.1) * deformFactor * 0.75f;
+            v.deformRoll = (float) Math.sin(seed * 1.5 + animTicks * 0.1) * deformFactor * 0.75f;
 
-            // Outward bulge vector (gaping opening)
-            double bulge = 1.0 + (deformFactor * 0.35);
-            v.currentOffset = v.unscaledOffset.clone().multiply(bulge * currentScale);
+            // Outward bulge and ragged cavity tearing (stretches up to 1.7x outward)
+            double bulge = 1.0 + (deformFactor * 0.65);
+            double sagY = -deformFactor * 0.22; // Physical downward sag of torn pieces
+            v.currentOffset = new Vector(
+                    v.unscaledOffset.getX() * bulge * currentScale,
+                    (v.unscaledOffset.getY() * bulge + sagY) * currentScale,
+                    v.unscaledOffset.getZ() * bulge * currentScale
+            );
 
             // Apply angular transformation to BlockDisplay
-            float scale = v.baseScale * currentScale;
+            float scale = v.baseScale * currentScale * (1.0f - deformFactor * 0.10f);
             v.display.setInterpolationDuration(2);
             v.display.setTransformation(new Transformation(
                     new Vector3f(-scale / 2.0f, -scale / 2.0f, -scale / 2.0f),
