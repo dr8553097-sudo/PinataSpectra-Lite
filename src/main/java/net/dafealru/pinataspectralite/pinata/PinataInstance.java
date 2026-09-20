@@ -375,6 +375,7 @@ public class PinataInstance {
         }
 
         // Dynamic Cracking & Snapping Pitch Modulation
+        double pct = Math.max(0.0, (double) currentHealth / maxHealth);
         float crackPitch = 1.15f + (float) ((1.0 - pct) * 0.55);
 
         // Direct Universal Loud Piñata Smacking Soundscape with Crisp Cardboard/Wood Snaps
