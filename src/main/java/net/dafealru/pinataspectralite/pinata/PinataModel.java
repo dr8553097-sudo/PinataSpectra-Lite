@@ -6,8 +6,13 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
@@ -15,8 +20,15 @@ import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Procedural 3D Voxel Model Engine for PinataSpectra Lite.
+ * Features real-time Display Entities, harmonic pendulum rotation,
+ * dynamic realistic cracking & fracture degradation, hole cavity creation, and snapping SFX.
+ */
 public class PinataModel {
 
     public static final NamespacedKey PDC_KEY = new NamespacedKey("pinataspectralite", "pinata_display");
@@ -24,8 +36,27 @@ public class PinataModel {
     private final PinataPartyLite plugin;
     private final Location baseLocation;
     private final PinataProfile profile;
-    private final List<BlockDisplay> voxelBlocks = new ArrayList<>();
-    private final List<Vector> relativeOffsets = new ArrayList<>();
+
+    private static class VoxelData {
+        final BlockDisplay display;
+        final Vector unscaledOffset;
+        Vector relativeOffset;
+        float baseScale;
+        final int tier; // 3 = star tips (break first), 2 = edges, 1 = faces, 0 = core center (remains last)
+        final Material material;
+        boolean shattered = false;
+
+        VoxelData(BlockDisplay display, Vector offset, float baseScale, int tier, Material material) {
+            this.display = display;
+            this.unscaledOffset = offset.clone();
+            this.relativeOffset = offset.clone();
+            this.baseScale = baseScale;
+            this.tier = tier;
+            this.material = material;
+        }
+    }
+
+    private final List<VoxelData> voxelList = new ArrayList<>();
 
     private Interaction hitbox;
     private TextDisplay nameTag;
@@ -36,13 +67,19 @@ public class PinataModel {
     private double wobbleRoll = 0.0;
     private double wobbleDecay = 0.88;
     private float currentScale = 1.0f;
-    private final List<Float> baseVoxelScales = new ArrayList<>();
-    private final List<Vector> unscaledOffsets = new ArrayList<>();
+
+    // Cached last transforms
+    private Location lastCenter;
+    private double lastYaw = 0.0;
+    private double lastPitch = 0.0;
+    private double lastRoll = 0.0;
+    private int animTicks = 0;
 
     public PinataModel(PinataPartyLite plugin, Location baseLocation, PinataProfile profile) {
         this.plugin = plugin;
         this.baseLocation = baseLocation.clone();
         this.profile = profile;
+        this.lastCenter = baseLocation.clone();
     }
 
     public void spawn() {
@@ -67,7 +104,7 @@ public class PinataModel {
         hitbox.setInteractionWidth(2.0f);
         hitbox.setInteractionHeight(2.4f);
 
-        // 3. Build 3D Voxel Star
+        // 3. Build Tiered 3D Voxel Star
         buildStarVoxelGrid();
     }
 
@@ -76,30 +113,31 @@ public class PinataModel {
         Material secondary = profile.getSecondaryBlock();
         List<Material> ribbons = profile.getRibbonBlocks();
 
-        // Core 3x3x3 voxels
+        // 3x3x3 Core Voxels
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
                 for (int z = -1; z <= 1; z++) {
                     int dist = Math.abs(x) + Math.abs(y) + Math.abs(z);
                     if (dist <= 2) {
                         Material mat = (dist == 0) ? secondary : primary;
-                        spawnVoxel(new Vector(x * 0.28, y * 0.28, z * 0.28), mat, 0.28f);
+                        int tier = (dist == 0) ? 0 : ((dist == 1) ? 1 : 2);
+                        spawnVoxel(new Vector(x * 0.28, y * 0.28, z * 0.28), mat, 0.28f, tier);
                     }
                 }
             }
         }
 
-        // 6 Star Points (Up, Down, North, South, East, West)
+        // 6 Star Points (Up, Down, North, South, East, West) — Tier 3 (Break first with loud snaps)
         double pt = 0.56;
-        spawnVoxel(new Vector(0, pt, 0), ribbons.get(0 % ribbons.size()), 0.24f);
-        spawnVoxel(new Vector(0, -pt, 0), ribbons.get(1 % ribbons.size()), 0.24f);
-        spawnVoxel(new Vector(pt, 0, 0), ribbons.get(2 % ribbons.size()), 0.24f);
-        spawnVoxel(new Vector(-pt, 0, 0), ribbons.get(0 % ribbons.size()), 0.24f);
-        spawnVoxel(new Vector(0, 0, pt), ribbons.get(1 % ribbons.size()), 0.24f);
-        spawnVoxel(new Vector(0, 0, -pt), ribbons.get(2 % ribbons.size()), 0.24f);
+        spawnVoxel(new Vector(0, pt, 0), ribbons.get(0 % ribbons.size()), 0.24f, 3);
+        spawnVoxel(new Vector(0, -pt, 0), ribbons.get(1 % ribbons.size()), 0.24f, 3);
+        spawnVoxel(new Vector(pt, 0, 0), ribbons.get(2 % ribbons.size()), 0.24f, 3);
+        spawnVoxel(new Vector(-pt, 0, 0), ribbons.get(0 % ribbons.size()), 0.24f, 3);
+        spawnVoxel(new Vector(0, 0, pt), ribbons.get(1 % ribbons.size()), 0.24f, 3);
+        spawnVoxel(new Vector(0, 0, -pt), ribbons.get(2 % ribbons.size()), 0.24f, 3);
     }
 
-    private void spawnVoxel(Vector offset, Material material, float scale) {
+    private void spawnVoxel(Vector offset, Material material, float scale, int tier) {
         if (baseLocation.getWorld() == null) return;
         Location loc = baseLocation.clone().add(offset);
         BlockDisplay bd = (BlockDisplay) baseLocation.getWorld().spawnEntity(loc, EntityType.BLOCK_DISPLAY);
@@ -114,10 +152,82 @@ public class PinataModel {
                 new AxisAngle4f(0, 0, 1, 0)
         ));
 
-        voxelBlocks.add(bd);
-        relativeOffsets.add(offset.clone());
-        unscaledOffsets.add(offset.clone());
-        baseVoxelScales.add(scale);
+        voxelList.add(new VoxelData(bd, offset, scale, tier, material));
+    }
+
+    /**
+     * Realistic Fracture & Hole Cavity Engine:
+     * As the piñata takes damage, outer voxels crack, shatter with snapping sounds,
+     * and break apart completely leaving realistic physical holes into the piñata body.
+     */
+    public void applyFractureAndHoles(int currentHealth, int maxHealth, Vector hitDirection, Location currentCenter) {
+        if (voxelList.isEmpty() || currentCenter == null || currentCenter.getWorld() == null) return;
+
+        double healthPct = Math.max(0.0, (double) currentHealth / maxHealth);
+        int totalVoxels = voxelList.size();
+        int targetIntact = Math.max(1, (int) Math.round(totalVoxels * healthPct));
+
+        long intactCount = voxelList.stream().filter(v -> !v.shattered).count();
+
+        World world = currentCenter.getWorld();
+
+        while (intactCount > targetIntact) {
+            // Find highest active tier (3 -> 2 -> 1)
+            int highestTier = -1;
+            for (VoxelData v : voxelList) {
+                if (!v.shattered && v.tier > highestTier) {
+                    highestTier = v.tier;
+                }
+            }
+
+            if (highestTier <= 0) break; // Keep center core intact until death
+
+            // Pick an intact voxel from the highest tier
+            List<VoxelData> candidates = new ArrayList<>();
+            for (VoxelData v : voxelList) {
+                if (!v.shattered && v.tier == highestTier) {
+                    candidates.add(v);
+                }
+            }
+
+            if (candidates.isEmpty()) break;
+
+            Collections.shuffle(candidates);
+            VoxelData toShatter = candidates.get(0);
+            toShatter.shattered = true;
+            intactCount--;
+
+            // Calculate precise world location of the shattering voxel
+            Vector rotatedOffset = rotateVector(toShatter.relativeOffset, lastYaw, lastPitch, lastRoll);
+            Location voxelLoc = currentCenter.clone().add(rotatedOffset);
+
+            // 1. Crisp Wood/Cardboard Snapping Soundscape ("Chasquidos Realistas")
+            float snapPitch = 1.35f + (float) (ThreadLocalRandom.current().nextDouble() * 0.35);
+            world.playSound(voxelLoc, Sound.BLOCK_WOOD_BREAK, SoundCategory.PLAYERS, 1.8f, snapPitch);
+            world.playSound(voxelLoc, Sound.BLOCK_BAMBOO_WOOD_BREAK, SoundCategory.PLAYERS, 1.6f, snapPitch + 0.2f);
+            world.playSound(voxelLoc, Sound.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 1.6f, 1.25f);
+            world.playSound(voxelLoc, Sound.BLOCK_DECORATED_POT_SHATTER, SoundCategory.PLAYERS, 1.4f, 1.15f);
+            world.playSound(voxelLoc, Sound.BLOCK_CHAIN_BREAK, SoundCategory.PLAYERS, 1.2f, 1.45f);
+
+            // 2. Realistic Physical Shard Explosion & Confetti Particles
+            world.spawnParticle(Particle.BLOCK, voxelLoc, 24, 0.2, 0.2, 0.2, 0.10, toShatter.material.createBlockData());
+            world.spawnParticle(Particle.CRIT, voxelLoc, 12, 0.25, 0.25, 0.25, 0.15);
+            world.spawnParticle(Particle.DUST, voxelLoc, 16, 0.25, 0.25, 0.25, new Particle.DustOptions(Color.fromRGB(255, 200, 50), 1.1f));
+
+            // 3. Sweets & Candies Leaking from newly created Hole Cavity
+            world.spawnParticle(Particle.ITEM, voxelLoc, 6, 0.15, 0.15, 0.15, 0.08, new ItemStack(Material.COOKIE));
+            world.spawnParticle(Particle.ITEM, voxelLoc, 6, 0.15, 0.15, 0.15, 0.08, new ItemStack(Material.SUGAR));
+            world.spawnParticle(Particle.ITEM, voxelLoc, 4, 0.15, 0.15, 0.15, 0.08, new ItemStack(Material.HONEYCOMB));
+
+            // 4. Cleanly remove the BlockDisplay entity
+            if (toShatter.display != null && toShatter.display.isValid()) {
+                toShatter.display.remove();
+            }
+
+            // 5. Dynamic Recoil Impulse from fractured segment
+            this.wobblePitch += (ThreadLocalRandom.current().nextDouble() - 0.5) * 0.40;
+            this.wobbleRoll += (ThreadLocalRandom.current().nextDouble() - 0.5) * 0.40;
+        }
     }
 
     public void setScaleAnimated(float targetScale, int durationTicks) {
@@ -130,15 +240,13 @@ public class PinataModel {
         }
 
         // Rescale all 3D block displays
-        for (int i = 0; i < voxelBlocks.size(); i++) {
-            BlockDisplay bd = voxelBlocks.get(i);
-            if (!bd.isValid()) continue;
+        for (VoxelData voxel : voxelList) {
+            if (voxel.shattered || voxel.display == null || !voxel.display.isValid()) continue;
 
-            float baseScale = baseVoxelScales.get(i);
-            float newScale = baseScale * targetScale;
+            float newScale = voxel.baseScale * targetScale;
 
-            bd.setInterpolationDuration(durationTicks);
-            bd.setTransformation(new Transformation(
+            voxel.display.setInterpolationDuration(durationTicks);
+            voxel.display.setTransformation(new Transformation(
                     new Vector3f(-newScale / 2.0f, -newScale / 2.0f, -newScale / 2.0f),
                     new AxisAngle4f(0, 0, 1, 0),
                     new Vector3f(newScale, newScale, newScale),
@@ -146,8 +254,7 @@ public class PinataModel {
             ));
 
             // Update scaled offsets
-            Vector unscaled = unscaledOffsets.get(i);
-            relativeOffsets.set(i, unscaled.clone().multiply(targetScale));
+            voxel.relativeOffset = voxel.unscaledOffset.clone().multiply(targetScale);
         }
     }
 
@@ -170,6 +277,12 @@ public class PinataModel {
     }
 
     public void updatePosition(Location newCenter, double yaw, double pitch, double roll) {
+        this.lastCenter = newCenter.clone();
+        this.lastYaw = yaw;
+        this.lastPitch = pitch;
+        this.lastRoll = roll;
+        this.animTicks++;
+
         // Decay wobble oscillation
         pitch += wobblePitch;
         roll += wobbleRoll;
@@ -188,17 +301,31 @@ public class PinataModel {
             hitbox.teleport(newCenter.clone().add(0, -0.6, 0));
         }
 
-        // Rotate voxel relative offsets around center
-        for (int i = 0; i < voxelBlocks.size(); i++) {
-            BlockDisplay bd = voxelBlocks.get(i);
-            if (!bd.isValid()) continue;
+        // Rotate only active (non-shattered) voxels around center
+        for (VoxelData voxel : voxelList) {
+            if (voxel.shattered || voxel.display == null || !voxel.display.isValid()) continue;
 
-            Vector orig = relativeOffsets.get(i);
-            Vector rotated = rotateVector(orig, yaw, pitch, roll);
+            Vector rotated = rotateVector(voxel.relativeOffset, yaw, pitch, roll);
             Location voxelLoc = newCenter.clone().add(rotated);
 
-            bd.teleport(voxelLoc);
-            bd.setInterpolationDuration(1);
+            voxel.display.teleport(voxelLoc);
+            voxel.display.setInterpolationDuration(1);
+        }
+
+        // Ambient candy and paper particles drifting from exposed holes
+        long shatteredCount = voxelList.stream().filter(v -> v.shattered).count();
+        if (shatteredCount >= 4 && animTicks % 5 == 0 && newCenter.getWorld() != null) {
+            World world = newCenter.getWorld();
+            double ox = (ThreadLocalRandom.current().nextDouble() - 0.5) * 0.4;
+            double oy = (ThreadLocalRandom.current().nextDouble() - 0.5) * 0.3;
+            double oz = (ThreadLocalRandom.current().nextDouble() - 0.5) * 0.4;
+            Location leakLoc = newCenter.clone().add(ox, oy, oz);
+
+            if (ThreadLocalRandom.current().nextDouble() < 0.4) {
+                world.spawnParticle(Particle.ITEM, leakLoc, 1, 0.02, -0.05, 0.02, 0.02, new ItemStack(Material.SUGAR));
+            } else {
+                world.spawnParticle(Particle.CHERRY_LEAVES, leakLoc, 1, 0.05, -0.04, 0.05, 0.01);
+            }
         }
 
         // Render 3D Catenary Particle Hanging Rope
@@ -271,11 +398,12 @@ public class PinataModel {
     }
 
     public void destroy() {
-        for (BlockDisplay bd : voxelBlocks) {
-            if (bd != null && bd.isValid()) bd.remove();
+        for (VoxelData voxel : voxelList) {
+            if (voxel.display != null && voxel.display.isValid()) {
+                voxel.display.remove();
+            }
         }
-        voxelBlocks.clear();
-        relativeOffsets.clear();
+        voxelList.clear();
 
         if (nameTag != null && nameTag.isValid()) nameTag.remove();
         if (infoTag != null && infoTag.isValid()) infoTag.remove();

@@ -355,6 +355,9 @@ public class PinataInstance {
         // Trigger Kinetic Hit Wobble
         model.applyHitWobble(player.getLocation().getDirection());
 
+        // Trigger Realistic Fracture, Snapping Sounds & Voxel Hole Degradation
+        model.applyFractureAndHoles(currentHealth, maxHealth, player.getLocation().getDirection(), loc);
+
         // Spawn 3D Floating Damage Popup
         if (plugin.getDamagePopupEngine() != null) {
             plugin.getDamagePopupEngine().spawnPopup(loc.clone().add(0, 0.6, 0), actualDamage, isVip);
@@ -368,13 +371,17 @@ public class PinataInstance {
             player.setVelocity(push);
         }
 
-        // Direct Universal Loud Piñata Smacking Soundscape
+        // Dynamic Cracking & Snapping Pitch Modulation
+        float crackPitch = 1.15f + (float) ((1.0 - pct) * 0.55);
+
+        // Direct Universal Loud Piñata Smacking Soundscape with Crisp Cardboard/Wood Snaps
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 2.0f, 1.1f);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 2.0f, 1.2f);
         player.playSound(player.getLocation(), Sound.BLOCK_DECORATED_POT_HIT, 2.0f, 0.95f);
-        player.playSound(player.getLocation(), Sound.BLOCK_WOOD_BREAK, 2.0f, 1.25f);
-        player.playSound(player.getLocation(), Sound.ENTITY_ITEM_FRAME_BREAK, 2.0f, 1.35f);
-        player.playSound(player.getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR, 1.5f, 1.35f);
+        player.playSound(player.getLocation(), Sound.BLOCK_WOOD_BREAK, 1.8f, crackPitch);
+        player.playSound(player.getLocation(), Sound.BLOCK_BAMBOO_WOOD_HIT, 1.8f, crackPitch + 0.2f);
+        player.playSound(player.getLocation(), Sound.ENTITY_ITEM_FRAME_BREAK, 1.8f, 1.35f);
+        player.playSound(player.getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR, 1.2f, 1.45f);
 
         if (profile.getHitSound() != null) {
             player.playSound(player.getLocation(), profile.getHitSound(), 2.0f, 1.1f);
@@ -383,12 +390,14 @@ public class PinataInstance {
         if (loc.getWorld() != null) {
             loc.getWorld().playSound(loc, Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.8f, 1.2f);
             loc.getWorld().playSound(loc, Sound.BLOCK_DECORATED_POT_HIT, 1.8f, 0.95f);
-            loc.getWorld().playSound(loc, Sound.BLOCK_WOOD_BREAK, 1.8f, 1.25f);
+            loc.getWorld().playSound(loc, Sound.BLOCK_WOOD_BREAK, 1.8f, crackPitch);
+            loc.getWorld().playSound(loc, Sound.BLOCK_BAMBOO_WOOD_HIT, 1.6f, crackPitch + 0.2f);
             if (profile.getHitSound() != null) {
                 loc.getWorld().playSound(loc, profile.getHitSound(), 1.8f, 1.1f);
             }
             loc.getWorld().spawnParticle(profile.getHitParticle(), loc.clone().add(0, 0.8, 0), 20, 0.35, 0.35, 0.35, 0.1);
-            loc.getWorld().spawnParticle(Particle.CRIT, loc.clone().add(0, 0.8, 0), 10, 0.3, 0.3, 0.3, 0.15);
+            loc.getWorld().spawnParticle(Particle.CRIT, loc.clone().add(0, 0.8, 0), 12, 0.3, 0.3, 0.3, 0.15);
+            loc.getWorld().spawnParticle(Particle.BLOCK, loc.clone().add(0, 0.6, 0), 14, 0.25, 0.25, 0.25, 0.08, profile.getPrimaryBlock().createBlockData());
         }
 
         // Drop physical flying prizes & inventory delivery

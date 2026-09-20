@@ -30,6 +30,24 @@ The math engine calculates multiple kinematic forces throughout the event:
 
 ---
 
+## 💥 Dynamic Fracture & Voxel Cavity Degradation Engine
+
+PinataSpectra Lite features a **physics-driven degradation model** where the piñata physically cracks and breaks open as players deal damage:
+
+```
+  100% HP ──► Pristine 25-Voxel 3D Star
+   75% HP ──► Star Tips Snap Off (Tier 3 Voxels) + Wooden Cracks
+   50% HP ──► Outer Shell Fractures (Tier 2 Voxels) + Hollow Holes Form
+   25% HP ──► Deep Exposed Cavities + Sweets & Paper Drifting Out
+    0% HP ──► Climax Supernova Radial Detonation & Loot Burst
+```
+
+* **Physical Hole Formation:** As health declines, the 25 individual `BlockDisplay` voxels shatter sequentially from the outer star tips inward. Each shattered voxel is completely removed from the scene, exposing real physical gaps and cavities through the body of the piñata.
+* **Crisp Cardboard & Wood Snapping Audio ("Chasquidos"):** Every fracture triggers layered snapping soundscapes (`BLOCK_WOOD_BREAK`, `BLOCK_BAMBOO_WOOD_BREAK`, `BLOCK_DECORATED_POT_SHATTER`, and `ENTITY_ITEM_BREAK`) with pitch modulation scaling up as the structure weakens.
+* **Internal Sweet & Debris Leakage:** Once holes form, internal candy (`COOKIE`, `SUGAR`, `HONEYCOMB`) and paper flakes drift out of the hollow core between strikes.
+
+---
+
 ## ⛰️ Smart Ground Clamping (`findSafeGroundY`)
 
 A common issue in warping events is entities glitching underground or floating 20 blocks up when teleporting onto hilly terrain.
