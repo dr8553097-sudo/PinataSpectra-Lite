@@ -9,7 +9,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 /**
@@ -72,13 +71,7 @@ public class ConfigUpdaterEngine {
             int jarVersion = jarConfig.getInt("settings.config-version", jarConfig.getInt("config-version", 1));
 
             if (missingKeys > 0 || diskVersion < jarVersion) {
-                // 1. Create a safe backup before migration
-                File backupFile = new File(diskFile.getParentFile(), diskFile.getName() + ".bak");
-                try {
-                    Files.copy(diskFile.toPath(), backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException ignored) {}
-
-                // 2. Merge missing keys into disk configuration
+                // 1. Merge missing keys into disk configuration
                 mergeSections(jarConfig, diskConfig);
                 if (jarVersion > diskVersion) {
                     diskConfig.set("settings.config-version", jarVersion);
