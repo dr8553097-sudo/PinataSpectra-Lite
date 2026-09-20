@@ -809,41 +809,18 @@ public class PinataInstance {
             default -> "✨";
         };
 
-        // Dynamic Phase badge
-        String phaseBadge = switch (currentPhase) {
-            case PHASE_1_STANDARD -> "<gradient:#EC4899:#FCD34D><bold>" + spark + " FIESTA</bold></gradient>";
-            case PHASE_2_MICRO_SPEED -> "<gradient:#F59E0B:#EF4444><bold>⚡ OVERDRIVE</bold></gradient>";
-            case PHASE_3_CHAOTIC_SHIFTER -> "<gradient:#A855F7:#EC4899><bold>🌀 FRENZY</bold></gradient>";
-        };
-
-        // Health gradient
+        // Compact Health display
         String healthGrad = (percent > 60)
-                ? "<gradient:#22C55E:#38BDF8><bold>"
-                : (percent > 30 ? "<gradient:#FCD34D:#F59E0B><bold>" : "<gradient:#EF4444:#DC2626><bold>");
-
-        // Top MVP Leader in title
-        String mvpInfo = "";
-        if (!hitCounters.isEmpty()) {
-            UUID topUuid = hitCounters.entrySet().stream()
-                    .max(Map.Entry.comparingByValue())
-                    .map(Map.Entry::getKey)
-                    .orElse(null);
-            if (topUuid != null) {
-                Player topPlayer = Bukkit.getPlayer(topUuid);
-                String topName = topPlayer != null ? topPlayer.getName() : "Leader";
-                int topHits = hitCounters.get(topUuid);
-                mvpInfo = " <dark_gray>| <#FCD34D>👑 <white>" + topName + " <gray>(" + topHits + ")";
-            }
-        }
+                ? "<#22C55E><bold>❤ " + percent + "%</bold>"
+                : (percent > 30 ? "<#FCD34D><bold>❤ " + percent + "%</bold>" : "<#EF4444><bold>❤ " + percent + "%</bold>");
 
         // Urgency countdown timer animation
         String timeDisplay = (remainingSeconds <= 30 && (ticksAlive % 10 < 5))
-                ? "<gradient:#EF4444:#DC2626><bold>⏳ " + formattedTime + "</bold></gradient>"
-                : "<yellow><bold>⏳ " + formattedTime + "</bold></yellow>";
+                ? "<#EF4444><bold>⏳ " + formattedTime + "</bold>"
+                : "<yellow><bold>⏳ " + formattedTime + "</bold>";
 
-        String title = phaseBadge + " <dark_gray>› " + profile.getDisplayName() +
-                " <dark_gray>| " + healthGrad + "❤ " + percent + "% <dark_gray>(" + currentHealth + "/" + maxHealth + ")</bold></gradient>" +
-                mvpInfo + " <dark_gray>| " + timeDisplay;
+        // Compact, clean & Bedrock/Mobile-friendly title (No wrapping on small screens)
+        String title = spark + " " + profile.getDisplayName() + " <dark_gray>• " + healthGrad + " <dark_gray>• " + timeDisplay;
 
         bossBar.setTitle(ColorUtils.colorize(title));
     }
