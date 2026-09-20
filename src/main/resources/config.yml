@@ -67,8 +67,8 @@ mechanics:
   phases:
     # Enable dynamic phase transitions (Micro-speed & Evasive Blink)
     enabled: true
-    # Miniature scale in Phase 2 (66% - 33% HP)
-    phase2-scale: 0.65
+    # Scale in Phase 2 (66% - 33% HP)
+    phase2-scale: 0.95
     # Hits required to trigger an evasive acrobatic teleport in Phase 3 (33% - 0% HP)
     phase3-blink-hits: 3
 

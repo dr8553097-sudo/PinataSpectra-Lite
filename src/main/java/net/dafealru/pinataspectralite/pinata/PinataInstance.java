@@ -450,7 +450,7 @@ public class PinataInstance {
         this.currentPhase = PinataPhase.PHASE_2_MICRO_SPEED;
         this.phaseSpeedMultiplier = 1.85;
 
-        float targetScale = (float) plugin.getConfig().getDouble("mechanics.phases.phase2-scale", 0.65);
+        float targetScale = (float) plugin.getConfig().getDouble("mechanics.phases.phase2-scale", 0.95);
         model.setScaleAnimated(targetScale, 20);
 
         if (bossBar != null) {

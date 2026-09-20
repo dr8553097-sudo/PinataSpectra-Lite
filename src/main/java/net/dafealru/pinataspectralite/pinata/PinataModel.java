@@ -175,12 +175,15 @@ public class PinataModel {
         this.currentDamagePct = 1.0 - healthPct;
 
         int totalVoxels = voxelList.size();
-        int targetIntact = Math.max(1, (int) Math.round(totalVoxels * healthPct));
+        // Limit max shattered voxels to ~30% (5-6 voxels max) so the piñata ALWAYS retains its full recognizable shape!
+        int maxShatter = Math.min(6, (int) Math.floor(totalVoxels * 0.32));
+        int targetIntact = totalVoxels - (int) Math.round(maxShatter * this.currentDamagePct);
+        targetIntact = Math.max(totalVoxels - maxShatter, targetIntact);
 
         long intactCount = voxelList.stream().filter(v -> !v.shattered).count();
         World world = currentCenter.getWorld();
 
-        // 1. Shatter outer voxels to create physical holes
+        // 1. Shatter outer tips/edges progressively to create physical holes without destroying the silhouette
         while (intactCount > targetIntact) {
             int highestTier = -1;
             for (VoxelData v : voxelList) {
@@ -189,7 +192,7 @@ public class PinataModel {
                 }
             }
 
-            if (highestTier <= 0) break; // Keep center core intact until death
+            if (highestTier <= 1) break; // Always preserve the main core body and frame!
 
             List<VoxelData> candidates = new ArrayList<>();
             for (VoxelData v : voxelList) {
@@ -231,8 +234,8 @@ public class PinataModel {
                 toShatter.display.remove();
             }
 
-            this.wobblePitch += (ThreadLocalRandom.current().nextDouble() - 0.5) * 0.50;
-            this.wobbleRoll += (ThreadLocalRandom.current().nextDouble() - 0.5) * 0.50;
+            this.wobblePitch += (ThreadLocalRandom.current().nextDouble() - 0.5) * 0.45;
+            this.wobbleRoll += (ThreadLocalRandom.current().nextDouble() - 0.5) * 0.45;
         }
 
         // 2. Realistic Angular Deformation & Warping on remaining intact voxels
@@ -240,23 +243,23 @@ public class PinataModel {
         for (VoxelData v : voxelList) {
             if (v.shattered || v.display == null || !v.display.isValid()) continue;
 
-            // Intense irregular tilt & angular rotation simulating crushed and ripped cardboard
-            float seed = (float) (v.unscaledOffset.getX() * 7.1 + v.unscaledOffset.getY() * 11.3 + v.unscaledOffset.getZ() * 13.7);
-            v.deformYaw = (float) Math.sin(seed + animTicks * 0.1) * deformFactor * 0.75f;
-            v.deformPitch = (float) Math.cos(seed + animTicks * 0.1) * deformFactor * 0.75f;
-            v.deformRoll = (float) Math.sin(seed * 1.5 + animTicks * 0.1) * deformFactor * 0.75f;
+            // Organic angular tilt simulating crushed and bent cardboard
+            float seed = (float) (v.unscaledOffset.getX() * 5.7 + v.unscaledOffset.getY() * 8.3 + v.unscaledOffset.getZ() * 11.9);
+            v.deformYaw = (float) Math.sin(seed + animTicks * 0.08) * deformFactor * 0.45f;
+            v.deformPitch = (float) Math.cos(seed + animTicks * 0.08) * deformFactor * 0.45f;
+            v.deformRoll = (float) Math.sin(seed * 1.3 + animTicks * 0.08) * deformFactor * 0.45f;
 
-            // Outward bulge and ragged cavity tearing (stretches up to 1.7x outward)
-            double bulge = 1.0 + (deformFactor * 0.65);
-            double sagY = -deformFactor * 0.22; // Physical downward sag of torn pieces
+            // Outward bulge and ragged cavity tearing without losing proportions
+            double bulge = 1.0 + (deformFactor * 0.25);
+            double sagY = -deformFactor * 0.15; // Physical downward sag of torn pieces
             v.currentOffset = new Vector(
                     v.unscaledOffset.getX() * bulge * currentScale,
                     (v.unscaledOffset.getY() * bulge + sagY) * currentScale,
                     v.unscaledOffset.getZ() * bulge * currentScale
             );
 
-            // Apply angular transformation to BlockDisplay
-            float scale = v.baseScale * currentScale * (1.0f - deformFactor * 0.10f);
+            // Apply angular transformation to BlockDisplay (retains full readable volume)
+            float scale = v.baseScale * currentScale;
             v.display.setInterpolationDuration(2);
             v.display.setTransformation(new Transformation(
                     new Vector3f(-scale / 2.0f, -scale / 2.0f, -scale / 2.0f),
