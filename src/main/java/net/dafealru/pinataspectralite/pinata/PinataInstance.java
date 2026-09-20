@@ -386,32 +386,32 @@ public class PinataInstance {
 
             if (launchEnabled && (now - lastLaunch >= launchCooldown)) {
                 lastLaunchTimes.put(player.getUniqueId(), now);
-                // 🎈 Controlled Upward Bounce Jump (smooth 2-3 blocks, fun and bouncy)
-                double vertLaunch = plugin.getConfig().getDouble("physics.knockback.upward-bounce.vertical-height", 0.52);
-                if (isVip) vertLaunch += 0.08;
+                // 🎈 Controlled Higher Upward Bounce Jump (about 4-5 blocks high, bouncy fiesta style)
+                double vertLaunch = plugin.getConfig().getDouble("physics.knockback.upward-bounce.vertical-height", 0.78);
+                if (isVip) vertLaunch += 0.12;
                 if (push.lengthSquared() > 0.0001) {
-                    push.normalize().multiply(0.25);
+                    push.normalize().multiply(0.35);
                 }
                 push.setY(vertLaunch);
                 player.setVelocity(push);
 
-                player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.2f, 1.4f);
-                player.playSound(player.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1.4f, 1.3f);
-                player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 0.5, 0), 8, 0.25, 0.25, 0.25, 0.05);
-                player.getWorld().spawnParticle(Particle.CHERRY_LEAVES, player.getLocation().add(0, 0.5, 0), 8, 0.25, 0.25, 0.25, 0.05);
+                player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.4f, 1.3f);
+                player.playSound(player.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1.5f, 1.3f);
+                player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 0.5, 0), 12, 0.3, 0.3, 0.3, 0.08);
+                player.getWorld().spawnParticle(Particle.CHERRY_LEAVES, player.getLocation().add(0, 0.5, 0), 10, 0.3, 0.3, 0.3, 0.05);
                 player.sendActionBar(ColorUtils.colorizeComponent("<gradient:#38BDF8:#818CF8><bold>🎈 ¡FIESTA BOUNCE! 🎈</bold></gradient>"));
             } else {
-                // 💥 Retaliatory Horizontal Pushback (pushes player back after hitting multiple times)
-                double horizForce = plugin.getConfig().getDouble("physics.knockback.horizontal-force", 0.65);
-                double vertForce = plugin.getConfig().getDouble("physics.knockback.vertical-force", 0.20);
+                // 💥 Retaliatory Strong Horizontal Pushback (pushes player back with good impact after hitting multiple times)
+                double horizForce = plugin.getConfig().getDouble("physics.knockback.horizontal-force", 1.15);
+                double vertForce = plugin.getConfig().getDouble("physics.knockback.vertical-force", 0.38);
                 if (isVip) {
-                    horizForce += 0.15;
-                    vertForce += 0.05;
+                    horizForce += 0.25;
+                    vertForce += 0.08;
                 }
                 if (push.lengthSquared() > 0.0001) {
                     push.normalize().multiply(horizForce).setY(vertForce);
                     player.setVelocity(push);
-                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.1f, 1.0f);
+                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.3f, 1.0f);
                     player.sendActionBar(ColorUtils.colorizeComponent("<gradient:#F59E0B:#EF4444><bold>💥 ¡PIÑATA PUSHBACK! 💥</bold></gradient>"));
                 }
             }

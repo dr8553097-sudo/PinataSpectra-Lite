@@ -129,14 +129,14 @@ physics:
     # Consecutive hits required before the piñata pushes the player back (e.g. 5 hits)
     # Individual hits (1..4) have 0 pushback so players can hit freely
     combo-threshold: 5
-    # Force of retaliatory pushback
-    horizontal-force: 0.65
-    vertical-force: 0.20
-    # Upward bounce launch (controlled fun jump, not blasting into clouds)
+    # Force of retaliatory pushback (increased for satisfying knockback impact)
+    horizontal-force: 1.15
+    vertical-force: 0.38
+    # Upward bounce launch (higher bouncy jump)
     upward-bounce:
       enabled: true
       cooldown-seconds: 10
-      vertical-height: 0.52
+      vertical-height: 0.78
 
 # Sound Effects & Vibrations
 audio:
