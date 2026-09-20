@@ -51,6 +51,12 @@ public class PinataPartyLite extends JavaPlugin {
         this.messageManager = new net.dafealru.pinataspectralite.messages.MessageManager(this);
         this.cleanEngine = new net.dafealru.pinataspectralite.clean.PinataCleanEngine(this);
 
+        // Auto-purge any lingering orphan displays/hitboxes on startup
+        int purgedOnBoot = this.cleanEngine.cleanOrphansOnly();
+        if (purgedOnBoot > 0) {
+            getLogger().info("[CleanEngine] Automatically cleared " + purgedOnBoot + " lingering entity/entities from previous session.");
+        }
+
         this.vaultHook = new VaultHook(this);
         this.lootManager = new LootManager(this);
         this.grandFinaleEngine = new GrandFinaleEngine(this);
@@ -113,13 +119,16 @@ public class PinataPartyLite extends JavaPlugin {
             activeInstance.remove();
             activeInstance = null;
         }
+        if (cleanEngine != null) {
+            cleanEngine.cleanAll();
+        }
         if (pinataScheduler != null) {
             pinataScheduler.stop();
         }
         if (databaseManager != null) {
             databaseManager.close();
         }
-        getLogger().info("PinataSpectra Lite safely disabled.");
+        getLogger().info("PinataSpectra Lite safely disabled and entities cleaned.");
     }
 
     public void spawnPinata(Location location, PinataProfile profile) {

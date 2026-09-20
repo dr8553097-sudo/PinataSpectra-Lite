@@ -366,12 +366,37 @@ public class PinataInstance {
             plugin.getDamagePopupEngine().spawnPopup(loc.clone().add(0, 0.6, 0), actualDamage, isVip);
         }
 
-        // Reactive Knockback impulse on player (PinataParty style)
+        // Reactive High-Energy Knockback impulse on player (Launches into the air with fun fiesta physics)
         Vector push = player.getLocation().toVector().subtract(loc.toVector());
         push.setY(0);
         if (push.lengthSquared() > 0.0001) {
-            push.normalize().multiply(0.42).setY(0.20);
+            double horizForce = isVip ? 1.25 : 0.92;
+            double vertForce = isVip ? 0.62 : 0.48;
+            push.normalize().multiply(horizForce).setY(vertForce);
             player.setVelocity(push);
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.4f, 1.1f);
+        }
+
+        // 15% Chance to trigger a playful Festive Spin-Warp (Short nearby teleport 4 to 7.5 blocks away)
+        if (ThreadLocalRandom.current().nextDouble() < 0.15 && player.getWorld() != null) {
+            double angle = ThreadLocalRandom.current().nextDouble(0, 2 * Math.PI);
+            double dist = ThreadLocalRandom.current().nextDouble(4.5, 7.5);
+            double targetX = loc.getX() + Math.cos(angle) * dist;
+            double targetZ = loc.getZ() + Math.sin(angle) * dist;
+            double safeY = findSafeGroundY(player.getWorld(), targetX, targetZ, player.getLocation().getY());
+            Location warpTarget = new Location(player.getWorld(), targetX, safeY, targetZ, player.getLocation().getYaw() + 180f, player.getLocation().getPitch());
+
+            player.getWorld().spawnParticle(Particle.PORTAL, player.getLocation().add(0, 1, 0), 25, 0.4, 0.4, 0.4, 0.1);
+            player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 1, 0), 12, 0.3, 0.3, 0.3, 0.05);
+
+            player.teleport(warpTarget);
+
+            player.getWorld().spawnParticle(Particle.PORTAL, warpTarget.clone().add(0, 1, 0), 25, 0.4, 0.4, 0.4, 0.1);
+            player.getWorld().spawnParticle(Particle.CHERRY_LEAVES, warpTarget.clone().add(0, 1, 0), 15, 0.4, 0.4, 0.4, 0.05);
+            player.playSound(warpTarget, Sound.ITEM_CHORUS_FRUIT_TELEPORT, 1.4f, 1.3f);
+            player.playSound(warpTarget, Sound.ENTITY_ENDERMAN_TELEPORT, 1.2f, 1.4f);
+
+            player.sendActionBar(ColorUtils.colorizeComponent("<gradient:#EC4899:#FCD34D><bold>🌀 ¡FIESTA SPIN-WARP! 🌀</bold></gradient>"));
         }
 
         // Dynamic Cracking & Snapping Pitch Modulation
@@ -426,9 +451,9 @@ public class PinataInstance {
 
         for (Player p : world.getPlayers()) {
             if (p.getLocation().distance(loc) <= radius) {
-                Vector push = p.getLocation().toVector().subtract(loc.toVector()).normalize().setY(0.42);
-                p.setVelocity(push.multiply(force));
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.0f, 1.0f);
+                Vector push = p.getLocation().toVector().subtract(loc.toVector()).normalize().multiply(force * 1.35).setY(0.70);
+                p.setVelocity(push);
+                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.2f, 0.9f);
                 p.sendActionBar(ColorUtils.colorizeComponent("<gradient:#EF4444:#DC2626><bold>⚠ PIÑATA SHOCKWAVE BLAST! ⚠</bold></gradient>"));
             }
         }
