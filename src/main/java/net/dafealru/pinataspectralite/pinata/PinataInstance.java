@@ -206,6 +206,19 @@ public class PinataInstance {
                         world.spawnParticle(Particle.WAX_OFF, currentLoc.clone().add(0, 0.6, 0), 16, 0.4, 0.4, 0.4, 0.08);
                         world.spawnParticle(Particle.FIREWORK, currentLoc.clone().add(0, 0.8, 0), 8, 0.3, 0.3, 0.3, 0.05);
                     }
+
+                    // 4. Continuous Ambient Kinetic Aura & Collision Nudge
+                    if (ticksAlive % 4 == 0) {
+                        for (Player p : world.getPlayers()) {
+                            if (p.getGameMode() != org.bukkit.GameMode.SPECTATOR && p.getLocation().distanceSquared(currentLoc) <= 4.5) {
+                                Vector nudge = p.getLocation().toVector().subtract(currentLoc.toVector()).setY(0);
+                                if (nudge.lengthSquared() > 0.001) {
+                                    nudge.normalize().multiply(0.22).setY(0.12);
+                                    p.setVelocity(p.getVelocity().add(nudge));
+                                }
+                            }
+                        }
+                    }
                 }
 
                 // Add newly joined players to bossbar
@@ -366,37 +379,60 @@ public class PinataInstance {
             plugin.getDamagePopupEngine().spawnPopup(loc.clone().add(0, 0.6, 0), actualDamage, isVip);
         }
 
-        // Reactive High-Energy Knockback impulse on player (Launches into the air with fun fiesta physics)
+        // Dynamic Rhythm Physics & Launch Engine:
+        // 1) Super Sky Trampoline Launch ("Te lance para arriba" every 4 hits or 22% chance)
+        // 2) Festive Spin-Warp (12% chance or combo % 7)
+        // 3) Smooth Regular Recoil (Gentle nudge so player can comfortably chain hits)
         Vector push = player.getLocation().toVector().subtract(loc.toVector());
         push.setY(0);
-        if (push.lengthSquared() > 0.0001) {
-            double horizForce = isVip ? 1.25 : 0.92;
-            double vertForce = isVip ? 0.62 : 0.48;
-            push.normalize().multiply(horizForce).setY(vertForce);
+
+        int playerHits = hitCounters.getOrDefault(player.getUniqueId(), 1);
+
+        if (playerHits % 4 == 0 || ThreadLocalRandom.current().nextDouble() < 0.22) {
+            // 🚀 SUPER FIESTA LAUNCH (High upward sky bounce)
+            if (push.lengthSquared() > 0.0001) {
+                push.normalize().multiply(0.35);
+            }
+            double vertLaunch = isVip ? 1.15 : 0.98;
+            push.setY(vertLaunch);
             player.setVelocity(push);
-            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.4f, 1.1f);
-        }
 
-        // 15% Chance to trigger a playful Festive Spin-Warp (Short nearby teleport 4 to 7.5 blocks away)
-        if (ThreadLocalRandom.current().nextDouble() < 0.15 && player.getWorld() != null) {
-            double angle = ThreadLocalRandom.current().nextDouble(0, 2 * Math.PI);
-            double dist = ThreadLocalRandom.current().nextDouble(4.5, 7.5);
-            double targetX = loc.getX() + Math.cos(angle) * dist;
-            double targetZ = loc.getZ() + Math.sin(angle) * dist;
-            double safeY = findSafeGroundY(player.getWorld(), targetX, targetZ, player.getLocation().getY());
-            Location warpTarget = new Location(player.getWorld(), targetX, safeY, targetZ, player.getLocation().getYaw() + 180f, player.getLocation().getPitch());
+            player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.6f, 1.2f);
+            player.playSound(player.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1.5f, 1.4f);
+            player.playSound(player.getLocation(), Sound.ENTITY_WIND_CHARGE_WIND_BURST, 1.2f, 1.1f);
 
-            player.getWorld().spawnParticle(Particle.PORTAL, player.getLocation().add(0, 1, 0), 25, 0.4, 0.4, 0.4, 0.1);
-            player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 1, 0), 12, 0.3, 0.3, 0.3, 0.05);
+            player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 0.5, 0), 12, 0.3, 0.3, 0.3, 0.08);
+            player.getWorld().spawnParticle(Particle.CHERRY_LEAVES, player.getLocation().add(0, 0.5, 0), 10, 0.3, 0.3, 0.3, 0.05);
+            player.sendActionBar(ColorUtils.colorizeComponent("<gradient:#38BDF8:#EC4899><bold>🚀 ¡SUPER FIESTA LAUNCH! 🚀</bold></gradient>"));
+        } else if (playerHits % 7 == 0 || ThreadLocalRandom.current().nextDouble() < 0.12) {
+            // 🌀 FESTIVE SPIN-WARP (Short nearby teleport 4 to 7 blocks away)
+            if (player.getWorld() != null) {
+                double angle = ThreadLocalRandom.current().nextDouble(0, 2 * Math.PI);
+                double dist = ThreadLocalRandom.current().nextDouble(4.0, 6.5);
+                double targetX = loc.getX() + Math.cos(angle) * dist;
+                double targetZ = loc.getZ() + Math.sin(angle) * dist;
+                double safeY = findSafeGroundY(player.getWorld(), targetX, targetZ, player.getLocation().getY());
+                Location warpTarget = new Location(player.getWorld(), targetX, safeY, targetZ, player.getLocation().getYaw() + 180f, player.getLocation().getPitch());
 
-            player.teleport(warpTarget);
+                player.getWorld().spawnParticle(Particle.PORTAL, player.getLocation().add(0, 1, 0), 25, 0.4, 0.4, 0.4, 0.1);
+                player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 1, 0), 12, 0.3, 0.3, 0.3, 0.05);
 
-            player.getWorld().spawnParticle(Particle.PORTAL, warpTarget.clone().add(0, 1, 0), 25, 0.4, 0.4, 0.4, 0.1);
-            player.getWorld().spawnParticle(Particle.CHERRY_LEAVES, warpTarget.clone().add(0, 1, 0), 15, 0.4, 0.4, 0.4, 0.05);
-            player.playSound(warpTarget, Sound.ITEM_CHORUS_FRUIT_TELEPORT, 1.4f, 1.3f);
-            player.playSound(warpTarget, Sound.ENTITY_ENDERMAN_TELEPORT, 1.2f, 1.4f);
+                player.teleport(warpTarget);
 
-            player.sendActionBar(ColorUtils.colorizeComponent("<gradient:#EC4899:#FCD34D><bold>🌀 ¡FIESTA SPIN-WARP! 🌀</bold></gradient>"));
+                player.getWorld().spawnParticle(Particle.PORTAL, warpTarget.clone().add(0, 1, 0), 25, 0.4, 0.4, 0.4, 0.1);
+                player.getWorld().spawnParticle(Particle.CHERRY_LEAVES, warpTarget.clone().add(0, 1, 0), 15, 0.4, 0.4, 0.4, 0.05);
+                player.playSound(warpTarget, Sound.ITEM_CHORUS_FRUIT_TELEPORT, 1.4f, 1.3f);
+                player.playSound(warpTarget, Sound.ENTITY_ENDERMAN_TELEPORT, 1.2f, 1.4f);
+
+                player.sendActionBar(ColorUtils.colorizeComponent("<gradient:#EC4899:#FCD34D><bold>🌀 ¡FIESTA SPIN-WARP! 🌀</bold></gradient>"));
+            }
+        } else {
+            // Regular hit: gentle recoil so player stays in range and can keep hitting smoothly
+            if (push.lengthSquared() > 0.0001) {
+                push.normalize().multiply(0.16).setY(0.08);
+                player.setVelocity(player.getVelocity().add(push));
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.5f, 1.3f);
+            }
         }
 
         // Dynamic Cracking & Snapping Pitch Modulation
