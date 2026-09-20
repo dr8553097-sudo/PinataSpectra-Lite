@@ -139,8 +139,8 @@ public class PinataInstance {
 
                 ticksAlive++;
 
-                // Update countdown timer in BossBar every second (20 ticks)
-                if (ticksAlive % 20 == 0) {
+                // Animate BossBar sparkles, MVP tracker, and timer every 10 ticks (0.5s)
+                if (ticksAlive % 10 == 0) {
                     updateBossBarTitle();
                 }
 
@@ -781,11 +781,70 @@ public class PinataInstance {
         String formattedTime = String.format("%d:%02d", minutes, seconds);
 
         int percent = (int) Math.ceil(((double) currentHealth / maxHealth) * 100);
-        String healthCol = (percent > 60) ? "<gradient:#22C55E:#38BDF8><bold>" : (percent > 30 ? "<gradient:#FCD34D:#F59E0B><bold>" : "<gradient:#EF4444:#DC2626><bold>");
-        String timeCol = (remainingSeconds <= 15) ? "<gradient:#EF4444:#DC2626><bold>" : "<yellow><bold>";
+        double progress = Math.max(0.0, Math.min(1.0, (double) currentHealth / maxHealth));
+        bossBar.setProgress(progress);
 
-        bossBar.setProgress(Math.max(0.0, Math.min(1.0, (double) currentHealth / maxHealth)));
-        String title = profile.getDisplayName() + " <dark_gray>| " + healthCol + "❤ " + percent + "%</bold></gradient> <dark_gray>| " + timeCol + "⏳ " + formattedTime + "</bold></yellow>";
+        // Dynamic BarColor and BarStyle based on Phase & Health
+        switch (currentPhase) {
+            case PHASE_3_CHAOTIC_SHIFTER -> {
+                bossBar.setColor(BarColor.PURPLE);
+                bossBar.setStyle(BarStyle.SEGMENTED_6);
+            }
+            case PHASE_2_MICRO_SPEED -> {
+                bossBar.setColor(BarColor.YELLOW);
+                bossBar.setStyle(BarStyle.SEGMENTED_10);
+            }
+            default -> {
+                bossBar.setColor(percent > 50 ? BarColor.PINK : BarColor.YELLOW);
+                bossBar.setStyle(BarStyle.SEGMENTED_20);
+            }
+        }
+
+        // Oscillating animated sparkles
+        int animStep = (ticksAlive / 10) % 4;
+        String spark = switch (animStep) {
+            case 0 -> "✦";
+            case 1 -> "★";
+            case 2 -> "✦";
+            default -> "✨";
+        };
+
+        // Dynamic Phase badge
+        String phaseBadge = switch (currentPhase) {
+            case PHASE_1_STANDARD -> "<gradient:#EC4899:#FCD34D><bold>" + spark + " FIESTA</bold></gradient>";
+            case PHASE_2_MICRO_SPEED -> "<gradient:#F59E0B:#EF4444><bold>⚡ OVERDRIVE</bold></gradient>";
+            case PHASE_3_CHAOTIC_SHIFTER -> "<gradient:#A855F7:#EC4899><bold>🌀 FRENZY</bold></gradient>";
+        };
+
+        // Health gradient
+        String healthGrad = (percent > 60)
+                ? "<gradient:#22C55E:#38BDF8><bold>"
+                : (percent > 30 ? "<gradient:#FCD34D:#F59E0B><bold>" : "<gradient:#EF4444:#DC2626><bold>");
+
+        // Top MVP Leader in title
+        String mvpInfo = "";
+        if (!hitCounters.isEmpty()) {
+            UUID topUuid = hitCounters.entrySet().stream()
+                    .max(Map.Entry.comparingByValue())
+                    .map(Map.Entry::getKey)
+                    .orElse(null);
+            if (topUuid != null) {
+                Player topPlayer = Bukkit.getPlayer(topUuid);
+                String topName = topPlayer != null ? topPlayer.getName() : "Leader";
+                int topHits = hitCounters.get(topUuid);
+                mvpInfo = " <dark_gray>| <#FCD34D>👑 <white>" + topName + " <gray>(" + topHits + ")";
+            }
+        }
+
+        // Urgency countdown timer animation
+        String timeDisplay = (remainingSeconds <= 30 && (ticksAlive % 10 < 5))
+                ? "<gradient:#EF4444:#DC2626><bold>⏳ " + formattedTime + "</bold></gradient>"
+                : "<yellow><bold>⏳ " + formattedTime + "</bold></yellow>";
+
+        String title = phaseBadge + " <dark_gray>› " + profile.getDisplayName() +
+                " <dark_gray>| " + healthGrad + "❤ " + percent + "% <dark_gray>(" + currentHealth + "/" + maxHealth + ")</bold></gradient>" +
+                mvpInfo + " <dark_gray>| " + timeDisplay;
+
         bossBar.setTitle(ColorUtils.colorize(title));
     }
 
