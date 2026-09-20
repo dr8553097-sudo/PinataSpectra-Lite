@@ -44,6 +44,7 @@ bat:
   received: "<#22C55E>✔ You received the <gradient:#EC4899:#FCD34D><bold>Festive Piñata Bat</bold></gradient><#22C55E>!"
   given: "<#22C55E>✔ Festive Bat given to <#FCD34D>%player%<#22C55E>."
   given-all: "<#22C55E>✔ Distributed Festive Piñata Bats to all <#FCD34D>%count% <#22C55E>online players!"
+  disabled: "<#EF4444>The Festive Piñata Bat module is currently disabled."
   name: "<gradient:#EC4899:#FCD34D><bold>🪅 FESTIVE PIÑATA BAT</bold></gradient>"
   lore-1: "&7A festive club designed to"
   lore-2: "&7shatter piñatas with maximum speed!"
@@ -84,6 +85,7 @@ pool:
 
 vote:
   progress: "<#FCD34D>🗳 <gray>Community vote goal progress:</gray> <#22C55E>%current% <dark_gray>/</dark_gray> <#FCD34D>%target% <#8B5CF6>(%percent%%)"
+  disabled: "<#EF4444>The Community Vote Goal system is currently disabled."
 
 gui:
   language-title: "<gradient:#8B5CF6:#EC4899><bold>SELECT YOUR LANGUAGE</bold></gradient>"

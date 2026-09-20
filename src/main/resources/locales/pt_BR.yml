@@ -37,6 +37,7 @@ bat:
   received: "<#22C55E>✔ Você recebeu o <gradient:#EC4899:#FCD34D><bold>Taco Festivo de Piñata</bold></gradient><#22C55E>!"
   given: "<#22C55E>✔ Taco Festivo entregue a <#FCD34D>%player%<#22C55E>."
   given-all: "<#22C55E>✔ Tacos Festivos distribuídos para todos os <#FCD34D>%count% <#22C55E>jogadores online!"
+  disabled: "<#EF4444>O módulo de Taco Festivo de Piñata está desativado."
   name: "<gradient:#EC4899:#FCD34D><bold>🪅 TACO FESTIVO DE PIÑATA</bold></gradient>"
   lore-1: "&7Um taco festivo criado para"
   lore-2: "&7destruir piñatas em alta velocidade!"
@@ -77,6 +78,7 @@ pool:
 
 vote:
   progress: "<#FCD34D>🗳 <gray>Progresso de votos da comunidade:</gray> <#22C55E>%current% <dark_gray>/</dark_gray> <#FCD34D>%target% <#8B5CF6>(%percent%%)"
+  disabled: "<#EF4444>O sistema de Metas de Votos Comunitários está desativado."
 
 gui:
   language-title: "<gradient:#8B5CF6:#EC4899><bold>SELECIONE SEU IDIOMA</bold></gradient>"

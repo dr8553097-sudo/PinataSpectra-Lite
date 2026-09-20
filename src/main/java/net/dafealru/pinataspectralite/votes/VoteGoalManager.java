@@ -70,6 +70,10 @@ public class VoteGoalManager {
 
     public void sendVoteInfo(Player player) {
         if (player == null) return;
+        if (!enabled) {
+            plugin.getMessageManager().send(player, "vote.disabled");
+            return;
+        }
         player.sendMessage(ColorUtils.colorize("&#EC4899━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"));
         player.sendMessage(ColorUtils.colorize(" &#FCD34D&l🗳️ SERVER VOTE GOAL & PROGRESS"));
         player.sendMessage(ColorUtils.colorize(" &#71717ACommunity Progress: &#FCD34D" + currentVotes + " &7/ &#FCD34D" + targetVotes + " &#8B5CF6(" + (int)(((double)currentVotes/targetVotes)*100) + "%)"));

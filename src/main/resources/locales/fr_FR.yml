@@ -34,10 +34,11 @@ clean:
   none-found: "<#22C55E>✔ Le serveur est propre. Aucune entité résiduelle trouvée."
 
 bat:
-  received: "<#22C55E>✔ Vous avez reçu la <gradient:#EC4899:#FCD34D><bold>Batte Festive de Piñata</bold></gradient><#22C55E> !"
-  given: "<#22C55E>✔ Batte Festive donnée à <#FCD34D>%player%<#22C55E>."
-  given-all: "<#22C55E>✔ Battes Festives distribuées à tous les <#FCD34D>%count% <#22C55E>joueurs connectés !"
-  name: "<gradient:#EC4899:#FCD34D><bold>🪅 BATTE FESTIVE DE PIÑATA</bold></gradient>"
+  received: "<#22C55E>✔ Vous avez reçu le <gradient:#EC4899:#FCD34D><bold>Bâton Festif de Piñata</bold></gradient><#22C55E> !"
+  given: "<#22C55E>✔ Bâton Festif donné à <#FCD34D>%player%<#22C55E>."
+  given-all: "<#22C55E>✔ Bâtons Festifs distribués à l'ensemble des <#FCD34D>%count% <#22C55E>joueurs connectés !"
+  disabled: "<#EF4444>Le module Bâton Festif de Piñata est actuellement désactivé."
+  name: "<gradient:#EC4899:#FCD34D><bold>🪅 BÂTON FESTIF DE PIÑATA</bold></gradient>"
   lore-1: "&7Une batte festive conçue pour"
   lore-2: "&7fracasser les piñatas à toute vitesse !"
   lore-bonus: " &#22C55E✔ &fDégâts bonus contre Piñata: &#FCD34D+%bonus% HP"
@@ -77,6 +78,7 @@ pool:
 
 vote:
   progress: "<#FCD34D>🗳 <gray>Progrès des votes communautaires :</gray> <#22C55E>%current% <dark_gray>/</dark_gray> <#FCD34D>%target% <#8B5CF6>(%percent%%)"
+  disabled: "<#EF4444>Le système d'Objectif de Votes Communautaires est actuellement désactivé."
 
 gui:
   language-title: "<gradient:#8B5CF6:#EC4899><bold>CHOISISSEZ VOTRE LANGUE</bold></gradient>"

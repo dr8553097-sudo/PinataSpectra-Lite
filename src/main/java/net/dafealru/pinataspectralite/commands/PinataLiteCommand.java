@@ -197,6 +197,10 @@ public class PinataLiteCommand implements CommandExecutor, TabCompleter {
                 }
             }
             case "bat" -> {
+                if (!plugin.getConfig().getBoolean("pinata-bat.enabled", true)) {
+                    plugin.getMessageManager().send(sender, "bat.disabled");
+                    return true;
+                }
                 if (!sender.hasPermission("pinataspectra.admin")) {
                     plugin.getMessageManager().send(sender, "general.no-permission");
                     return true;

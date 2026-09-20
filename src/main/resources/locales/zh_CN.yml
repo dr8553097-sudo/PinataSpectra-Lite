@@ -37,6 +37,7 @@ bat:
   received: "<#22C55E>✔ 您获得了 <gradient:#EC4899:#FCD34D><bold>节日皮纳塔球棒</bold></gradient><#22C55E>！"
   given: "<#22C55E>✔ 节日球棒已给予 <#FCD34D>%player%<#22C55E>。"
   given-all: "<#22C55E>✔ 已向全部 <#FCD34D>%count% <#22C55E>名在线玩家发放节日皮纳塔球棒！"
+  disabled: "<#EF4444>节日皮纳塔球棒模块当前已被禁用。"
   name: "<gradient:#EC4899:#FCD34D><bold>🪅 节日皮纳塔球棒</bold></gradient>"
   lore-1: "&7专为狂欢节打造的强力球棒"
   lore-2: "&7能以极高速度砸碎皮纳塔！"
@@ -77,6 +78,7 @@ pool:
 
 vote:
   progress: "<#FCD34D>🗳 <gray>全服投票目标进度:</gray> <#22C55E>%current% <dark_gray>/</dark_gray> <#FCD34D>%target% <#8B5CF6>(%percent%%)"
+  disabled: "<#EF4444>社区投票目标系统当前已被禁用。"
 
 gui:
   language-title: "<gradient:#8B5CF6:#EC4899><bold>选择您的语言</bold></gradient>"

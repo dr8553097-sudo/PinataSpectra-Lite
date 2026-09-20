@@ -37,6 +37,7 @@ bat:
   received: "<#22C55E>✔ <gradient:#EC4899:#FCD34D><bold>お祭りピニャータバット</bold></gradient> <#22C55E>を受け取りました！"
   given: "<#22C55E>✔ <#FCD34D>%player% <#22C55E>にお祭りバットを付与しました。"
   given-all: "<#22C55E>✔ オンラインのプレイヤー全員 (<#FCD34D>%count%<#22C55E>名) にお祭りバットを配布しました！"
+  disabled: "<#EF4444>お祭りピニャータバットモジュールは現在無効化されています。"
   name: "<gradient:#EC4899:#FCD34D><bold>🪅 お祭りピニャータバット</bold></gradient>"
   lore-1: "&7お祭りのために作られた特製バット"
   lore-2: "&7超高速でピニャータを叩き割る！"
@@ -77,6 +78,7 @@ pool:
 
 vote:
   progress: "<#FCD34D>🗳 <gray>コミュニティ投票進捗:</gray> <#22C55E>%current% <dark_gray>/</dark_gray> <#FCD34D>%target% <#8B5CF6>(%percent%%)"
+  disabled: "<#EF4444>コミュニティ投票目標システムは現在無効化されています。"
 
 gui:
   language-title: "<gradient:#8B5CF6:#EC4899><bold>言語を選択してください</bold></gradient>"

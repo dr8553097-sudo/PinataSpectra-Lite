@@ -94,6 +94,7 @@ loot:
 
 # Festive Piñata Bat Configuration (/pinata bat give <player> or /pinata bat all)
 pinata-bat:
+  enabled: true
   material: "STICK"
   display-name: "<gradient:#EC4899:#FCD34D><bold>🪅 FESTIVE PIÑATA BAT</bold></gradient>"
   # Extra hit damage against piñata when striking with the bat

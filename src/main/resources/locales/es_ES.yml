@@ -43,7 +43,8 @@ clean:
 bat:
   received: "<#22C55E>✔ ¡Has recibido el <gradient:#EC4899:#FCD34D><bold>Bate Festivo de Piñata</bold></gradient><#22C55E>!"
   given: "<#22C55E>✔ Bate Festivo entregado a <#FCD34D>%player%<#22C55E>."
-  given-all: "<#22C55E>✔ ¡Se repartieron Bates Festivos a todos los <#FCD34D>%count% <#22C55E>jugadores conectados!"
+  given-all: "<#22C55E>✔ ¡Bates Festivos distribuidos a todos los <#FCD34D>%count% <#22C55E>jugadores online!"
+  disabled: "<#EF4444>El módulo de Bate Festivo de Piñata está actualmente desactivado."
   name: "<gradient:#EC4899:#FCD34D><bold>🪅 BATE FESTIVO DE PIÑATA</bold></gradient>"
   lore-1: "&7¡Un mazo festivo diseñado para"
   lore-2: "&7destrozar piñatas a toda velocidad!"
@@ -84,6 +85,7 @@ pool:
 
 vote:
   progress: "<#FCD34D>🗳 <gray>Progreso de votos comunitarios:</gray> <#22C55E>%current% <dark_gray>/</dark_gray> <#FCD34D>%target% <#8B5CF6>(%percent%%)"
+  disabled: "<#EF4444>El sistema de Metas de Voto Comunitario está actualmente desactivado."
 
 gui:
   language-title: "<gradient:#8B5CF6:#EC4899><bold>SELECCIONA TU IDIOMA</bold></gradient>"

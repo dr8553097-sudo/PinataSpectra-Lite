@@ -37,6 +37,7 @@ bat:
   received: "<#22C55E>✔ Вы получили <gradient:#EC4899:#FCD34D><bold>Праздничную Биту для Пиньяты</bold></gradient><#22C55E>!"
   given: "<#22C55E>✔ Праздничная Бита выдана игроку <#FCD34D>%player%<#22C55E>."
   given-all: "<#22C55E>✔ Праздничные Биты розданы всем <#FCD34D>%count% <#22C55E>игрокам онлайн!"
+  disabled: "<#EF4444>Модуль праздничной биты для пиньяты в настоящее время отключен."
   name: "<gradient:#EC4899:#FCD34D><bold>🪅 ПРАЗДНИЧНАЯ БИТА ДЛЯ ПИНЬЯТЫ</bold></gradient>"
   lore-1: "&7Праздничная дубинка, созданная для"
   lore-2: "&7быстрого крушения пиньят на празднике!"
@@ -77,6 +78,7 @@ pool:
 
 vote:
   progress: "<#FCD34D>🗳 <gray>Прогресс голосования сообщества:</gray> <#22C55E>%current% <dark_gray>/</dark_gray> <#FCD34D>%target% <#8B5CF6>(%percent%%)"
+  disabled: "<#EF4444>Система целей голосования сообщества в настоящее время отключена."
 
 gui:
   language-title: "<gradient:#8B5CF6:#EC4899><bold>ВЫБЕРИТЕ ВАШ ЯЗЫК</bold></gradient>"

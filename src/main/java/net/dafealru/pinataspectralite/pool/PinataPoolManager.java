@@ -33,7 +33,7 @@ public class PinataPoolManager {
 
     public boolean contribute(Player player, double amount) {
         if (!enabled) {
-            player.sendMessage(ColorUtils.colorize("&cThe community Pinata Pool is currently disabled."));
+            plugin.getMessageManager().send(player, "pool.disabled");
             return false;
         }
         if (amount <= 0) {
@@ -105,6 +105,10 @@ public class PinataPoolManager {
 
     public void showPoolInfo(Player player) {
         if (player == null) return;
+        if (!enabled) {
+            plugin.getMessageManager().send(player, "pool.disabled");
+            return;
+        }
         int pct = (int) Math.min(100, (currentPool / targetPool) * 100);
 
         player.sendMessage(ColorUtils.colorize("&#8B5CF6━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"));
