@@ -1,18 +1,19 @@
-* [🏠 Portada](README.md)
+* **🚀 Getting Started**
+  * [🏠 Overview & Home](README.md)
 
-* 📚 **Capítulos de la Wiki**
-  * [01. Introducción & Filosofía](01-Introduccion-y-Filosofia.md)
-  * [02. Instalación & Requisitos](02-Instalacion-y-Requisitos.md)
-  * [03. Modelos 3D & Físicas](03-Modelos-3D-Voxel-y-Fisicas.md)
-  * [04. Máquina de Fases & Combate](04-Maquina-de-Fases-Combate.md)
-  * [05. Cómo Crear Piñatas Custom](05-Guia-Como-Crear-una-Pinata.md)
-  * [06. Loot & Recompensas](06-Loot-Drops-y-Recompensas.md)
-  * [07. Metas de Votos & Pool Vault](07-Metas-de-Votos-y-Pool-Vault.md)
-  * [08. Auto-Scheduler & Sync](08-Scheduler-y-Eventos-Automaticos.md)
-  * [09. Configuración YAML Maestra](09-Configuracion-YAML-Maestra.md)
-  * [10. Comandos & Permisos](10-Comandos-y-Permisos.md)
-  * [11. Placeholders & Hooks](11-Placeholders-y-Hooks.md)
-  * [12. Solución de Problemas & FAQ](12-Solucion-de-Problemas-y-FAQ.md)
+* **📚 Documentation Modules**
+  * [01. Introduction & Philosophy](01-Introduction-and-Philosophy.md)
+  * [02. Installation & Requirements](02-Installation-and-Requirements.md)
+  * [03. 3D Voxel Models & Physics](03-3D-Voxel-Models-and-Physics.md)
+  * [04. Combat Phases & Boss Mechanics](04-Combat-Phases-and-Boss-Mechanics.md)
+  * [05. Creating Custom Piñatas](05-Creating-Custom-Pinatas.md)
+  * [06. Loot Drops & Rewards](06-Loot-Drops-and-Rewards.md)
+  * [07. Vote Goals & Vault Pool](07-Community-Vote-Goal-and-Vault-Pool.md)
+  * [08. Auto-Scheduler & Sync](08-Auto-Scheduler-and-Config-Sync.md)
+  * [09. Master Configuration Reference](09-Master-Configuration-Reference.md)
+  * [10. Commands & Permissions](10-Commands-and-Permissions.md)
+  * [11. Placeholders & Integrations](11-Placeholders-and-Integrations.md)
+  * [12. Troubleshooting & FAQ](12-Troubleshooting-and-FAQ.md)
 
-* 👑 **Sovereign PRO**
-  * [💎 Desbloquear Edición PRO](https://builtbybit.com/pinataspectra)
+* **👑 Sovereign PRO**
+  * [💎 Unlock Sovereign PRO Edition](https://builtbybit.com/pinataspectra)

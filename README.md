@@ -17,35 +17,35 @@
 
 ---
 
-## 🍃 Sobre PinataSpectra Lite / About PinataSpectra Lite
+## 🍃 About PinataSpectra Lite
 
-**PinataSpectra Lite** es la edición comunitaria y de código abierto del revolucionario motor de piñatas 3D procedimentales para Minecraft. Diseñado desde cero para erradicar los antiguos plugins basados en decenas de `ArmorStands` invisibles que causaban lag y caídas de FPS, **PinataSpectra Lite** utiliza la tecnología nativa de `Display Entities` e `Interaction` de Minecraft 1.20 - 1.26+ para brindar una experiencia fluida, armónica y completamente libre de resource packs o mods del cliente.
+**PinataSpectra Lite** is the official free and open-source community edition of the procedural 3D Piñata boss event engine for Minecraft. Engineered from scratch to eliminate outdated plugins reliant on dozens of invisible `ArmorStands` that cause packet lag and FPS drops, **PinataSpectra Lite** harnesses native Minecraft 1.20 - 1.26+ `Display Entities` and `Interaction` hitboxes to deliver a fluid, harmonic, and 100% resource-pack-free festive boss experience.
 
 > [!TIP]
-> **100% Código Abierto (GPLv3):** Puedes auditar el código, aprender de la arquitectura o contribuir con traducciones y mejoras sin riesgo alguno de puertas traseras ni ofuscación.
+> **100% Open Source (GPLv3):** Transparent, auditable, and secure. Zero obfuscation, zero backdoors, and community contribution ready.
 
 ---
 
-## ⚖️ Matriz Comparativa: Lite vs. Sovereign PRO vs. Plugins Genéricos
+## ⚖️ Comprehensive Feature Matrix: Lite vs. Sovereign PRO vs. Legacy
 
-| Característica / Módulo | 🍃 PinataSpectra Lite (Este Repo) | 🪅 PinataSpectra Sovereign PRO | 📦 Plugins Tradicionales (Legacy) |
+| Architectural Feature | 🍃 PinataSpectra Lite (This Repo) | 🪅 PinataSpectra Sovereign PRO | 📦 Legacy / Traditional Plugins |
 |---|:---:|:---:|:---:|
-| **Licencia & Código** | **GPLv3 Open Source** | Comercial Propietaria | Closed / Descontinuado |
-| **Núcleo de Entidades** | `ItemDisplay` + `Interaction` Nativo | `ItemDisplay` + `Interaction` + LOD | 10-30 `ArmorStands` invisibles (Lag) |
-| **Modelos 3D Voxel** | 1 Forma Base (Festive Llama) | **8 Formas 3D** (Mecha, Dragón, Corona, etc.) | Ninguno / Bloque flotante |
-| **Fases de Combate** | **3 Fases Dinámicas** (Música evolutiva) | **4 Fases Épicas** (Escudos, Esbirros & Rage) | 1 Sola barra de vida estática |
-| **Banda Sonora Sonora** | 3 Canciones NoteBlock por Fase + SFX | 4 Temas Orquestales + SFX Cósmicos | Sonidos de golpe genéricos |
-| **Fijación de Altura (Clamping)**| **Inteligente (+2.35m sobre suelo/cerro)** | **Raycast 3D Catenario con Cuerda** | Cae al vacío o se traba |
-| **Cinemáticas de Muerte** | 1 Explosión Clásica de Premios | **7 Supernovas Cósmicas (Black Hole)** | Suelta ítems al suelo sin efectos |
-| **Bates Festivos** | 1 Bate Festivo con MiniMessage | **7 Bates Míticos** (Mjolnir con Rayos) | Bate de palo normal |
-| **Sistema de Idiomas** | **Dinámico (`/pinata lang EN\|ES`)** | **Multi-Idioma Dinámico + Auto-Detect** | Solo 1 archivo manual |
-| **Metas Comunitarias** | NuVotifier + Pozo Vault `/pinata pool` | NuVotifier + Vault + BossBar Global | Ninguna |
-| **Bases de Datos** | SQLite Local | **SQLite + MySQL + MariaDB + Redis** | Flatfile YAML (Lento) |
-| **Studio & Editores GUI** | Editor Visual Básico | **6 Editores Visuales GUI en Tiempo Real** | Edición manual por archivo |
+| **License & Code** | **GPLv3 Open Source** | Commercial Proprietary | Closed / Abandoned |
+| **Entity Architecture** | Native `ItemDisplay` + `Interaction` | Native `ItemDisplay` + `Interaction` + LOD | 15-30 Invisible `ArmorStands` (High Packets) |
+| **3D Voxel Models** | 1 Base Form (Festive Llama) | **8 Mythic Forms** (Mecha, Dragon, Crown, etc.) | None / Static floating head |
+| **Combat Phases** | **3 Dynamic Phases** (Evolving Audio) | **4 Epic Phases** (Orbital Shields & Minions) | Single static health bar |
+| **Soundtrack & SFX** | 3 Phase NoteBlock Songs + Advanced SFX | 4 Orchestral Themes + Cosmic SFX | Generic hit sounds |
+| **Terrain Clamping** | **Smart Ground Clamping (`findSafeGroundY`)**| **3D Catenary Raycast with Harmonic Rope** | Falls into void or clips into terrain |
+| **Death Cinematics** | 1 Classic Festive Item Explosion | **7 Cosmic Supernovas (Black Hole)** | Generic item drop at feet |
+| **Custom Bats** | 1 Festive Bat with MiniMessage | **7 Mythic Bats** (Mjolnir with Lightning) | Regular wooden stick |
+| **Language System** | **Dynamic Live Switching (`/pinata lang EN\|ES`)** | **Dynamic Live Switching + Auto-Detect** | Single hardcoded file |
+| **Community Goals** | NuVotifier Goal + Vault Community Pool | NuVotifier + Vault + Global BossBar | None / Manual only |
+| **Database Engines** | Local SQLite | **SQLite + MySQL + MariaDB + Redis** | Slow YAML Flatfile |
+| **Studio & GUI Editors** | In-game Visual Editor GUI | **6 Live Visual In-Game Studio GUIs** | Manual YAML editing only |
 
 ---
 
-## 🌟 El Corazón y Visión del Creador / The Creator's Heart & Vision
+## 🌟 The Creator's Heart & Vision
 
 > ### *"Crafted with Precision. Born from Passion. Dedicated to Shared Joy."*
 > 
@@ -55,92 +55,83 @@
 > 
 > *PinataSpectra Lite brings this magic to every survival, network, and community server around the globe for free, with clean, honest, and high-performance open-source code."*
 > 
-> ---
-> 
-> ### *Versión en Español:*
-> *"Cada gran recuerdo en Minecraft nace de instantes compartidos de alegría, risas y triunfos colectivos. No creé **PinataSpectra** únicamente para resolver complejas ecuaciones físicas de alto rendimiento — lo construí porque creo firmemente que los eventos de un servidor deben sentirse verdaderamente **mágicos**.*
-> 
-> *Al crecer jugando en comunidades multijugador, las noches más memorables siempre fueron aquellas en las que decenas de personas se reunían en una plaza: riendo, golpeando una piñata suspendida bajo un cielo lleno de fuegos artificiales, celebrando la lluvia de caramelos y forjando amistades genuinas en medio de la emoción compartida.*
-> 
-> *PinataSpectra Lite lleva esta magia a cualquier servidor survival, modalidad o comunidad del mundo de forma gratuita, transparente y con código abierto de la más alta calidad."*
-> 
 > — **Dafealru ([dr8553097-sudo](https://github.com/dr8553097-sudo))**  
 > *Lead Developer & Architect of PinataSpectra*
 
 ---
 
-## ⚡ Características Principales de la Edición Lite
+## ⚡ Core Systems Overview
 
-### 🧊 1. Motor Voxel 3D Sin Resource Packs
-* Renderizado nativo por GPU usando Display Entities de Paper/Purpur.
-* Cero mods requeridos en los clientes.
-* Hitbox de colisión e interacción exacta.
+### 🧊 1. Zero Resource Pack 3D Voxel Engine
+* Native GPU-accelerated rendering using Paper/Purpur Display Entities.
+* Zero client-side mods or mandatory resource packs.
+* Pixel-perfect `Interaction` hitbox centered on the piñata model.
 
-### 🎶 2. Soundscape Dinámico & Música por Fases
-* **Fase 1 (100% - 66% HP):** Sinfonía festiva tradicional en NoteBlocks.
-* **Fase 2 (66% - 33% HP):** Melodía rápida de Micro-Evasión (la piñata se encoge y duplica velocidad).
-* **Fase 3 (33% - 0% HP):** Sinfonía de distorsión caótica con saltos dimensionales y ondas sónicas.
+### 🎶 2. Dynamic 3-Phase Soundscape & NoteBlock Music
+* **Phase 1 (100% - 66% HP):** Festive Carnival March (Flute & Bell notes).
+* **Phase 2 (66% - 33% HP):** Micro-Evasion Mode (Piñata shrinks to 65% scale, doubles speed, energetic Xylophone tempo).
+* **Phase 3 (33% - 0% HP):** Chaotic Warp Shifter (Dimensional leaps, sonic pulses, Amethyst resonance, coordinate broadcasts).
 
-### ⛰️ 3. Anclaje Inteligente de Suelo
-* Algoritmo `findSafeGroundY`: La piñata mantiene siempre una altura base estable (+2.35 bloques) sobre el terreno real, adaptándose suavemente si salta a una montaña, pozo o estructura.
+### ⛰️ 3. Smart Terrain Height Clamping (`findSafeGroundY`)
+* Dynamic vertical raycasting guarantees the piñata always floats safely at **+2.35 blocks** above the real solid terrain, even after warping onto hills, mountains, or structures.
 
-### 🌐 4. Motor Multi-Idioma en Vivo
-* Cambia de idioma al instante dentro del juego sin reiniciar el servidor:
-  * `/pinata lang ES` — Español
+### 🌐 4. Live Multi-Language Engine
+* Switch languages on the fly without restarting the server:
   * `/pinata lang EN` — English
-* Sincronización automática de nuevas opciones gracias al `ConfigUpdaterEngine`.
+  * `/pinata lang ES` — Spanish
+* Seamless automatic config synchronization via `ConfigUpdaterEngine`.
 
 ---
 
-## 📖 Documentación & Wiki Oficial (12 Capítulos)
+## 📖 Official 12-Chapter Documentation
 
-Explora la [**Wiki Completa de PinataSpectra-Lite**](docs/README.md):
+Explore the [**Interactive Web Portal**](https://dr8553097-sudo.github.io/PinataSpectra-Lite/) or read the local guides:
 
-| Capítulo | Título | Descripción |
+| Chapter | Title | Summary |
 |---|---|---|
-| 🏛️ **01** | [Introducción & Filosofía](docs/01-Introduccion-y-Filosofia.md) | Arquitectura y rendimiento sin ArmorStands. |
-| ⚙️ **02** | [Instalación & Requisitos](docs/02-Instalacion-y-Requisitos.md) | Compatibilidad Java 21/25 y Paper/Purpur. |
-| 🦄 **03** | [Modelos 3D & Físicas](docs/03-Modelos-3D-Voxel-y-Fisicas.md) | Balanceo armónico y escalado procedural. |
-| ⚔️ **04** | [Máquina de Fases & Combate](docs/04-Maquina-de-Fases-Combate.md) | Transición de 3 fases y bandas sonoras. |
-| 🛠️ **05** | [Cómo Crear Piñatas Custom](docs/05-Guia-Como-Crear-una-Pinata.md) | Guía práctica para crear nuevos perfiles `.yml`. |
-| 🎁 **06** | [Loot Drops & Recompensas](docs/06-Loot-Drops-y-Recompensas.md) | Podio MVP, premios de consolación y lluvia de dulces. |
-| 💰 **07** | [Metas de Votos & Pozo Vault](docs/07-Metas-de-Votos-y-Pool-Vault.md) | Integración con NuVotifier y donaciones con `/pinata pool`. |
-| ⏳ **08** | [Auto-Scheduler](docs/08-Scheduler-y-Eventos-Automaticos.md) | Programación de piñatas automáticas. |
-| 📜 **09** | [Configuración YAML Maestra](docs/09-Configuracion-YAML-Maestra.md) | Referencia detallada de todos los parámetros. |
-| 🎮 **10** | [Comandos & Permisos](docs/10-Comandos-y-Permisos.md) | Listado exhaustivo de comandos y permisos. |
-| 🧩 **11** | [Placeholders & Hooks](docs/11-Placeholders-y-Hooks.md) | PlaceholderAPI y Vault. |
-| 💡 **12** | [Solución de Problemas & FAQ](docs/12-Solucion-de-Problemas-y-FAQ.md) | Preguntas frecuentes y diagnóstico de errores. |
+| 🏛️ **01** | [Introduction & Philosophy](docs/01-Introduction-and-Philosophy.md) | Architectural vision, zero-ArmorStand rendering. |
+| ⚙️ **02** | [Installation & Requirements](docs/02-Installation-and-Requirements.md) | Java 21/25, Paper/Purpur compatibility & hooks. |
+| 🧊 **03** | [3D Voxel Models & Physics](docs/03-3D-Voxel-Models-and-Physics.md) | Harmonic pendulum sway and procedural recoil. |
+| ⚔️ **04** | [Combat Phases & Boss Mechanics](docs/04-Combat-Phases-and-Boss-Mechanics.md) | 3-phase transitions & adaptive NoteBlock soundtracks. |
+| 🛠️ **05** | [Creating Custom Piñatas](docs/05-Creating-Custom-Pinatas.md) | Step-by-step guide to configuring `.yml` profiles in `pinatas/`. |
+| 🎁 **06** | [Loot Drops & Rewards](docs/06-Loot-Drops-and-Rewards.md) | Dual loot delivery, MVP Podium Top 1/2/3 & consolation prizes. |
+| 💰 **07** | [Vote Goals & Vault Pool](docs/07-Community-Vote-Goal-and-Vault-Pool.md) | NuVotifier integration & community donation pool (`/pinata pool`). |
+| ⏳ **08** | [Auto-Scheduler & Sync](docs/08-Auto-Scheduler-and-Config-Sync.md) | Automated event intervals & `ConfigUpdaterEngine`. |
+| 📜 **09** | [Master Configuration Reference](docs/09-Master-Configuration-Reference.md) | Comprehensive breakdown of `config.yml` and message files. |
+| 🎮 **10** | [Commands & Permissions](docs/10-Commands-and-Permissions.md) | Complete list of commands, subcommands, and permission nodes. |
+| 🧩 **11** | [Placeholders & Integrations](docs/11-Placeholders-and-Integrations.md) | PlaceholderAPI variables, Vault economy, and Discord Webhooks. |
+| 💡 **12** | [Troubleshooting & FAQ](docs/12-Troubleshooting-and-FAQ.md) | Common diagnostics, WorldGuard flag fixes, and `/pinata clean`. |
 
 ---
 
-## 👑 ¿Buscas la Experiencia Definitiva? Conoce Sovereign PRO
+## 👑 Looking for the Ultimate Experience? Discover Sovereign PRO
 
-Si tu servidor maneja más de 50 jugadores simultáneos o deseas llevar los eventos de tu comunidad al siguiente nivel:
+For large networks with 50+ concurrent players looking for the pinnacle of multiplayer event engineering:
 
-* **8 Formas 3D Voxel:** Mecha Titán, Dragón del Fin, Corona Real, etc.
-* **7 Supernovas Cósmicas:** Agujero Negro, Fénix Solar, Rayos Divinos, etc.
-* **Anti-Steal Vault:** Protección individual de loot para evitar que los jugadores se roben los premios.
-* **7 Bates Míticos:** Mjolnir, Bate del Caos, Bate Estelar con partículas exclusivas.
-* **Bases de Datos & Sincronización:** MySQL, MariaDB y Redis para redes BungeeCord/Velocity.
-* **Ruletas Jackpot 3D:** Giros de la fortuna sobre el suelo en tiempo real.
+* **8 Mythic 3D Voxel Forms:** Mecha Titan, Ender Dragon, Royal Crown, Golden Pegasus, etc.
+* **7 Cosmic Supernova Death Cinematics:** Black Hole Singularity, Solar Phoenix, Divine Thunder, etc.
+* **Anti-Steal Loot Vaults:** Individual reward security preventing loot stealing during high-player events.
+* **7 Mythic Bats:** Mjolnir with authentic lightning strikes, Chaos Bat, Celestial Stave.
+* **Cross-Server Sync & Databases:** Native MySQL, MariaDB, and Redis caching.
+* **3D Floor Roulette Jackpots:** Animated rotating prize wheels projected onto the ground in real-time.
 
-👉 **[Desbloquear PinataSpectra Sovereign PRO en BuiltByBit](https://builtbybit.com/pinataspectra)**
-
----
-
-## 🐛 Reporte de Errores & Contribuciones
-
-Agradecemos profundamente el apoyo de la comunidad para mantener PinataSpectra Lite como el mejor plugin de piñatas gratuito:
-
-* 🐞 [Reportar un Error (Bug Report)](https://github.com/dr8553097-sudo/PinataSpectra-Lite/issues/new?template=bug_report.yml)
-* 💡 [Proponer una Nueva Función (Feature Request)](https://github.com/dr8553097-sudo/PinataSpectra-Lite/issues/new?template=feature_request.yml)
+👉 **[Unlock PinataSpectra Sovereign PRO on BuiltByBit](https://builtbybit.com/pinataspectra)**
 
 ---
 
-## 📜 Licencia / License
+## 🐛 Bug Reports & Community Contributions
 
-Distribuido bajo la licencia **GNU General Public License v3.0 (GPLv3)**. Consulta el archivo [`LICENSE`](LICENSE) para más detalles.
+We warmly welcome community feedback, translations, and issue reports:
+
+* 🐞 [Submit a Bug Report](https://github.com/dr8553097-sudo/PinataSpectra-Lite/issues/new?template=bug_report.yml)
+* 💡 [Request a Feature](https://github.com/dr8553097-sudo/PinataSpectra-Lite/issues/new?template=feature_request.yml)
+
+---
+
+## 📜 License
+
+Distributed under the **GNU General Public License v3.0 (GPLv3)**. See [`LICENSE`](LICENSE) for details.
 
 <p align="center">
-  <sub>Diseñado y desarrollado con pasión por <b><a href="https://dr8553097-sudo.github.io">Dafealru</a></b>.</sub>
+  <sub>Designed and developed with passion by <b><a href="https://dr8553097-sudo.github.io">Dafealru</a></b>.</sub>
 </p>
