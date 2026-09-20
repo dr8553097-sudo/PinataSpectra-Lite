@@ -12,6 +12,8 @@
 # ==============================================================================
 
 settings:
+  # Internal configuration version for automatic updates (Do not edit)
+  config-version: 1
   # Language: EN (English) or ES (Spanish)
   language: "EN"
   # Default Piñata Profile to spawn when running /pinata spawn without args

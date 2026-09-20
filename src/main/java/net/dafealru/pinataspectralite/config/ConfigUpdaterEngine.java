@@ -8,13 +8,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.List;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
 
 /**
- * Intelligent Automatic Config & Profile Synchronizer.
- * Ensures all existing and newly created configuration files on disk
- * receive newly introduced keys, default values, and headers from the JAR
- * without overwriting or resetting any user-customized settings.
+ * Intelligent Comment-Preserving Configuration & Profile Synchronizer.
+ * Automatically updates existing server files with new parameters, comments, and headers
+ * from newer plugin versions while strictly preserving 100% of user-customized values.
  */
 public class ConfigUpdaterEngine {
 
@@ -30,11 +30,11 @@ public class ConfigUpdaterEngine {
         updateFile("messages.yml");
         updateFile("messages_es.yml");
 
-        // 2. Sync and deploy all default and custom pinatas in pinatas/ folder
+        // 2. Sync default profiles in pinatas/
         updateFile("pinatas/festive_llama.yml");
         updateFile("pinatas/custom_party.yml");
 
-        // 3. Scan and synchronize any custom pinatas created by admins in /pinatas/
+        // 3. Scan and synchronize any custom admin pinata profiles
         syncAllCustomPinataProfiles();
     }
 
@@ -48,7 +48,7 @@ public class ConfigUpdaterEngine {
                 InputStream jarIn = plugin.getResource(resourcePath);
                 if (jarIn != null) {
                     plugin.saveResource(resourcePath, false);
-                    plugin.getLogger().info("[ConfigUpdater] Deployed default configuration file: " + resourcePath);
+                    plugin.getLogger().info("[ConfigUpdater] Deployed default configuration: " + resourcePath);
                 }
             } catch (Exception e) {
                 plugin.getLogger().warning("[ConfigUpdater] Failed to deploy " + resourcePath + ": " + e.getMessage());
@@ -57,25 +57,42 @@ public class ConfigUpdaterEngine {
         }
 
         try {
-            FileConfiguration diskConfig = YamlConfiguration.loadConfiguration(diskFile);
-
             InputStream jarStream = plugin.getResource(resourcePath);
             if (jarStream == null) return;
 
+            FileConfiguration diskConfig = YamlConfiguration.loadConfiguration(diskFile);
             FileConfiguration jarConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(jarStream, StandardCharsets.UTF_8));
 
-            int addedKeys = mergeSections(jarConfig, diskConfig);
-            if (addedKeys > 0) {
-                // Ensure header is copied
-                if (jarConfig.options().header() != null && (diskConfig.options().header() == null || diskConfig.options().header().isEmpty())) {
-                    diskConfig.options().header(jarConfig.options().header());
+            int missingKeys = countMissingKeys(jarConfig, diskConfig);
+            int diskVersion = diskConfig.getInt("settings.config-version", diskConfig.getInt("config-version", 1));
+            int jarVersion = jarConfig.getInt("settings.config-version", jarConfig.getInt("config-version", 1));
+
+            if (missingKeys > 0 || diskVersion < jarVersion) {
+                // 1. Create a safe backup before migration
+                File backupFile = new File(diskFile.getParentFile(), diskFile.getName() + ".bak");
+                try {
+                    Files.copy(diskFile.toPath(), backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException ignored) {}
+
+                // 2. Merge missing keys into disk configuration
+                mergeSections(jarConfig, diskConfig);
+                if (jarVersion > diskVersion) {
+                    diskConfig.set("settings.config-version", jarVersion);
                 }
-                diskConfig.options().copyHeader(true);
-                diskConfig.save(diskFile);
-                plugin.getLogger().info("[ConfigUpdater] ✔ Synchronized " + addedKeys + " new option(s) in " + resourcePath + " preserving your custom settings.");
+
+                // 3. Attempt comment-preserving line rebuild
+                InputStream templateStream = plugin.getResource(resourcePath);
+                if (templateStream != null) {
+                    List<String> updatedLines = buildCommentPreservedLines(templateStream, diskConfig);
+                    Files.write(diskFile.toPath(), updatedLines, StandardCharsets.UTF_8);
+                } else {
+                    diskConfig.save(diskFile);
+                }
+
+                plugin.getLogger().info("[ConfigUpdater] ✔ Automatically synchronized " + resourcePath + " (" + missingKeys + " new setting(s) added, custom values preserved).");
             }
         } catch (Exception e) {
-            plugin.getLogger().warning("[ConfigUpdater] Error synchronizing " + resourcePath + ": " + e.getMessage());
+            plugin.getLogger().warning("[ConfigUpdater] Warning during sync of " + resourcePath + ": " + e.getMessage());
         }
     }
 
@@ -96,10 +113,9 @@ public class ConfigUpdaterEngine {
                 FileConfiguration profileConfig = YamlConfiguration.loadConfiguration(file);
                 int added = 0;
 
-                // Essential Profile Keys to guarantee
                 for (String key : templateConfig.getKeys(false)) {
                     if (key.equalsIgnoreCase("drops") || key.equalsIgnoreCase("display-name") || key.equalsIgnoreCase("id")) {
-                        continue; // Keep profile custom identity and custom loot
+                        continue;
                     }
                     if (!profileConfig.isSet(key)) {
                         profileConfig.set(key, templateConfig.get(key));
@@ -117,24 +133,132 @@ public class ConfigUpdaterEngine {
         }
     }
 
-    private int mergeSections(ConfigurationSection source, ConfigurationSection target) {
-        int added = 0;
+    private List<String> buildCommentPreservedLines(InputStream jarTemplate, FileConfiguration diskConfig) throws IOException {
+        List<String> outputLines = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(jarTemplate, StandardCharsets.UTF_8));
+        String line;
+
+        Deque<String> pathStack = new ArrayDeque<>();
+        Deque<Integer> indentStack = new ArrayDeque<>();
+
+        while ((line = reader.readLine()) != null) {
+            String trimmed = line.trim();
+
+            // Preserve empty lines and pure comment lines exactly as they are in the template
+            if (trimmed.isEmpty() || trimmed.startsWith("#")) {
+                outputLines.add(line);
+                continue;
+            }
+
+            // List item line
+            if (trimmed.startsWith("-")) {
+                outputLines.add(line);
+                continue;
+            }
+
+            // Key-Value or Section Header line
+            int colonIndex = line.indexOf(':');
+            if (colonIndex != -1) {
+                int indent = getIndentation(line);
+                String keyName = line.substring(0, colonIndex).trim();
+
+                while (!indentStack.isEmpty() && indent <= indentStack.peek()) {
+                    indentStack.pop();
+                    pathStack.pop();
+                }
+
+                pathStack.push(keyName);
+                indentStack.push(indent);
+
+                String currentPath = buildPath(pathStack);
+                String remainder = line.substring(colonIndex + 1).trim();
+
+                if (remainder.isEmpty() || remainder.startsWith("#")) {
+                    // Section header
+                    outputLines.add(line);
+                } else {
+                    // Key with value
+                    if (diskConfig.isSet(currentPath) && !diskConfig.isConfigurationSection(currentPath) && !diskConfig.isList(currentPath)) {
+                        Object diskVal = diskConfig.get(currentPath);
+                        String formattedVal = formatYamlValue(diskVal);
+                        String indentStr = line.substring(0, line.indexOf(keyName));
+                        
+                        // Extract inline comment if present in template
+                        int hashIndex = remainder.indexOf('#');
+                        String inlineComment = (hashIndex != -1) ? " " + remainder.substring(hashIndex) : "";
+
+                        outputLines.add(indentStr + keyName + ": " + formattedVal + inlineComment);
+                    } else {
+                        outputLines.add(line);
+                    }
+                }
+            } else {
+                outputLines.add(line);
+            }
+        }
+        return outputLines;
+    }
+
+    private String buildPath(Deque<String> stack) {
+        List<String> list = new ArrayList<>(stack);
+        Collections.reverse(list);
+        return String.join(".", list);
+    }
+
+    private int getIndentation(String line) {
+        int count = 0;
+        for (char c : line.toCharArray()) {
+            if (c == ' ') count++;
+            else break;
+        }
+        return count;
+    }
+
+    private String formatYamlValue(Object val) {
+        if (val == null) return "null";
+        if (val instanceof String s) {
+            if (s.contains("\"")) {
+                return "'" + s.replace("'", "''") + "'";
+            }
+            return "\"" + s + "\"";
+        }
+        return String.valueOf(val);
+    }
+
+    private int countMissingKeys(ConfigurationSection source, ConfigurationSection target) {
+        int missing = 0;
+        for (String key : source.getKeys(false)) {
+            if (source.isConfigurationSection(key)) {
+                ConfigurationSection subSource = source.getConfigurationSection(key);
+                ConfigurationSection subTarget = target.getConfigurationSection(key);
+                if (subTarget == null) {
+                    missing++;
+                } else {
+                    missing += countMissingKeys(subSource, subTarget);
+                }
+            } else {
+                if (!target.isSet(key)) {
+                    missing++;
+                }
+            }
+        }
+        return missing;
+    }
+
+    private void mergeSections(ConfigurationSection source, ConfigurationSection target) {
         for (String key : source.getKeys(false)) {
             if (source.isConfigurationSection(key)) {
                 ConfigurationSection subSource = source.getConfigurationSection(key);
                 ConfigurationSection subTarget = target.getConfigurationSection(key);
                 if (subTarget == null) {
                     subTarget = target.createSection(key);
-                    added++;
                 }
-                added += mergeSections(subSource, subTarget);
+                mergeSections(subSource, subTarget);
             } else {
                 if (!target.isSet(key)) {
                     target.set(key, source.get(key));
-                    added++;
                 }
             }
         }
-        return added;
     }
 }
