@@ -26,22 +26,104 @@
 
 ---
 
-## ⚖️ Comprehensive Feature Matrix: Lite vs. Sovereign PRO vs. Legacy
+## ⚖️ Comprehensive Architecture & Feature Comparison Matrix
 
-| Architectural Feature | 🍃 PinataSpectra Lite (This Repo) | 🪅 PinataSpectra Sovereign PRO | 📦 Legacy / Traditional Plugins |
+Whether you run a private survival server with friends or an enterprise network with hundreds of concurrent players, here is a detailed breakdown of how **PinataSpectra Lite** compares to the flagship **PinataSpectra Sovereign PRO** and traditional legacy plugins:
+
+| Subsystem / Architectural Feature | 🍃 PinataSpectra Lite (Community Free) | 🪅 PinataSpectra Sovereign PRO (Flagship) | 📦 Legacy / Generic Piñata Plugins |
 |---|:---:|:---:|:---:|
-| **License & Code** | **GPLv3 Open Source** | Commercial Proprietary | Closed / Abandoned |
-| **Entity Architecture** | Native `ItemDisplay` + `Interaction` | Native `ItemDisplay` + `Interaction` + LOD | 15-30 Invisible `ArmorStands` (High Packets) |
-| **3D Voxel Models** | 1 Base Form (Festive Llama) | **8 Mythic Forms** (Mecha, Dragon, Crown, etc.) | None / Static floating head |
-| **Combat Phases** | **3 Dynamic Phases** (Evolving Audio) | **4 Epic Phases** (Orbital Shields & Minions) | Single static health bar |
-| **Soundtrack & SFX** | 3 Phase NoteBlock Songs + Advanced SFX | 4 Orchestral Themes + Cosmic SFX | Generic hit sounds |
-| **Terrain Clamping** | **Smart Ground Clamping (`findSafeGroundY`)**| **3D Catenary Raycast with Harmonic Rope** | Falls into void or clips into terrain |
-| **Death Cinematics** | 1 Classic Festive Item Explosion | **7 Cosmic Supernovas (Black Hole)** | Generic item drop at feet |
-| **Custom Bats** | 1 Festive Bat with MiniMessage | **7 Mythic Bats** (Mjolnir with Lightning) | Regular wooden stick |
-| **Language System** | **Dynamic Live Switching (`/pinata lang EN\|ES`)** | **Dynamic Live Switching + Auto-Detect** | Single hardcoded file |
-| **Community Goals** | NuVotifier Goal + Vault Community Pool | NuVotifier + Vault + Global BossBar | None / Manual only |
-| **Database Engines** | Local SQLite | **SQLite + MySQL + MariaDB + Redis** | Slow YAML Flatfile |
-| **Studio & GUI Editors** | In-game Visual Editor GUI | **6 Live Visual In-Game Studio GUIs** | Manual YAML editing only |
+| **Target Scale & Audience** | Survival & Small Community Servers | Enterprise Networks (50–150+ Players) | Outdated Spigot Servers |
+| **Licensing & Code** | **100% GPLv3 Open Source** | Commercial Proprietary EULA | Closed / Abandoned |
+| **Entity Render Pipeline** | Native `ItemDisplay` + `Interaction` (1.20+) | Native `ItemDisplay` + Particle LOD (80+ Players) | 15–30 Invisible `ArmorStands` (Packet Flood) |
+| **Performance Guarantee** | 20.0 TPS (Single Server Scale) | **Solid 20.0 TPS Guaranteed (80+ Players)** | Severe Client FPS Drops & Server Stutter |
+| **3D Voxel Models** | 1 Standard Form (Festive Llama) | **8 Mythic Forms** (Mecha, Dragon, Crown, etc.) | None / Static floating head |
+| **Custom Model Engine / Oraxen** | Basic Head Textures | **Native Hooks + Custom Model Data Support** | None |
+| **Combat State Machine** | **3 Dynamic Phases** (Micro-Evasion & Warp) | **4 Epic Boss Phases** (Shields & Minions) | Single static health bar |
+| **Shield & Minion Invasions** | None | **Orbital Energy Shields + Guardian Minions** | None |
+| **Soundtrack & Soundscape** | 3 NoteBlock Songs + Native Minecraft SFX | **4 Dynamic Orchestral Suites + Cosmic SFX** | Generic hit click sounds |
+| **Death Cinematics** | Classic Radial Item Burst | **7 Cosmic Supernovas** (Black Hole, Phoenix) | Generic item drop at feet |
+| **Loot Security & Fair Play** | Direct Delivery + Floor Loot | **Anti-Steal Vault** (Private Instanced Loot) | Floor drops (Stolen by speed hackers) |
+| **Custom Weaponry & Bats** | 1 Festive Bat with MiniMessage Lore | **7 Mythic Bats** (Mjolnir with Lightning Strikes) | Regular wooden stick |
+| **Floor Jackpots & Minigames** | None | **3D Animated Floor Roulette Wheels** | None |
+| **In-Game Visual Studio** | Basic Editor GUI | **6 Live In-Game Studio GUIs** (Live 3D Scaling) | Manual YAML text editing only |
+| **Multi-Server & Databases** | Local SQLite Database | **MySQL + MariaDB + Redis Caching (HikariCP)** | YAML Flatfile (Slow, corrupts on crash) |
+| **Leaderboards & Analytics** | Text Podium in Chat | **54-Slot Async Interactive GUI** (`/pinata top`) | None or basic text dump |
+| **Multi-Language Engine** | **Dynamic In-Game (`/pinata lang EN\|ES`)** | **Dynamic In-Game + Auto-Player Language** | Single hardcoded message file |
+| **Discord Webhooks** | Plain Text Event Alerts | **Luxury Rich Embeds with Leaderboards & Images** | None |
+
+---
+
+## 💎 Why Upgrade to Sovereign PRO? Deep-Dive Feature Breakdown
+
+If you manage an active community or commercial network, **PinataSpectra Sovereign PRO** was engineered to turn server events into your network's primary player retention and engagement driver:
+
+```
+ ┌─────────────────────────────────────────────────────────────────────────────────┐
+ │                   👑 SOVEREIGN PRO EXCLUSIVE ENTERPRISE SUITE                   │
+ ├────────────────────────────────────────┬────────────────────────────────────────┤
+ │ 🌌 7 Cosmic Supernova Cinematics       │ 🛡️ Anti-Steal Personal Loot Vaults     │
+ │  • Black Hole Singularity Gravitational│  • Zero loot stealing during events    │
+ │    pull, Solar Phoenix & Divine Thunder│  • Private floating holographic chests │
+ ├────────────────────────────────────────┼────────────────────────────────────────┤
+ │ 🐉 8 Mythic 3D Voxel Models            │ ⚔️ 4-Phase Boss Fights & Minions       │
+ │  • Mecha Titan, Ender Dragon, Crown,   │  • Orbital damage-absorbing shields &  │
+ │    Pegasus, Cyber Reaper, Cosmic Whale │    Guardian Minion mini-boss waves     │
+ ├────────────────────────────────────────┼────────────────────────────────────────┤
+ │ ⚡ 7 Mythic Bats with Powers           │ 🎰 3D Floor Roulette Jackpots          │
+ │  • Mjolnir (Real lightning strikes),   │  • Real-time rotating particle wheels  │
+ │    Chaos Scepter (Teleport strikes)    │    projected onto the arena floor      │
+ ├────────────────────────────────────────┼────────────────────────────────────────┤
+ │ 🖥️ 6 In-Game Visual Studio GUIs        │ 🌐 Enterprise Multi-Server Database    │
+ │  • Drag-and-drop loot creator, live 3D │  • HikariCP connection pool with MySQL,│
+ │    model scale slider, pitch composer  │    MariaDB & Redis Velocity sync       │
+ └────────────────────────────────────────┴────────────────────────────────────────┘
+```
+
+### 🌌 1. Seven Procedural Cosmic Supernova Death Cinematics
+While Lite provides a classic festive item explosion, **Sovereign PRO** unleashes cinema-quality death sequences:
+* **Black Hole Singularity:** The piñata collapses into a dark gravitational singularity that physically pulls nearby players toward its vortex before erupting in a blinding cosmic supernova.
+* **Solar Phoenix Rebirth:** A giant fiery bird silhouette rises into the sky, showering molten rewards over a 30-block radius.
+* **Divine Thunderstorm:** 12 localized celestial lightning strikes shatter the piñata into iridescent diamond dust.
+* **Dimensional Rift, Crystal Blossom, Hyperdrive Warp, and Atomic Confetti.**
+
+### 🛡️ 2. Anti-Steal Personal Loot Vaults (Zero Drama / Anti-Cheat Proof)
+In high-player events (30–100+ players), public floor drops cause frustration: speed hackers, autoclickers, and high-ping players often steal all the rare drops.
+* **Sovereign PRO** solves this completely: each player's loot is instanced into a private, floating holographic reward chest that **only that specific player can open**, guaranteeing fair rewards for every participant.
+
+### 🐉 3. Eight Handcrafted 3D Voxel Forms & Oraxen/ItemsAdder Native Hooks
+Switch piñata forms on the fly with custom hitboxes, emotion facial morphs (Calm, Nervous, Enraged, Dying), and native integration with Custom Model Data.
+
+### ⚔️ 4. Advanced 4-Phase Boss Mechanics with Orbital Shields & Minion Waves
+Transform simple piñatas into genuine server raid bosses:
+* **Orbital Energy Shield:** Surrounds the piñata with an impenetrable particle barrier that absorbs all damage until players defeat the spawned Guardian Minions.
+* **Rage Kinetic Pulses:** Knocks back greedy players and launches shockwaves across the floor.
+
+### ⚡ 5. Seven Mythic Bats with Active Powers
+Empower VIPs and event champions with legendary bats:
+* **Mjolnir:** Summons real lightning strikes on hit with booming thunder.
+* **Chaos Scepter:** Warps the attacker directly behind the piñata mid-swing.
+* **Vampire Sickle:** Heals the attacker and grants Speed II buffs during combat.
+
+### 🎰 6. 3D Animated Floor Roulette Wheels
+Project interactive, rotating prize wheels onto the arena floor in real-time, featuring spinning colored laser beams, ticking sound crescendos, and jackpot multipliers.
+
+### 🖥️ 7. Six In-Game Visual Studio GUIs
+Forget editing YAML files in Notepad. Configure your entire plugin in-game:
+* Drag and drop items directly from your inventory into the drop table GUI.
+* Adjust 3D model scale, rotation, and offsets live with interactive GUI sliders.
+* Test sound effects and pitch variations with built-in audio players.
+
+### 🌐 8. Enterprise Cross-Server Network Infrastructure
+* High-throughput **HikariCP connection pool** with **MySQL, MariaDB, and Redis**.
+* Sync community vote goals, leaderboards, and player stats seamlessly across your entire BungeeCord / Velocity network.
+* **Smart Particle Level of Detail (LOD):** Dynamically scales down particle density near dense player clusters to guarantee **20.0 TPS with 80+ players**.
+
+---
+
+<p align="center">
+  <a href="https://builtbybit.com/pinataspectra"><img src="https://img.shields.io/badge/👑_Upgrade_to_Sovereign_PRO-Unlock_All_Features-f59e0b?style=for-the-badge&logo=curseforge&logoColor=white" alt="Upgrade"></a>
+  <a href="https://dr8553097-sudo.github.io/PinataSpectra/"><img src="https://img.shields.io/badge/⚡_View_PRO_Live_Portal-Interactive_Demo-8b5cf6?style=for-the-badge" alt="PRO Docs"></a>
+</p>
 
 ---
 
@@ -60,7 +142,7 @@
 
 ---
 
-## ⚡ Core Systems Overview
+## ⚡ Lite Core Systems Overview
 
 ### 🧊 1. Zero Resource Pack 3D Voxel Engine
 * Native GPU-accelerated rendering using Paper/Purpur Display Entities.
@@ -89,7 +171,7 @@ Explore the [**Interactive Web Portal**](https://dr8553097-sudo.github.io/Pinata
 
 | Chapter | Title | Summary |
 |---|---|---|
-| 🏛️ **01** | [Introduction & Philosophy](docs/01-Introduction-and-Philosophy.md) | Architectural vision, zero-ArmorStand rendering. |
+| 🏛️ **01** | [Introduction & Philosophy](docs/01-Introduction-and-Philosophy.md) | Architectural vision, zero-ArmorStand rendering, and PRO comparison. |
 | ⚙️ **02** | [Installation & Requirements](docs/02-Installation-and-Requirements.md) | Java 21/25, Paper/Purpur compatibility & hooks. |
 | 🧊 **03** | [3D Voxel Models & Physics](docs/03-3D-Voxel-Models-and-Physics.md) | Harmonic pendulum sway and procedural recoil. |
 | ⚔️ **04** | [Combat Phases & Boss Mechanics](docs/04-Combat-Phases-and-Boss-Mechanics.md) | 3-phase transitions & adaptive NoteBlock soundtracks. |
@@ -101,21 +183,6 @@ Explore the [**Interactive Web Portal**](https://dr8553097-sudo.github.io/Pinata
 | 🎮 **10** | [Commands & Permissions](docs/10-Commands-and-Permissions.md) | Complete list of commands, subcommands, and permission nodes. |
 | 🧩 **11** | [Placeholders & Integrations](docs/11-Placeholders-and-Integrations.md) | PlaceholderAPI variables, Vault economy, and Discord Webhooks. |
 | 💡 **12** | [Troubleshooting & FAQ](docs/12-Troubleshooting-and-FAQ.md) | Common diagnostics, WorldGuard flag fixes, and `/pinata clean`. |
-
----
-
-## 👑 Looking for the Ultimate Experience? Discover Sovereign PRO
-
-For large networks with 50+ concurrent players looking for the pinnacle of multiplayer event engineering:
-
-* **8 Mythic 3D Voxel Forms:** Mecha Titan, Ender Dragon, Royal Crown, Golden Pegasus, etc.
-* **7 Cosmic Supernova Death Cinematics:** Black Hole Singularity, Solar Phoenix, Divine Thunder, etc.
-* **Anti-Steal Loot Vaults:** Individual reward security preventing loot stealing during high-player events.
-* **7 Mythic Bats:** Mjolnir with authentic lightning strikes, Chaos Bat, Celestial Stave.
-* **Cross-Server Sync & Databases:** Native MySQL, MariaDB, and Redis caching.
-* **3D Floor Roulette Jackpots:** Animated rotating prize wheels projected onto the ground in real-time.
-
-👉 **[Unlock PinataSpectra Sovereign PRO on BuiltByBit](https://builtbybit.com/pinataspectra)**
 
 ---
 

@@ -51,18 +51,45 @@ Traditional Minecraft piñata plugins over the past decade suffered from deep ar
 
 ---
 
-## 👑 Edition Comparison: Lite vs. Sovereign PRO
+## ⚖️ In-Depth Architectural Comparison: Lite vs. Sovereign PRO vs. Legacy
 
-| Feature | 🍃 PinataSpectra Lite | 🪅 PinataSpectra Sovereign PRO |
-|---|:---:|:---:|
-| **Code & License** | GPLv3 (Open Source) | Commercial Proprietary |
-| **3D Voxel Models** | 1 Base Form (Festive Llama) | **8 Mythic Forms** (Mecha, Dragon, Crown, etc.) |
-| **Combat Phases** | **3 Dynamic Phases** (Evasion & Chaos) | **4 Epic Phases** (Orbital Shields & Minions) |
-| **Death Cinematics** | Classic Festive Item Explosion | **7 Cosmic Supernovas (Black Hole)** |
-| **Mythic Bats** | 1 Festive Bat with MiniMessage | **7 Mythic Bats** (Mjolnir with Lightning) |
-| **Reward Security** | Direct Delivery + Ground Drops | **Anti-Steal Vault** (Individual Protection) |
-| **Database Engines** | Local SQLite | **MySQL + MariaDB + Redis** |
-| **Jackpots** | None | **3D Real-Time Floor Roulettes** |
+| Subsystem / Architectural Feature | 🍃 PinataSpectra Lite (Community Free) | 🪅 PinataSpectra Sovereign PRO (Flagship) | 📦 Legacy / Generic Piñata Plugins |
+|---|:---:|:---:|:---:|
+| **Target Scale & Audience** | Survival & Small Community Servers | Enterprise Networks (50–150+ Players) | Outdated Spigot Servers |
+| **Licensing & Code** | **100% GPLv3 Open Source** | Commercial Proprietary EULA | Closed / Abandoned |
+| **Entity Render Pipeline** | Native `ItemDisplay` + `Interaction` (1.20+) | Native `ItemDisplay` + Particle LOD (80+ Players) | 15–30 Invisible `ArmorStands` (Packet Flood) |
+| **Performance Guarantee** | 20.0 TPS (Single Server Scale) | **Solid 20.0 TPS Guaranteed (80+ Players)** | Severe Client FPS Drops & Server Stutter |
+| **3D Voxel Models** | 1 Standard Form (Festive Llama) | **8 Mythic Forms** (Mecha, Dragon, Crown, etc.) | None / Static floating head |
+| **Custom Model Engine / Oraxen** | Basic Head Textures | **Native Hooks + Custom Model Data Support** | None |
+| **Combat State Machine** | **3 Dynamic Phases** (Micro-Evasion & Warp) | **4 Epic Boss Phases** (Shields & Minions) | Single static health bar |
+| **Shield & Minion Invasions** | None | **Orbital Energy Shields + Guardian Minions** | None |
+| **Soundtrack & Soundscape** | 3 NoteBlock Songs + Native Minecraft SFX | **4 Dynamic Orchestral Suites + Cosmic SFX** | Generic hit click sounds |
+| **Death Cinematics** | Classic Radial Item Burst | **7 Cosmic Supernovas** (Black Hole, Phoenix) | Generic item drop at feet |
+| **Loot Security & Fair Play** | Direct Delivery + Floor Loot | **Anti-Steal Vault** (Private Instanced Loot) | Floor drops (Stolen by speed hackers) |
+| **Custom Weaponry & Bats** | 1 Festive Bat with MiniMessage Lore | **7 Mythic Bats** (Mjolnir with Lightning Strikes) | Regular wooden stick |
+| **Floor Jackpots & Minigames** | None | **3D Animated Floor Roulette Wheels** | None |
+| **In-Game Visual Studio** | Basic Editor GUI | **6 Live In-Game Studio GUIs** (Live 3D Scaling) | Manual YAML text editing only |
+| **Multi-Server & Databases** | Local SQLite Database | **MySQL + MariaDB + Redis Caching (HikariCP)** | YAML Flatfile (Slow, corrupts on crash) |
+| **Leaderboards & Analytics** | Text Podium in Chat | **54-Slot Async Interactive GUI** (`/pinata top`) | None or basic text dump |
+| **Multi-Language Engine** | **Dynamic In-Game (`/pinata lang EN\|ES`)** | **Dynamic In-Game + Auto-Player Language** | Single hardcoded message file |
+| **Discord Webhooks** | Plain Text Event Alerts | **Luxury Rich Embeds with Leaderboards & Images** | None |
+
+---
+
+## 💎 Why Upgrade to Sovereign PRO?
+
+For servers looking to monetize events and provide a AAA multiplayer boss experience, **PinataSpectra Sovereign PRO** adds:
+
+1. 🌌 **7 Cosmic Supernova Death Cinematics:** Black Hole Singularity with player gravitational pull, Solar Phoenix Rebirth, Divine Thunderstorm, Dimensional Rift, and Atomic Confetti.
+2. 🛡️ **Anti-Steal Personal Loot Vaults:** Eliminates loot stealing forever by spawning private instanced reward chests for each participant.
+3. 🐉 **8 Mythic 3D Voxel Forms:** Mecha Titan, Ender Dragon Lord, Royal Crown, Golden Pegasus, Cyber Reaper, and Cosmic Whale.
+4. ⚔️ **4-Phase Boss Raid Combat:** Orbital invulnerability shields and Guardian Minion wave defense.
+5. ⚡ **7 Mythic Bats with Powers:** Mjolnir with lightning strikes, Chaos Scepter teleports, and Vampire Sickle lifesteal.
+6. 🎰 **3D Floor Roulette Wheels:** Interactive rotating prize wheels projected directly onto the ground.
+7. 🖥️ **6 In-Game Visual Studio GUIs:** Drag-and-drop loot creation, live 3D scale sliders, and sound composers.
+8. 🌐 **Enterprise Multi-Server Sync:** HikariCP connection pool with MySQL, MariaDB, and Redis for Velocity/BungeeCord networks.
+
+👉 **[Unlock Sovereign PRO Edition on BuiltByBit](https://builtbybit.com/pinataspectra)**
 
 ---
 
