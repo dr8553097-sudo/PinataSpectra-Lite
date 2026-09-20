@@ -110,19 +110,19 @@ public class PinataProfile {
         this.ribbonBlocks = (ribbonBlocks != null && !ribbonBlocks.isEmpty()) ? ribbonBlocks : List.of(Material.PINK_WOOL, Material.CYAN_WOOL, Material.YELLOW_WOOL);
         this.glowColor = glowColor != null ? glowColor : Color.fromRGB(255, 105, 180);
 
-        this.auraParticle = auraParticle != null ? auraParticle : Particle.WAX_OFF;
+        this.auraParticle = auraParticle != null ? auraParticle : net.dafealru.pinataspectralite.util.ParticleAdapter.WAX_OFF;
         this.auraParticleCount = Math.max(1, auraParticleCount);
         this.auraParticleSpeed = Math.max(0.0, auraParticleSpeed);
 
-        this.hitParticle = hitParticle != null ? hitParticle : Particle.FIREWORK;
+        this.hitParticle = hitParticle != null ? hitParticle : net.dafealru.pinataspectralite.util.ParticleAdapter.FIREWORK;
         this.hitParticleCount = Math.max(1, hitParticleCount);
         this.hitParticleSpeed = Math.max(0.0, hitParticleSpeed);
 
-        this.breakParticle = breakParticle != null ? breakParticle : Particle.CRIT;
+        this.breakParticle = breakParticle != null ? breakParticle : net.dafealru.pinataspectralite.util.ParticleAdapter.CRIT;
         this.breakParticleCount = Math.max(1, breakParticleCount);
         this.breakParticleSpeed = Math.max(0.0, breakParticleSpeed);
 
-        this.trailParticle = trailParticle != null ? trailParticle : Particle.CHERRY_LEAVES;
+        this.trailParticle = trailParticle != null ? trailParticle : net.dafealru.pinataspectralite.util.ParticleAdapter.CHERRY_LEAVES;
         this.trailParticleCount = Math.max(1, trailParticleCount);
         this.trailParticleSpeed = Math.max(0.0, trailParticleSpeed);
 

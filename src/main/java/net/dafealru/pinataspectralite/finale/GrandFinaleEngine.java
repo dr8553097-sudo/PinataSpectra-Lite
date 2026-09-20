@@ -31,15 +31,15 @@ public class GrandFinaleEngine {
         World world = center.getWorld();
 
         // 1. Detonation, Voxel Debris & Victory Fanfare
-        world.spawnParticle(Particle.EXPLOSION_EMITTER, center, 4, 0.5, 0.5, 0.5, 0.0);
-        world.spawnParticle(Particle.FIREWORK, center, 60, 1.2, 1.2, 1.2, 0.25);
+        world.spawnParticle(net.dafealru.pinataspectralite.util.ParticleAdapter.EXPLOSION_EMITTER, center, 4, 0.5, 0.5, 0.5, 0.0);
+        world.spawnParticle(net.dafealru.pinataspectralite.util.ParticleAdapter.FIREWORK, center, 60, 1.2, 1.2, 1.2, 0.25);
         world.playSound(center, Sound.ENTITY_GENERIC_EXPLODE, 2.0f, 0.8f);
         world.playSound(center, Sound.UI_TOAST_CHALLENGE_COMPLETE, 1.5f, 1.0f);
 
         // Voxel Debris fragment burst
         Material[] debrisMats = {Material.MAGENTA_CONCRETE, Material.YELLOW_CONCRETE, Material.CYAN_CONCRETE, Material.LIME_CONCRETE, Material.ORANGE_WOOL};
         for (Material mat : debrisMats) {
-            world.spawnParticle(Particle.BLOCK, center, 40, 0.8, 0.8, 0.8, mat.createBlockData());
+            net.dafealru.pinataspectralite.util.ParticleAdapter.spawnBlockBreak(world, center, 40, 0.8, 0.8, 0.8, mat);
         }
         spawnFlyingDebris(center, debrisMats);
 
@@ -102,7 +102,7 @@ public class GrandFinaleEngine {
             public void run() {
                 for (Item item : debrisItems) {
                     if (item.isValid()) {
-                        item.getWorld().spawnParticle(Particle.POOF, item.getLocation(), 4, 0.1, 0.1, 0.1, 0.02);
+                        item.getWorld().spawnParticle(net.dafealru.pinataspectralite.util.ParticleAdapter.POOF, item.getLocation(), 4, 0.1, 0.1, 0.1, 0.02);
                         item.remove();
                     }
                 }
@@ -149,7 +149,7 @@ public class GrandFinaleEngine {
 
                 world.playSound(center, Sound.ENTITY_DOLPHIN_SPLASH, 1.4f, 1.0f + (pulse * 0.15f));
                 world.playSound(center, Sound.BLOCK_NOTE_BLOCK_BELL, 1.2f, 1.0f + (pulse * 0.15f));
-                world.spawnParticle(Particle.SPLASH, center.clone().add(0, 0.4, 0), 30, 0.4, 0.2, 0.4, 0.1);
+                world.spawnParticle(net.dafealru.pinataspectralite.util.ParticleAdapter.SPLASH, center.clone().add(0, 0.4, 0), 30, 0.4, 0.2, 0.4, 0.1);
 
                 int batchSize = Math.max(4, (items.size() - itemPtr) / Math.max(1, (6 - pulse)));
                 for (int i = 0; i < batchSize && itemPtr < items.size(); i++) {

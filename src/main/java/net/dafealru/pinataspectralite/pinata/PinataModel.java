@@ -221,14 +221,16 @@ public class PinataModel {
             world.playSound(voxelLoc, Sound.BLOCK_DECORATED_POT_SHATTER, SoundCategory.PLAYERS, 1.6f, 1.15f);
 
             // Real Block Break Debris Burst
-            world.spawnParticle(Particle.BLOCK, voxelLoc, 30, 0.25, 0.25, 0.25, 0.12, toShatter.material.createBlockData());
-            world.spawnParticle(profile.getBreakParticle(), voxelLoc, profile.getBreakParticleCount(), 0.3, 0.3, 0.3, profile.getBreakParticleSpeed());
-            world.spawnParticle(Particle.DUST, voxelLoc, 20, 0.3, 0.3, 0.3, new Particle.DustOptions(Color.fromRGB(255, 200, 50), 1.2f));
+            net.dafealru.pinataspectralite.util.ParticleAdapter.spawnBlockBreak(world, voxelLoc, 30, 0.25, 0.25, 0.25, 0.12, toShatter.material);
+            if (profile.getBreakParticle() != null) {
+                world.spawnParticle(profile.getBreakParticle(), voxelLoc, profile.getBreakParticleCount(), 0.3, 0.3, 0.3, profile.getBreakParticleSpeed());
+            }
+            net.dafealru.pinataspectralite.util.ParticleAdapter.spawnDust(world, voxelLoc, 20, 0.3, 0.3, 0.3, Color.fromRGB(255, 200, 50), 1.2f);
 
             // Internal Sweets & Candy Leaking from new Hole Cavity
-            world.spawnParticle(Particle.ITEM, voxelLoc, 8, 0.2, 0.2, 0.2, 0.10, new ItemStack(Material.COOKIE));
-            world.spawnParticle(Particle.ITEM, voxelLoc, 8, 0.2, 0.2, 0.2, 0.10, new ItemStack(Material.SUGAR));
-            world.spawnParticle(Particle.ITEM, voxelLoc, 5, 0.2, 0.2, 0.2, 0.10, new ItemStack(Material.HONEYCOMB));
+            net.dafealru.pinataspectralite.util.ParticleAdapter.spawnItemDebris(world, voxelLoc, 8, 0.2, 0.2, 0.2, 0.10, Material.COOKIE);
+            net.dafealru.pinataspectralite.util.ParticleAdapter.spawnItemDebris(world, voxelLoc, 8, 0.2, 0.2, 0.2, 0.10, Material.SUGAR);
+            net.dafealru.pinataspectralite.util.ParticleAdapter.spawnItemDebris(world, voxelLoc, 5, 0.2, 0.2, 0.2, 0.10, Material.HONEYCOMB);
 
             if (toShatter.display != null && toShatter.display.isValid()) {
                 toShatter.display.remove();
@@ -355,11 +357,11 @@ public class PinataModel {
             Location leakLoc = newCenter.clone().add(ox, oy, oz);
 
             if (ThreadLocalRandom.current().nextDouble() < 0.45) {
-                world.spawnParticle(Particle.ITEM, leakLoc, 1, 0.03, -0.06, 0.03, 0.02, new ItemStack(Material.SUGAR));
+                net.dafealru.pinataspectralite.util.ParticleAdapter.spawnItemDebris(world, leakLoc, 1, 0.03, -0.06, 0.03, 0.02, Material.SUGAR);
             } else if (ThreadLocalRandom.current().nextDouble() < 0.30) {
-                world.spawnParticle(Particle.ITEM, leakLoc, 1, 0.03, -0.06, 0.03, 0.02, new ItemStack(Material.COOKIE));
-            } else {
-                world.spawnParticle(Particle.CHERRY_LEAVES, leakLoc, 1, 0.05, -0.04, 0.05, 0.01);
+                net.dafealru.pinataspectralite.util.ParticleAdapter.spawnItemDebris(world, leakLoc, 1, 0.03, -0.06, 0.03, 0.02, Material.COOKIE);
+            } else if (net.dafealru.pinataspectralite.util.ParticleAdapter.CHERRY_LEAVES != null) {
+                world.spawnParticle(net.dafealru.pinataspectralite.util.ParticleAdapter.CHERRY_LEAVES, leakLoc, 1, 0.05, -0.04, 0.05, 0.01);
             }
         }
 
@@ -374,8 +376,8 @@ public class PinataModel {
         Location topPoint = piñataTop.clone().add(0, 0.85, 0);
 
         int ropePoints = 14;
-        org.bukkit.Particle.DustOptions ropeDust = new org.bukkit.Particle.DustOptions(Color.fromRGB(222, 184, 135), 0.75f);
-        org.bukkit.Particle.DustOptions knotDust = new org.bukkit.Particle.DustOptions(Color.fromRGB(255, 215, 0), 1.0f);
+        Color knotColor = Color.fromRGB(255, 215, 0);
+        Color ropeColor = Color.fromRGB(222, 184, 135);
 
         for (int i = 0; i <= ropePoints; i++) {
             double t = (double) i / ropePoints;
@@ -387,9 +389,9 @@ public class PinataModel {
             Location ropeLoc = new Location(anchor.getWorld(), lx, ly - sag, lz);
 
             if (i == ropePoints) {
-                anchor.getWorld().spawnParticle(org.bukkit.Particle.DUST, ropeLoc, 1, 0, 0, 0, knotDust);
+                net.dafealru.pinataspectralite.util.ParticleAdapter.spawnDust(anchor.getWorld(), ropeLoc, 1, 0, 0, 0, knotColor, 1.0f);
             } else {
-                anchor.getWorld().spawnParticle(org.bukkit.Particle.DUST, ropeLoc, 1, 0, 0, 0, ropeDust);
+                net.dafealru.pinataspectralite.util.ParticleAdapter.spawnDust(anchor.getWorld(), ropeLoc, 1, 0, 0, 0, ropeColor, 0.75f);
             }
         }
     }

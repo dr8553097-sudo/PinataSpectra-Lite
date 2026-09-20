@@ -65,7 +65,9 @@ public class PinataCleanEngine {
         for (World world : Bukkit.getWorlds()) {
             for (Entity entity : world.getEntities()) {
                 if (entity.getPersistentDataContainer().has(PinataModel.PDC_KEY, PersistentDataType.BYTE)) {
-                    world.spawnParticle(Particle.POOF, entity.getLocation(), 4, 0.1, 0.1, 0.1, 0.02);
+                    if (net.dafealru.pinataspectralite.util.ParticleAdapter.POOF != null) {
+                        world.spawnParticle(net.dafealru.pinataspectralite.util.ParticleAdapter.POOF, entity.getLocation(), 4, 0.1, 0.1, 0.1, 0.02);
+                    }
                     entity.remove();
                     removed++;
                 }

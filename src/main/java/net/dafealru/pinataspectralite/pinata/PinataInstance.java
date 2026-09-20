@@ -4,6 +4,7 @@ import net.dafealru.pinataspectralite.PinataPartyLite;
 import net.dafealru.pinataspectralite.audio.PartyMusicEngine;
 import net.dafealru.pinataspectralite.loot.LootItem;
 import net.dafealru.pinataspectralite.utils.ColorUtils;
+import net.dafealru.pinataspectralite.util.ParticleAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -193,20 +194,20 @@ public class PinataInstance {
                     double hz1 = Math.sin(helix1) * radius;
                     double hy1 = Math.sin(time * 3.0) * 0.35;
 
-                    Particle primaryPart = (currentPhase == PinataPhase.PHASE_3_CHAOTIC_SHIFTER) ? Particle.PORTAL : Particle.END_ROD;
-                    world.spawnParticle(primaryPart, currentLoc.clone().add(hx1, 0.4 + hy1, hz1), 1, 0, 0, 0, 0);
-                    world.spawnParticle(profile.getAuraParticle(), currentLoc.clone().add(-hx1, 0.4 - hy1, -hz1), 1, 0, 0, 0, 0);
+                    Particle primaryPart = (currentPhase == PinataPhase.PHASE_3_CHAOTIC_SHIFTER) ? ParticleAdapter.PORTAL : ParticleAdapter.resolveParticle("END_ROD", "CRIT");
+                    if (primaryPart != null) world.spawnParticle(primaryPart, currentLoc.clone().add(hx1, 0.4 + hy1, hz1), 1, 0, 0, 0, 0);
+                    if (profile.getAuraParticle() != null) world.spawnParticle(profile.getAuraParticle(), currentLoc.clone().add(-hx1, 0.4 - hy1, -hz1), 1, 0, 0, 0, 0);
 
                     // 2. Festive Sparkle Trail under the Piñata
                     if (((int) (time * 10)) % 3 == 0) {
-                        world.spawnParticle(Particle.CHERRY_LEAVES, currentLoc.clone().add(0, -0.4, 0), 2, 0.25, 0.1, 0.25, 0.02);
-                        world.spawnParticle(profile.getTrailParticle(), currentLoc.clone().add(0, 0.2, 0), 2, 0.2, 0.2, 0.2, 0.02);
+                        if (ParticleAdapter.CHERRY_LEAVES != null) world.spawnParticle(ParticleAdapter.CHERRY_LEAVES, currentLoc.clone().add(0, -0.4, 0), 2, 0.25, 0.1, 0.25, 0.02);
+                        if (profile.getTrailParticle() != null) world.spawnParticle(profile.getTrailParticle(), currentLoc.clone().add(0, 0.2, 0), 2, 0.2, 0.2, 0.2, 0.02);
                     }
 
                     // 3. Periodic Sovereign Aura Fireworks Burst
                     if (ticksAlive % 100 == 0 && ticksAlive > 0) {
-                        world.spawnParticle(Particle.WAX_OFF, currentLoc.clone().add(0, 0.6, 0), 16, 0.4, 0.4, 0.4, 0.08);
-                        world.spawnParticle(Particle.FIREWORK, currentLoc.clone().add(0, 0.8, 0), 8, 0.3, 0.3, 0.3, 0.05);
+                        if (ParticleAdapter.WAX_OFF != null) world.spawnParticle(ParticleAdapter.WAX_OFF, currentLoc.clone().add(0, 0.6, 0), 16, 0.4, 0.4, 0.4, 0.08);
+                        if (ParticleAdapter.FIREWORK != null) world.spawnParticle(ParticleAdapter.FIREWORK, currentLoc.clone().add(0, 0.8, 0), 8, 0.3, 0.3, 0.3, 0.05);
                     }
                 }
 
@@ -279,8 +280,8 @@ public class PinataInstance {
         dead = true;
 
         if (originLocation.getWorld() != null) {
-            originLocation.getWorld().spawnParticle(Particle.POOF, originLocation, 40, 0.8, 0.8, 0.8, 0.05);
-            originLocation.getWorld().spawnParticle(Particle.CLOUD, originLocation, 25, 0.5, 0.5, 0.5, 0.02);
+            if (ParticleAdapter.POOF != null) originLocation.getWorld().spawnParticle(ParticleAdapter.POOF, originLocation, 40, 0.8, 0.8, 0.8, 0.05);
+            if (ParticleAdapter.CLOUD != null) originLocation.getWorld().spawnParticle(ParticleAdapter.CLOUD, originLocation, 25, 0.5, 0.5, 0.5, 0.02);
             originLocation.getWorld().playSound(originLocation, Sound.ENTITY_BAT_TAKEOFF, 1.5f, 0.8f);
         }
 
@@ -321,7 +322,7 @@ public class PinataInstance {
             isVip = true;
             if (player.getLocation().getWorld() != null) {
                 player.getLocation().getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE_FAR, 1.2f, 1.6f);
-                player.getLocation().getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 1.2, 0), 8, 0.2, 0.2, 0.2, 0.05);
+                if (ParticleAdapter.FIREWORK != null) player.getLocation().getWorld().spawnParticle(ParticleAdapter.FIREWORK, player.getLocation().add(0, 1.2, 0), 8, 0.2, 0.2, 0.2, 0.05);
             }
         }
 
@@ -397,9 +398,9 @@ public class PinataInstance {
 
                 player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.6f, 1.2f);
                 player.playSound(player.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1.6f, 1.3f);
-                player.playSound(player.getLocation(), Sound.ENTITY_WIND_CHARGE_WIND_BURST, 1.4f, 1.1f);
-                player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 0.5, 0), 16, 0.35, 0.35, 0.35, 0.1);
-                player.getWorld().spawnParticle(Particle.CHERRY_LEAVES, player.getLocation().add(0, 0.5, 0), 12, 0.3, 0.3, 0.3, 0.05);
+                net.dafealru.pinataspectralite.util.SoundAdapter.play(player, player.getLocation(), net.dafealru.pinataspectralite.util.SoundAdapter.WIND_BURST, 1.4f, 1.1f);
+                if (ParticleAdapter.FIREWORK != null) player.getWorld().spawnParticle(ParticleAdapter.FIREWORK, player.getLocation().add(0, 0.5, 0), 16, 0.35, 0.35, 0.35, 0.1);
+                if (ParticleAdapter.CHERRY_LEAVES != null) player.getWorld().spawnParticle(ParticleAdapter.CHERRY_LEAVES, player.getLocation().add(0, 0.5, 0), 12, 0.3, 0.3, 0.3, 0.05);
                 player.sendActionBar(ColorUtils.colorizeComponent("<gradient:#38BDF8:#818CF8><bold>🚀 ¡SUPER FIESTA LAUNCH! 🚀</bold></gradient>"));
             } else {
                 // 💥 Retaliatory Strong Horizontal Pushback (~7-9 blocks away)
@@ -413,7 +414,7 @@ public class PinataInstance {
                     push.normalize().multiply(horizForce).setY(vertForce);
                     player.setVelocity(push);
                     player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.5f, 1.0f);
-                    player.playSound(player.getLocation(), Sound.ENTITY_WIND_CHARGE_WIND_BURST, 1.1f, 1.3f);
+                    net.dafealru.pinataspectralite.util.SoundAdapter.play(player, player.getLocation(), net.dafealru.pinataspectralite.util.SoundAdapter.WIND_BURST, 1.1f, 1.3f);
                     player.sendActionBar(ColorUtils.colorizeComponent("<gradient:#F59E0B:#EF4444><bold>💥 ¡PIÑATA PUSHBACK! 💥</bold></gradient>"));
                 }
             }
@@ -433,13 +434,13 @@ public class PinataInstance {
             double safeY = findSafeGroundY(player.getWorld(), targetX, targetZ, player.getLocation().getY());
             Location warpTarget = new Location(player.getWorld(), targetX, safeY, targetZ, player.getLocation().getYaw() + 180f, player.getLocation().getPitch());
 
-            player.getWorld().spawnParticle(Particle.PORTAL, player.getLocation().add(0, 1, 0), 25, 0.4, 0.4, 0.4, 0.1);
-            player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 1, 0), 12, 0.3, 0.3, 0.3, 0.05);
+            if (ParticleAdapter.PORTAL != null) player.getWorld().spawnParticle(ParticleAdapter.PORTAL, player.getLocation().add(0, 1, 0), 25, 0.4, 0.4, 0.4, 0.1);
+            if (ParticleAdapter.FIREWORK != null) player.getWorld().spawnParticle(ParticleAdapter.FIREWORK, player.getLocation().add(0, 1, 0), 12, 0.3, 0.3, 0.3, 0.05);
 
             player.teleport(warpTarget);
 
-            player.getWorld().spawnParticle(Particle.PORTAL, warpTarget.clone().add(0, 1, 0), 25, 0.4, 0.4, 0.4, 0.1);
-            player.getWorld().spawnParticle(Particle.CHERRY_LEAVES, warpTarget.clone().add(0, 1, 0), 15, 0.4, 0.4, 0.4, 0.05);
+            if (ParticleAdapter.PORTAL != null) player.getWorld().spawnParticle(ParticleAdapter.PORTAL, warpTarget.clone().add(0, 1, 0), 25, 0.4, 0.4, 0.4, 0.1);
+            if (ParticleAdapter.CHERRY_LEAVES != null) player.getWorld().spawnParticle(ParticleAdapter.CHERRY_LEAVES, warpTarget.clone().add(0, 1, 0), 15, 0.4, 0.4, 0.4, 0.05);
             player.playSound(warpTarget, Sound.ITEM_CHORUS_FRUIT_TELEPORT, 1.4f, 1.3f);
             player.playSound(warpTarget, Sound.ENTITY_ENDERMAN_TELEPORT, 1.2f, 1.4f);
 
@@ -471,9 +472,11 @@ public class PinataInstance {
             if (profile.getHitSound() != null) {
                 loc.getWorld().playSound(loc, profile.getHitSound(), profile.getHitSoundVolume(), profile.getHitSoundPitch());
             }
-            loc.getWorld().spawnParticle(profile.getHitParticle(), loc.clone().add(0, 0.8, 0), profile.getHitParticleCount(), 0.35, 0.35, 0.35, profile.getHitParticleSpeed());
-            loc.getWorld().spawnParticle(Particle.CRIT, loc.clone().add(0, 0.8, 0), 12, 0.3, 0.3, 0.3, 0.15);
-            loc.getWorld().spawnParticle(Particle.BLOCK, loc.clone().add(0, 0.6, 0), 14, 0.25, 0.25, 0.25, 0.08, profile.getPrimaryBlock().createBlockData());
+            if (profile.getHitParticle() != null) {
+                loc.getWorld().spawnParticle(profile.getHitParticle(), loc.clone().add(0, 0.8, 0), profile.getHitParticleCount(), 0.35, 0.35, 0.35, profile.getHitParticleSpeed());
+            }
+            if (ParticleAdapter.CRIT != null) loc.getWorld().spawnParticle(ParticleAdapter.CRIT, loc.clone().add(0, 0.8, 0), 12, 0.3, 0.3, 0.3, 0.15);
+            ParticleAdapter.spawnBlockBreak(loc.getWorld(), loc.clone().add(0, 0.6, 0), 14, 0.25, 0.25, 0.25, 0.08, profile.getPrimaryBlock());
         }
 
         // Drop physical flying prizes & inventory delivery
@@ -491,8 +494,8 @@ public class PinataInstance {
         double radius = plugin.getConfig().getDouble("mechanics.boss-attacks.ground-slam.radius", 6.0);
         double force = plugin.getConfig().getDouble("mechanics.boss-attacks.ground-slam.knockback-force", 1.1);
 
-        world.spawnParticle(Particle.EXPLOSION, loc, 5, 0.5, 0.3, 0.5, 0.05);
-        world.spawnParticle(Particle.SWEEP_ATTACK, loc, 16, 0.8, 0.2, 0.8, 0.1);
+        if (ParticleAdapter.EXPLOSION != null) world.spawnParticle(ParticleAdapter.EXPLOSION, loc, 5, 0.5, 0.3, 0.5, 0.05);
+        if (ParticleAdapter.SWEEP_ATTACK != null) world.spawnParticle(ParticleAdapter.SWEEP_ATTACK, loc, 16, 0.8, 0.2, 0.8, 0.1);
         world.playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 1.5f, 1.4f);
         world.playSound(loc, Sound.BLOCK_ANVIL_LAND, 1.2f, 1.6f);
 
@@ -538,8 +541,8 @@ public class PinataInstance {
             loc.getWorld().playSound(loc, Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundCategory.MASTER, 1.4f, 1.25f);
             loc.getWorld().playSound(loc, Sound.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.MASTER, 1.5f, 1.8f);
             loc.getWorld().playSound(loc, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, SoundCategory.MASTER, 1.5f, 1.4f);
-            loc.getWorld().spawnParticle(Particle.POOF, loc, 35, 0.35, 0.35, 0.35, 0.05);
-            loc.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, loc, 20, 0.4, 0.4, 0.4, 0.1);
+            if (ParticleAdapter.POOF != null) loc.getWorld().spawnParticle(ParticleAdapter.POOF, loc, 35, 0.35, 0.35, 0.35, 0.05);
+            if (ParticleAdapter.ELECTRIC_SPARK != null) loc.getWorld().spawnParticle(ParticleAdapter.ELECTRIC_SPARK, loc, 20, 0.4, 0.4, 0.4, 0.1);
         }
     }
 
@@ -564,8 +567,8 @@ public class PinataInstance {
             loc.getWorld().playSound(loc, Sound.ENTITY_WARDEN_SONIC_BOOM, SoundCategory.MASTER, 1.4f, 1.2f);
             loc.getWorld().playSound(loc, Sound.BLOCK_END_PORTAL_SPAWN, SoundCategory.MASTER, 1.2f, 1.2f);
             loc.getWorld().playSound(loc, Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.MASTER, 1.5f, 0.8f);
-            loc.getWorld().spawnParticle(Particle.SONIC_BOOM, loc, 1, 0, 0, 0, 0);
-            loc.getWorld().spawnParticle(Particle.PORTAL, loc, 60, 0.8, 0.8, 0.8, 0.2);
+            if (ParticleAdapter.SONIC_BOOM != null) loc.getWorld().spawnParticle(ParticleAdapter.SONIC_BOOM, loc, 1, 0, 0, 0, 0);
+            if (ParticleAdapter.PORTAL != null) loc.getWorld().spawnParticle(ParticleAdapter.PORTAL, loc, 60, 0.8, 0.8, 0.8, 0.2);
 
             // Knockback to nearby players
             for (Player p : loc.getWorld().getPlayers()) {
@@ -610,18 +613,18 @@ public class PinataInstance {
         Vector dir = targetLoc.toVector().subtract(oldLoc.toVector());
         double dist = oldLoc.distance(targetLoc);
         int steps = (int) (dist * 3);
-        if (steps > 0) {
+        if (steps > 0 && ParticleAdapter.PORTAL != null) {
             Vector stepVec = dir.clone().normalize().multiply(0.33);
             Location traceLoc = oldLoc.clone();
             for (int i = 0; i < steps; i++) {
                 traceLoc.add(stepVec);
-                world.spawnParticle(Particle.PORTAL, traceLoc, 2, 0.05, 0.05, 0.05, 0.02);
+                world.spawnParticle(ParticleAdapter.PORTAL, traceLoc, 2, 0.05, 0.05, 0.05, 0.02);
             }
         }
 
         // FX at old location
-        world.spawnParticle(Particle.PORTAL, oldLoc, 40, 0.6, 0.6, 0.6, 0.15);
-        world.spawnParticle(Particle.POOF, oldLoc, 20, 0.4, 0.4, 0.4, 0.05);
+        if (ParticleAdapter.PORTAL != null) world.spawnParticle(ParticleAdapter.PORTAL, oldLoc, 40, 0.6, 0.6, 0.6, 0.15);
+        if (ParticleAdapter.POOF != null) world.spawnParticle(ParticleAdapter.POOF, oldLoc, 20, 0.4, 0.4, 0.4, 0.05);
         world.playSound(oldLoc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.4f, 1.2f);
 
         // Update origin & anchor
@@ -631,8 +634,8 @@ public class PinataInstance {
         model.setBaseLocation(originLocation);
 
         // FX at new location
-        world.spawnParticle(Particle.PORTAL, targetLoc, 40, 0.6, 0.6, 0.6, 0.15);
-        world.spawnParticle(Particle.FIREWORK, targetLoc, 15, 0.3, 0.3, 0.3, 0.08);
+        if (ParticleAdapter.PORTAL != null) world.spawnParticle(ParticleAdapter.PORTAL, targetLoc, 40, 0.6, 0.6, 0.6, 0.15);
+        if (ParticleAdapter.FIREWORK != null) world.spawnParticle(ParticleAdapter.FIREWORK, targetLoc, 15, 0.3, 0.3, 0.3, 0.08);
         world.playSound(targetLoc, Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS, 1.3f, 1.6f);
 
         String sx = String.valueOf((int) newX);

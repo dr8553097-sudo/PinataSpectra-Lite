@@ -2,6 +2,7 @@ package net.dafealru.pinataspectralite.pinata;
 
 import net.dafealru.pinataspectralite.PinataPartyLite;
 import net.dafealru.pinataspectralite.loot.LootItem;
+import net.dafealru.pinataspectralite.util.ParticleAdapter;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -92,19 +93,19 @@ public class PinataRegistry {
         Color glowColor = parseHexColor(config.getString("glow-color", "#EC4899"));
 
         // Particles
-        Particle aura = matchParticle(config.getString("aura-particle"), Particle.WAX_OFF);
+        Particle aura = matchParticle(config.getString("aura-particle"), ParticleAdapter.WAX_OFF);
         int auraCount = config.getInt("aura-particle-count", 1);
         double auraSpeed = config.getDouble("aura-particle-speed", 0.0);
 
-        Particle hit = matchParticle(config.getString("hit-particle"), Particle.FIREWORK);
+        Particle hit = matchParticle(config.getString("hit-particle"), ParticleAdapter.FIREWORK);
         int hitCount = config.getInt("hit-particle-count", 20);
         double hitSpeed = config.getDouble("hit-particle-speed", 0.1);
 
-        Particle breakPart = matchParticle(config.getString("break-particle"), Particle.CRIT);
+        Particle breakPart = matchParticle(config.getString("break-particle"), ParticleAdapter.CRIT);
         int breakCount = config.getInt("break-particle-count", 15);
         double breakSpeed = config.getDouble("break-particle-speed", 0.15);
 
-        Particle trail = matchParticle(config.getString("trail-particle"), Particle.CHERRY_LEAVES);
+        Particle trail = matchParticle(config.getString("trail-particle"), ParticleAdapter.CHERRY_LEAVES);
         int trailCount = config.getInt("trail-particle-count", 2);
         double trailSpeed = config.getDouble("trail-particle-speed", 0.02);
 
@@ -177,8 +178,7 @@ public class PinataRegistry {
     }
 
     private Particle matchParticle(String name, Particle def) {
-        if (name == null) return def;
-        try { return Particle.valueOf(name.toUpperCase()); } catch (Exception e) { return def; }
+        return ParticleAdapter.match(name, def);
     }
 
     private Sound matchSound(String name, Sound def) {

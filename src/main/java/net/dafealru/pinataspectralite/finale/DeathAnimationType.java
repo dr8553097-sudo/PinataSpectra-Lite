@@ -16,7 +16,7 @@ public enum DeathAnimationType {
             "&c★ PRO ONLY &7- Magma geyser launching burning ballistic loot arcs.",
             "&c★ EXCLUSIVO PRO &7- Géiser térmico vertical y parábolas de magma.", true),
 
-    SPIRAL_VORTEX("Spiral Vortex", "Vórtice Espiral", Material.WIND_CHARGE,
+    SPIRAL_VORTEX("Spiral Vortex", "Vórtice Espiral", Material.FEATHER,
             "&b★ PRO ONLY &7- Double-helix cyclone lifting items into orbital vortex.",
             "&b★ EXCLUSIVO PRO &7- Doble hélice ascendente de viento ciclónico.", true),
 
