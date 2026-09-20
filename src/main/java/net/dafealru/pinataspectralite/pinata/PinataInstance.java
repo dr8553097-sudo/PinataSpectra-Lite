@@ -39,6 +39,8 @@ public class PinataInstance {
     private boolean dead = false;
 
     private final Map<UUID, Integer> hitCounters = new ConcurrentHashMap<>();
+    private final Map<UUID, Integer> consecutiveHits = new ConcurrentHashMap<>();
+    private final Map<UUID, Long> lastLaunchTimes = new ConcurrentHashMap<>();
     private final Map<UUID, Long> playerCooldowns = new ConcurrentHashMap<>();
     private final Map<UUID, Long> fullInvMsgCooldown = new ConcurrentHashMap<>();
 
@@ -206,19 +208,6 @@ public class PinataInstance {
                         world.spawnParticle(Particle.WAX_OFF, currentLoc.clone().add(0, 0.6, 0), 16, 0.4, 0.4, 0.4, 0.08);
                         world.spawnParticle(Particle.FIREWORK, currentLoc.clone().add(0, 0.8, 0), 8, 0.3, 0.3, 0.3, 0.05);
                     }
-
-                    // 4. Continuous Ambient Kinetic Aura & Collision Nudge
-                    if (ticksAlive % 4 == 0) {
-                        for (Player p : world.getPlayers()) {
-                            if (p.getGameMode() != org.bukkit.GameMode.SPECTATOR && p.getLocation().distanceSquared(currentLoc) <= 4.5) {
-                                Vector nudge = p.getLocation().toVector().subtract(currentLoc.toVector()).setY(0);
-                                if (nudge.lengthSquared() > 0.001) {
-                                    nudge.normalize().multiply(0.22).setY(0.12);
-                                    p.setVelocity(p.getVelocity().add(nudge));
-                                }
-                            }
-                        }
-                    }
                 }
 
                 // Add newly joined players to bossbar
@@ -380,60 +369,54 @@ public class PinataInstance {
         }
 
         // Dynamic Rhythm Physics & Launch Engine:
-        // 1) Super Sky Trampoline Launch ("Te lance para arriba" every 4 hits or 22% chance)
-        // 2) Festive Spin-Warp (12% chance or combo % 7)
-        // 3) Smooth Regular Recoil (Gentle nudge so player can comfortably chain hits)
+        // Consecutive combo tracking: Hits 1..(threshold - 1) have 0 knockback so players can chain hits comfortably.
+        // When reaching the combo threshold (e.g. 5 hits), the piñata retaliates with a pushback or a timed gentle upward bounce.
+        int combo = consecutiveHits.merge(player.getUniqueId(), 1, Integer::sum);
+        int threshold = plugin.getConfig().getInt("physics.knockback.combo-threshold", 5);
+
         Vector push = player.getLocation().toVector().subtract(loc.toVector());
         push.setY(0);
 
-        int playerHits = hitCounters.getOrDefault(player.getUniqueId(), 1);
+        if (combo >= threshold) {
+            consecutiveHits.put(player.getUniqueId(), 0); // Reset combo
 
-        if (playerHits % 4 == 0 || ThreadLocalRandom.current().nextDouble() < 0.22) {
-            // 🚀 SUPER FIESTA LAUNCH (High upward sky bounce)
-            if (push.lengthSquared() > 0.0001) {
-                push.normalize().multiply(0.35);
-            }
-            double vertLaunch = isVip ? 1.15 : 0.98;
-            push.setY(vertLaunch);
-            player.setVelocity(push);
+            long lastLaunch = lastLaunchTimes.getOrDefault(player.getUniqueId(), 0L);
+            long launchCooldown = plugin.getConfig().getLong("physics.knockback.upward-bounce.cooldown-seconds", 10L) * 1000L;
+            boolean launchEnabled = plugin.getConfig().getBoolean("physics.knockback.upward-bounce.enabled", true);
 
-            player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.6f, 1.2f);
-            player.playSound(player.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1.5f, 1.4f);
-            player.playSound(player.getLocation(), Sound.ENTITY_WIND_CHARGE_WIND_BURST, 1.2f, 1.1f);
+            if (launchEnabled && (now - lastLaunch >= launchCooldown)) {
+                lastLaunchTimes.put(player.getUniqueId(), now);
+                // 🎈 Controlled Upward Bounce Jump (smooth 2-3 blocks, fun and bouncy)
+                double vertLaunch = plugin.getConfig().getDouble("physics.knockback.upward-bounce.vertical-height", 0.52);
+                if (isVip) vertLaunch += 0.08;
+                if (push.lengthSquared() > 0.0001) {
+                    push.normalize().multiply(0.25);
+                }
+                push.setY(vertLaunch);
+                player.setVelocity(push);
 
-            player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 0.5, 0), 12, 0.3, 0.3, 0.3, 0.08);
-            player.getWorld().spawnParticle(Particle.CHERRY_LEAVES, player.getLocation().add(0, 0.5, 0), 10, 0.3, 0.3, 0.3, 0.05);
-            player.sendActionBar(ColorUtils.colorizeComponent("<gradient:#38BDF8:#EC4899><bold>🚀 ¡SUPER FIESTA LAUNCH! 🚀</bold></gradient>"));
-        } else if (playerHits % 7 == 0 || ThreadLocalRandom.current().nextDouble() < 0.12) {
-            // 🌀 FESTIVE SPIN-WARP (Short nearby teleport 4 to 7 blocks away)
-            if (player.getWorld() != null) {
-                double angle = ThreadLocalRandom.current().nextDouble(0, 2 * Math.PI);
-                double dist = ThreadLocalRandom.current().nextDouble(4.0, 6.5);
-                double targetX = loc.getX() + Math.cos(angle) * dist;
-                double targetZ = loc.getZ() + Math.sin(angle) * dist;
-                double safeY = findSafeGroundY(player.getWorld(), targetX, targetZ, player.getLocation().getY());
-                Location warpTarget = new Location(player.getWorld(), targetX, safeY, targetZ, player.getLocation().getYaw() + 180f, player.getLocation().getPitch());
-
-                player.getWorld().spawnParticle(Particle.PORTAL, player.getLocation().add(0, 1, 0), 25, 0.4, 0.4, 0.4, 0.1);
-                player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 1, 0), 12, 0.3, 0.3, 0.3, 0.05);
-
-                player.teleport(warpTarget);
-
-                player.getWorld().spawnParticle(Particle.PORTAL, warpTarget.clone().add(0, 1, 0), 25, 0.4, 0.4, 0.4, 0.1);
-                player.getWorld().spawnParticle(Particle.CHERRY_LEAVES, warpTarget.clone().add(0, 1, 0), 15, 0.4, 0.4, 0.4, 0.05);
-                player.playSound(warpTarget, Sound.ITEM_CHORUS_FRUIT_TELEPORT, 1.4f, 1.3f);
-                player.playSound(warpTarget, Sound.ENTITY_ENDERMAN_TELEPORT, 1.2f, 1.4f);
-
-                player.sendActionBar(ColorUtils.colorizeComponent("<gradient:#EC4899:#FCD34D><bold>🌀 ¡FIESTA SPIN-WARP! 🌀</bold></gradient>"));
-            }
-        } else {
-            // Regular hit: gentle recoil so player stays in range and can keep hitting smoothly
-            if (push.lengthSquared() > 0.0001) {
-                push.normalize().multiply(0.16).setY(0.08);
-                player.setVelocity(player.getVelocity().add(push));
-                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.5f, 1.3f);
+                player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.2f, 1.4f);
+                player.playSound(player.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1.4f, 1.3f);
+                player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation().add(0, 0.5, 0), 8, 0.25, 0.25, 0.25, 0.05);
+                player.getWorld().spawnParticle(Particle.CHERRY_LEAVES, player.getLocation().add(0, 0.5, 0), 8, 0.25, 0.25, 0.25, 0.05);
+                player.sendActionBar(ColorUtils.colorizeComponent("<gradient:#38BDF8:#818CF8><bold>🎈 ¡FIESTA BOUNCE! 🎈</bold></gradient>"));
+            } else {
+                // 💥 Retaliatory Horizontal Pushback (pushes player back after hitting multiple times)
+                double horizForce = plugin.getConfig().getDouble("physics.knockback.horizontal-force", 0.65);
+                double vertForce = plugin.getConfig().getDouble("physics.knockback.vertical-force", 0.20);
+                if (isVip) {
+                    horizForce += 0.15;
+                    vertForce += 0.05;
+                }
+                if (push.lengthSquared() > 0.0001) {
+                    push.normalize().multiply(horizForce).setY(vertForce);
+                    player.setVelocity(push);
+                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.1f, 1.0f);
+                    player.sendActionBar(ColorUtils.colorizeComponent("<gradient:#F59E0B:#EF4444><bold>💥 ¡PIÑATA PUSHBACK! 💥</bold></gradient>"));
+                }
             }
         }
+        // Hits 1..(threshold - 1): 0 Knockback! The player can stand and hit freely without being pushed away!
 
         // Dynamic Cracking & Snapping Pitch Modulation
         double pct = Math.max(0.0, (double) currentHealth / maxHealth);
