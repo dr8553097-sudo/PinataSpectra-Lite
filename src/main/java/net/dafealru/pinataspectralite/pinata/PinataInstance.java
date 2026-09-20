@@ -108,11 +108,11 @@ public class PinataInstance {
 
         // 1. Setup BossBar
         bossBar = Bukkit.createBossBar(
-                ColorUtils.colorize(profile.getDisplayName() + " &7- &e" + currentHealth + " &7/ &f" + maxHealth + " HP"),
+                "",
                 BarColor.PINK,
                 BarStyle.SOLID
         );
-        bossBar.setProgress(1.0);
+        updateBossBarTitle();
         for (Player p : Bukkit.getOnlinePlayers()) {
             bossBar.addPlayer(p);
         }
@@ -136,6 +136,11 @@ public class PinataInstance {
                 }
 
                 ticksAlive++;
+
+                // Update countdown timer in BossBar every second (20 ticks)
+                if (ticksAlive % 20 == 0) {
+                    updateBossBarTitle();
+                }
 
                 // Ground height reassurance clamp every 2 seconds
                 if (ticksAlive % 40 == 0 && originLocation.getWorld() != null) {
@@ -347,9 +352,7 @@ public class PinataInstance {
         }
 
         // Update BossBar & Holograms
-        double pct = Math.max(0.0, (double) currentHealth / maxHealth);
-        bossBar.setProgress(pct);
-        bossBar.setTitle(ColorUtils.colorize(profile.getDisplayName() + " &7- &e" + currentHealth + " &7/ &f" + maxHealth + " HP"));
+        updateBossBarTitle();
         model.updateHealthDisplay(currentHealth, maxHealth);
 
         // Trigger Kinetic Hit Wobble
@@ -695,6 +698,21 @@ public class PinataInstance {
         if (ambientSoundTask != null) ambientSoundTask.cancel();
         if (model != null) model.destroy();
         if (bossBar != null) bossBar.removeAll();
+    }
+
+    public void updateBossBarTitle() {
+        if (bossBar == null) return;
+        int remainingSeconds = Math.max(0, (maxLifetimeTicks - ticksAlive) / 20);
+        int minutes = remainingSeconds / 60;
+        int seconds = remainingSeconds % 60;
+        String formattedTime = String.format("%d:%02d", minutes, seconds);
+
+        int percent = (int) Math.ceil(((double) currentHealth / maxHealth) * 100);
+        String healthCol = (percent > 60) ? "&a" : (percent > 30 ? "&e" : "&c");
+        String timeCol = (remainingSeconds <= 15) ? "&c&l" : "&e";
+
+        bossBar.setProgress(Math.max(0.0, Math.min(1.0, (double) currentHealth / maxHealth)));
+        bossBar.setTitle(ColorUtils.colorize(profile.getDisplayName() + " &8| " + healthCol + "❤ " + percent + "% &8| " + timeCol + "⏳ " + formattedTime));
     }
 
     public boolean isDead() { return dead; }
