@@ -709,11 +709,12 @@ public class PinataInstance {
         String formattedTime = String.format("%d:%02d", minutes, seconds);
 
         int percent = (int) Math.ceil(((double) currentHealth / maxHealth) * 100);
-        String healthCol = (percent > 60) ? "&a" : (percent > 30 ? "&e" : "&c");
-        String timeCol = (remainingSeconds <= 15) ? "&c&l" : "&e";
+        String healthCol = (percent > 60) ? "<gradient:#22C55E:#38BDF8><bold>" : (percent > 30 ? "<gradient:#FCD34D:#F59E0B><bold>" : "<gradient:#EF4444:#DC2626><bold>");
+        String timeCol = (remainingSeconds <= 15) ? "<gradient:#EF4444:#DC2626><bold>" : "<yellow><bold>";
 
         bossBar.setProgress(Math.max(0.0, Math.min(1.0, (double) currentHealth / maxHealth)));
-        bossBar.setTitle(ColorUtils.colorize(profile.getDisplayName() + " &8| " + healthCol + "❤ " + percent + "% &8| " + timeCol + "⏳ " + formattedTime));
+        String title = profile.getDisplayName() + " <dark_gray>| " + healthCol + "❤ " + percent + "%</bold></gradient> <dark_gray>| " + timeCol + "⏳ " + formattedTime + "</bold></yellow>";
+        bossBar.setTitle(ColorUtils.colorize(title));
     }
 
     public boolean isDead() { return dead; }
