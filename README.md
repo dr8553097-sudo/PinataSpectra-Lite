@@ -24,6 +24,9 @@
 > [!TIP]
 > **100% Open Source (GPLv3):** Transparent, auditable, and secure. Zero obfuscation, zero backdoors, and community contribution ready.
 
+> [!NOTE]
+> **Dedicated Documentation Scope:** This repository and its [Official Master Wiki](https://dr8553097-sudo.github.io/PinataSpectra-Lite/) are exclusively dedicated to **PinataSpectra Lite**. The enterprise-grade Sovereign PRO edition features an expanded architecture (HikariCP MySQL/MariaDB, Redis caching, 8 mythic 3D voxel models, 6 live studio GUIs, minion raid combat, and personal instanced loot vaults) and maintains its own separate master documentation suite.
+
 ---
 
 ## ⚖️ Comprehensive Architecture & Feature Comparison Matrix

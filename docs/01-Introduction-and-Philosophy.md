@@ -4,6 +4,10 @@
 
 It was engineered to democratize top-tier server events in Minecraft, allowing any multiplayer community—from small private survival servers to growing public networks—to host spectacular festive boss fights featuring fluid physics, multi-phase soundtracks, and zero tick lag.
 
+> [!NOTE]
+> **Dedicated Documentation Scope:**  
+> This master wiki focuses strictly on features, mechanics, commands, and YAML configurations available in **PinataSpectra Lite**. The flagship **PinataSpectra Sovereign PRO** edition features an enterprise architecture (HikariCP multi-server database synchronization, 8 mythic 3D voxel models, 6 live studio GUIs, minion raid combat, and personal instanced loot vaults) and maintains its own dedicated, advanced master wiki.
+
 ---
 
 ## 🎯 Why Does PinataSpectra Lite Exist?

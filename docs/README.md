@@ -2,6 +2,14 @@
 
 Welcome to the official documentation for **PinataSpectra-Lite**, the standard procedural 3D Piñata boss event engine for **Minecraft servers (Paper, Purpur, Spigot 1.20 - 1.26+)**.
 
+> [!IMPORTANT]
+> **🍃 COMMUNITY OPEN-SOURCE EDITION — DEDICATED WIKI**  
+> This documentation portal is **exclusively dedicated to PinataSpectra-Lite (Community Edition)**.  
+> 
+> Because **PinataSpectra Sovereign PRO (Commercial Edition)** is a vastly more complex enterprise ecosystem—featuring multi-server Redis/HikariCP databases, 8 mythic 3D voxel models, 6 in-game studio GUIs, 4-phase boss combat with minion AI, and instanced anti-steal vaults—the PRO edition maintains its own comprehensive master documentation. Conversely, this Lite wiki is tailored specifically for the lightweight, zero-dependency community edition, ensuring clean, focused, and accurate guides without enterprise clutter.
+> 
+> *Need the full enterprise suite? Check out the [PinataSpectra Sovereign PRO Wiki](https://dr8553097-sudo.github.io/PinataSpectra/#/).*
+
 ---
 
 ## 🧭 Documentation Index
