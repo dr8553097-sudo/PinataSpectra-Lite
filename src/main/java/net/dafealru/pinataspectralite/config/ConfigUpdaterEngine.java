@@ -48,10 +48,10 @@ public class ConfigUpdaterEngine {
                 InputStream jarIn = plugin.getResource(resourcePath);
                 if (jarIn != null) {
                     plugin.saveResource(resourcePath, false);
-                    plugin.getLogger().info("[ConfigUpdater] Desplegado nuevo archivo por defecto: " + resourcePath);
+                    plugin.getLogger().info("[ConfigUpdater] Deployed default configuration file: " + resourcePath);
                 }
             } catch (Exception e) {
-                plugin.getLogger().warning("[ConfigUpdater] No se pudo desplegar " + resourcePath + ": " + e.getMessage());
+                plugin.getLogger().warning("[ConfigUpdater] Failed to deploy " + resourcePath + ": " + e.getMessage());
             }
             return;
         }
@@ -72,10 +72,10 @@ public class ConfigUpdaterEngine {
                 }
                 diskConfig.options().copyHeader(true);
                 diskConfig.save(diskFile);
-                plugin.getLogger().info("[ConfigUpdater] ✔ Sincronizadas " + addedKeys + " nuevas opciones en " + resourcePath + " sin alterar tus configuraciones existentes.");
+                plugin.getLogger().info("[ConfigUpdater] ✔ Synchronized " + addedKeys + " new option(s) in " + resourcePath + " preserving your custom settings.");
             }
         } catch (Exception e) {
-            plugin.getLogger().warning("[ConfigUpdater] Error al sincronizar " + resourcePath + ": " + e.getMessage());
+            plugin.getLogger().warning("[ConfigUpdater] Error synchronizing " + resourcePath + ": " + e.getMessage());
         }
     }
 
@@ -109,10 +109,10 @@ public class ConfigUpdaterEngine {
 
                 if (added > 0) {
                     profileConfig.save(file);
-                    plugin.getLogger().info("[ConfigUpdater] ✔ Perfil 'pinatas/" + file.getName() + "' actualizado con " + added + " nuevos parámetros por defecto.");
+                    plugin.getLogger().info("[ConfigUpdater] ✔ Profile 'pinatas/" + file.getName() + "' updated with " + added + " new default parameter(s).");
                 }
             } catch (Exception e) {
-                plugin.getLogger().warning("[ConfigUpdater] Error al comprobar perfil " + file.getName() + ": " + e.getMessage());
+                plugin.getLogger().warning("[ConfigUpdater] Error checking profile " + file.getName() + ": " + e.getMessage());
             }
         }
     }
