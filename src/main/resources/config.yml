@@ -13,7 +13,7 @@
 
 settings:
   # Internal configuration version for automatic updates (Do not edit)
-  config-version: 2
+  config-version: 3
   # Server default language: en_US, es_ES, fr_FR, de_DE, pt_BR, ru_RU, zh_CN, it_IT, ja_JP
   language: "en_US"
   # Auto-detect player's client language and display messages in their native language
@@ -129,14 +129,20 @@ physics:
     # Consecutive hits required before the piñata pushes the player back (e.g. 5 hits)
     # Individual hits (1..4) have 0 pushback so players can hit freely
     combo-threshold: 5
-    # Force of retaliatory pushback (increased for satisfying knockback impact)
-    horizontal-force: 1.15
-    vertical-force: 0.38
-    # Upward bounce launch (higher bouncy jump)
+    # Force of retaliatory pushback (strong, crisp backwards launch)
+    horizontal-force: 2.10
+    vertical-force: 0.50
+    # Upward bounce launch (high bouncy fiesta jump ~8-10 blocks)
     upward-bounce:
       enabled: true
       cooldown-seconds: 10
-      vertical-height: 0.78
+      vertical-height: 1.30
+    # Playful Festive Spin-Warp (chance to teleport nearby player on hit)
+    spin-warp:
+      enabled: true
+      chance-percentage: 15
+      min-distance: 4.0
+      max-distance: 7.5
 
 # Sound Effects & Vibrations
 audio:
